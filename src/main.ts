@@ -1,6 +1,6 @@
 import './style.css';
 
-document.querySelector('#app').innerHTML = `
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <header>
     <h1>Entity</h1>
   </header>

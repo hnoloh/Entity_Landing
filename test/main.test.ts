@@ -6,8 +6,8 @@ describe('App Bootstrap', () => {
   });
 
   it('should render the identifiable root screen, global Shell, and apply base styles', async () => {
-    await import('../src/main.js?t=' + Date.now()); // force reload module
-    const app = document.querySelector('#app');
+    await import('../src/main.ts?t=' + Date.now()); // force reload module
+    const app = document.querySelector<HTMLDivElement>('#app')!;
     
     // FIA-001 contract updated AS-BUILT
     expect(app.innerHTML).toContain('Entity');
