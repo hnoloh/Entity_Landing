@@ -3,11 +3,11 @@ import './style.css';
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <header>
     <h1>Entity</h1>
+    <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
     <button class="btn">Comenzar</button>
   </header>
   <main>
     <section id="hero" class="region">
-      <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
     </section>
     <section id="problema" class="region">
       <h2>Problema</h2>

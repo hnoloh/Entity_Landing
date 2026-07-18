@@ -96,6 +96,7 @@ main {
   filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.2));
   animation: float 6s ease-in-out infinite;
   pointer-events: none;
+  margin-top: -1.5rem; /* Cancel header padding to sit at absolute top */
 }
 
 @keyframes float {
