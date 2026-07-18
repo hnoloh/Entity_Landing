@@ -27,5 +27,13 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('#producto')).not.toBeNull();
     expect(app.querySelector('#join')).not.toBeNull();
     expect(app.querySelector('#cta')).not.toBeNull();
+
+    // FIA-007 contract
+    const nav = app.querySelector('header nav');
+    expect(nav).not.toBeNull();
+    expect(nav?.textContent).toContain('Inicio');
+    expect(nav?.textContent).toContain('Producto');
+    expect(nav?.textContent).toContain('Beta');
+    expect(nav?.textContent).toContain('GitHub');
   });
 });
