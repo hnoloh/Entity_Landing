@@ -6,7 +6,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button class="btn">Comenzar</button>
   </header>
   <main>
-    <img src="/ghost.png" alt="Entity Ghost" class="ghost-hero" />
+    <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
   </main>
   <footer>
   </footer>
