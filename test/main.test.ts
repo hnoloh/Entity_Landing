@@ -17,5 +17,10 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('header')).not.toBeNull();
     expect(app.querySelector('main')).not.toBeNull();
     expect(app.querySelector('footer')).not.toBeNull();
+
+    // FIA-004 contract
+    expect(app.querySelector('.container')).not.toBeNull();
+    expect(app.querySelector('.section')).not.toBeNull();
+    expect(app.querySelector('.btn')).not.toBeNull();
   });
 });

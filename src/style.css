@@ -61,6 +61,54 @@ main p {
   font-weight: 300;
 }
 
+/* UI Primitives */
+.container {
+  background-color: #122535; /* Nivel 2 Surface: Lighter than bg #0d1b26 */
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.btn {
+  background-color: var(--accent-color);
+  color: #000;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 229, 255, 0.2);
+}
+
+.btn:hover {
+  background-color: #33ebff;
+  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+  transform: translateY(-1px);
+}
+
 footer {
   padding: 2rem 0;
   text-align: center;
