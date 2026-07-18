@@ -34,10 +34,11 @@ body {
 }
 
 header {
-  padding: 1.5rem 0 0 0; /* Un margen ajustado y elegante a la parte superior absoluta */
+  padding: 1.5rem 0 0 0;
   display: flex;
-  justify-content: space-between;
-  align-items: center; 
+  flex-direction: column;
+  align-items: flex-start; 
+  gap: 0.5rem; /* Separación vertical entre el botón y el título */
 }
 
 header h1 {
@@ -86,7 +87,7 @@ main {
   color: var(--accent-color);
   font-family: inherit;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.7rem; /* Reducido para que sea más sutil y pequeño */
   border: none;
   padding: 0;
   cursor: pointer;
