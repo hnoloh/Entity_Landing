@@ -156,6 +156,7 @@ main {
   transition: all 0.2s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  margin-left: 0.2rem; /* Alineación óptica con el glifo del título H1 */
 }
 
 .btn:hover {
