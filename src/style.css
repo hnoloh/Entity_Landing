@@ -38,16 +38,16 @@ body::before {
 }
 
 #app {
-  max-width: var(--max-width);
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 2rem 2rem 2rem; /* Eliminamos el padding superior (antes 2rem global) para clavar la cabecera arriba */
+  padding: 0 4rem 2rem 4rem; /* Eliminamos el padding superior y damos margen lateral para HUD */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 header {
-  padding: 1.5rem 0 0 0;
+  padding: 2rem 0 0 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start; /* Pega ambos elementos al borde superior absoluto */
@@ -112,7 +112,17 @@ main {
 .logo-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0; /* Gap 0 para pegarlo al texto */
+}
+
+.slogan {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-left: 0.2rem;
+  line-height: 1.3;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
 }
 
 .visual-nav {
@@ -142,7 +152,8 @@ main {
   animation: float 6s ease-in-out infinite;
   pointer-events: none;
   /* El margen superior evita que se salga de la pantalla al animarse hacia arriba (-15px) */
-  margin-top: 15px; 
+  margin-top: 15px;
+  margin-left: -0.8rem; /* Margen negativo para que funcione como la siguiente letra */
 }
 
 /* Hero Shell */
@@ -274,14 +285,14 @@ main {
   color: var(--accent-color);
   font-family: inherit;
   font-weight: 500;
-  font-size: 0.7rem; /* Reducido para que sea más sutil y pequeño */
+  font-size: 0.7rem;
   border: none;
   padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-left: 0.2rem; /* Alineación óptica con el glifo del título H1 */
+  margin-left: 0.2rem;
 }
 
 .btn:hover {

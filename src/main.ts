@@ -7,7 +7,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <h1>Entity</h1>
         <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
       </div>
-      <button class="btn">Inscríbete a la beta aquí</button>
+      <span class="slogan">Y si el código...<br />Ya no fuera el centro?</span>
     </div>
     <nav class="visual-nav">
       <span class="nav-item">Inicio</span>
