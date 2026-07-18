@@ -27,28 +27,29 @@ body {
 #app {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem 2rem 2rem; /* Eliminamos el padding superior (antes 2rem global) para clavar la cabecera arriba */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 header {
-  padding: 1rem 0 0 0; /* Ajustado a la parte superior */
+  padding: 1.5rem 0 0 0; /* Un margen ajustado y elegante a la parte superior absoluta */
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Mantenemos centro para que h1 y btn estén alineados entre sí */
+  align-items: center; 
 }
 
 header h1 {
   font-weight: 600;
   font-size: 3.5rem;
   letter-spacing: -0.05em;
+  line-height: 1; /* Esto elimina el aire invisible por encima y por debajo de las letras */
   background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
-  margin: 0; /* Aseguramos que no haya margen extra empujando hacia abajo */
+  margin: 0; 
 }
 
 main {
