@@ -43,5 +43,8 @@ describe('App Bootstrap', () => {
     expect(hero?.querySelector('.hero-supporting')).not.toBeNull();
     expect(hero?.querySelector('.hero-cta')).not.toBeNull();
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
+
+    // FIA-009 contract
+    expect(app.querySelector('#intro-entity')).not.toBeNull();
   });
 });
