@@ -20,5 +20,13 @@ describe('App Bootstrap', () => {
     // FIA-004 AS-BUILT contract
     expect(app.querySelector('header .btn')).not.toBeNull();
     expect(app.querySelector('main .ghost-hero')).not.toBeNull();
+
+    // FIA-006 contract
+    expect(app.querySelector('#hero')).not.toBeNull();
+    expect(app.querySelector('#problema')).not.toBeNull();
+    expect(app.querySelector('#vision')).not.toBeNull();
+    expect(app.querySelector('#producto')).not.toBeNull();
+    expect(app.querySelector('#join')).not.toBeNull();
+    expect(app.querySelector('#cta')).not.toBeNull();
   });
 });
