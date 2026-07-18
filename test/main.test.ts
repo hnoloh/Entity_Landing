@@ -19,7 +19,7 @@ describe('App Bootstrap', () => {
 
     // FIA-004 AS-BUILT contract
     expect(app.querySelector('header .btn')).not.toBeNull();
-    expect(app.querySelector('header .ghost-hero')).not.toBeNull();
+    expect(app.querySelector('header .logo-container .ghost-hero')).not.toBeNull();
 
     // FIA-006 contract
     expect(app.querySelector('#hero')).not.toBeNull();

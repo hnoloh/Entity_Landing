@@ -89,14 +89,21 @@ main {
 }
 
 /* UI Primitives */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .ghost-hero {
-  max-width: 100px;
+  max-width: 80px; /* Reducido un poco para que encaje mejor al lado del título */
   height: auto;
   opacity: 0.6;
   filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.2));
   animation: float 6s ease-in-out infinite;
   pointer-events: none;
-  margin-top: -1.5rem; /* Cancel header padding to sit at absolute top */
+  /* El margen superior evita que se salga de la pantalla al animarse hacia arriba (-15px) */
+  margin-top: 15px; 
 }
 
 @keyframes float {
