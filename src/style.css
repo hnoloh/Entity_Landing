@@ -55,8 +55,37 @@ header h1 {
 main {
   flex: 1;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.region {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+  padding: 4rem 1rem;
+}
+
+.region:last-child {
+  border-bottom: none;
+}
+
+.region h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--accent-color);
+}
+
+.region p {
+  color: var(--text-secondary);
+  max-width: 600px;
 }
 
 /* UI Primitives */
