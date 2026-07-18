@@ -1,6 +1,10 @@
 document.querySelector('#app').innerHTML = `
-  <div>
+  <header>
     <h1>Entity Landing</h1>
+  </header>
+  <main>
     <p>Status: MVP Bootstrap</p>
-  </div>
+  </main>
+  <footer>
+  </footer>
 `;
