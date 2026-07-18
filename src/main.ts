@@ -12,7 +12,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <span class="nav-item">Beta</span>
       <span class="nav-item">GitHub</span>
     </nav>
-    <button class="btn">Comenzar</button>
+    <button class="btn">Inscríbete a la beta aquí</button>
   </header>
   <main>
     <section id="problema" class="region">
