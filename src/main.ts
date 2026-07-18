@@ -2,9 +2,12 @@ import './style.css';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <header>
-    <div class="logo-container">
-      <h1>Entity</h1>
-      <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
+    <div class="header-left">
+      <div class="logo-container">
+        <h1>Entity</h1>
+        <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
+      </div>
+      <button class="btn">Inscríbete a la beta aquí</button>
     </div>
     <nav class="visual-nav">
       <span class="nav-item">Inicio</span>
@@ -12,7 +15,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <span class="nav-item">Beta</span>
       <span class="nav-item">GitHub</span>
     </nav>
-    <button class="btn">Inscríbete a la beta aquí</button>
   </header>
   <main>
     <section id="problema" class="region">

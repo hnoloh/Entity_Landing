@@ -36,7 +36,15 @@ body {
 header {
   padding: 1.5rem 0 0 0;
   display: flex;
+  justify-content: space-between;
   align-items: flex-start; /* Pega ambos elementos al borde superior absoluto */
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
 }
 
 header h1 {
@@ -98,8 +106,6 @@ main {
   display: flex;
   gap: 2rem;
   align-items: center;
-  margin-left: auto;
-  margin-right: 4rem; /* Mas distancia hacia el boton que entre los items */
 }
 
 .nav-item {
