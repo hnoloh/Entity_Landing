@@ -57,6 +57,34 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <button class="final-cta btn">Inscríbete ahora</button>
     </section>
   </main>
-  <footer>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Entity</h3>
+        <p>Y si el código ya no fuera el centro?</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Producto</h4>
+          <span>Características</span>
+          <span>Roadmap</span>
+          <span>Precios</span>
+        </div>
+        <div class="footer-col">
+          <h4>Comunidad</h4>
+          <span>Discord</span>
+          <span>GitHub</span>
+          <span>Twitter</span>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <span>Privacidad</span>
+          <span>Términos</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Entity. Todos los derechos reservados.</p>
+    </div>
   </footer>
 `;
