@@ -35,7 +35,9 @@ body {
 
 header {
   padding: 2rem 0;
-  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
@@ -55,38 +57,24 @@ main {
   justify-content: center;
 }
 
-main p {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  font-weight: 300;
-}
-
 /* UI Primitives */
-.container {
-  background-color: #122535; /* Nivel 2 Surface: Lighter than bg #0d1b26 */
-  border-radius: 12px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 600px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+.ghost-hero {
+  max-width: 250px;
+  height: auto;
+  filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.3));
+  animation: float 6s ease-in-out infinite;
 }
 
-.section {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.section:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.section h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--text-primary);
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .btn {

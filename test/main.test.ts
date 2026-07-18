@@ -11,16 +11,14 @@ describe('App Bootstrap', () => {
     
     // FIA-001 contract updated AS-BUILT
     expect(app.innerHTML).toContain('Entity');
-    expect(app.innerHTML).toContain('Status: MVP Bootstrap');
 
     // FIA-002 contract
     expect(app.querySelector('header')).not.toBeNull();
     expect(app.querySelector('main')).not.toBeNull();
     expect(app.querySelector('footer')).not.toBeNull();
 
-    // FIA-004 contract
-    expect(app.querySelector('.container')).not.toBeNull();
-    expect(app.querySelector('.section')).not.toBeNull();
-    expect(app.querySelector('.btn')).not.toBeNull();
+    // FIA-004 AS-BUILT contract
+    expect(app.querySelector('header .btn')).not.toBeNull();
+    expect(app.querySelector('main .ghost-hero')).not.toBeNull();
   });
 });
