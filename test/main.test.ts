@@ -22,7 +22,6 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('header .logo-container .ghost-hero')).not.toBeNull();
 
     // FIA-006 contract
-    expect(app.querySelector('#hero')).not.toBeNull();
     expect(app.querySelector('#problema')).not.toBeNull();
     expect(app.querySelector('#vision')).not.toBeNull();
     expect(app.querySelector('#producto')).not.toBeNull();

@@ -9,8 +9,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <button class="btn">Comenzar</button>
   </header>
   <main>
-    <section id="hero" class="region">
-    </section>
     <section id="problema" class="region">
       <h2>Problema</h2>
       <p>Placeholder content</p>
