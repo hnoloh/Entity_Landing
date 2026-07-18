@@ -381,13 +381,58 @@ main {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  #app {
+    padding: 0 2rem 2rem 2rem;
+  }
+  
+  .hero-headline {
+    font-size: 3rem;
+  }
+  
+  #hero {
+    gap: 2rem;
+  }
+  
+  .visual-nav {
+    gap: 1.5rem;
+  }
+  
+  header h1 {
+    font-size: 3rem;
+  }
+  
+  .ghost-hero {
+    max-width: 70px;
+  }
+}
+
 @media (max-width: 768px) {
   #app {
     padding: 0 1rem 1rem 1rem;
   }
   
   header {
-    padding-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    gap: 2rem;
+  }
+
+  .header-left {
+    align-items: center;
+    text-align: center;
+  }
+
+  .slogan {
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .visual-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
   }
 
   header h1 {
@@ -395,12 +440,13 @@ main {
   }
   
   .ghost-hero {
-    max-width: 80px;
+    max-width: 60px;
   }
 
   #hero {
     flex-direction: column;
-    padding-top: 2rem;
+    padding-top: 3rem;
+    text-align: center;
   }
 
   .hero-content {
@@ -416,7 +462,50 @@ main {
     min-height: 250px;
   }
 
+  .region {
+    padding: 3rem 1rem;
+  }
+
+  .region h2 {
+    font-size: 2rem;
+  }
+
   .producto-visual {
     height: 300px;
+    margin-top: 2rem;
+  }
+  
+  .join-cta, .final-cta {
+    width: 100%;
+    max-width: 320px;
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+  
+  .footer {
+    padding: 3rem 0 1rem 0;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 3rem;
+  }
+  
+  .footer-brand {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .footer-col {
+    align-items: center;
+    text-align: center;
   }
 }
