@@ -236,6 +236,27 @@ main {
   box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 }
 
+/* Final CTA Shell (FIA-012) */
+.final-cta {
+  font-size: 1.5rem;
+  padding: 1.2rem 3rem;
+  margin-top: 2rem;
+  background: var(--accent-color);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+}
+
+.final-cta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
