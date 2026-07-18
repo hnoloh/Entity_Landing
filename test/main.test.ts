@@ -51,5 +51,10 @@ describe('App Bootstrap', () => {
     const producto = app.querySelector('#producto');
     expect(producto).not.toBeNull();
     expect(producto?.querySelector('.producto-visual')).not.toBeNull();
+
+    // FIA-011 contract
+    const join = app.querySelector('#join');
+    expect(join).not.toBeNull();
+    expect(join?.querySelector('.join-cta')).not.toBeNull();
   });
 });
