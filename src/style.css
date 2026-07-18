@@ -59,10 +59,12 @@ main {
 
 /* UI Primitives */
 .ghost-hero {
-  max-width: 250px;
+  max-width: 100px;
   height: auto;
-  filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.3));
+  opacity: 0.6;
+  filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.2));
   animation: float 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes float {
