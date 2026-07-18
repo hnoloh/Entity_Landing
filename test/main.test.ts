@@ -56,5 +56,10 @@ describe('App Bootstrap', () => {
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();
     expect(join?.querySelector('.join-cta')).not.toBeNull();
+
+    // FIA-012 contract
+    const ctaRegion = app.querySelector('#cta');
+    expect(ctaRegion).not.toBeNull();
+    expect(ctaRegion?.querySelector('.final-cta')).not.toBeNull();
   });
 });
