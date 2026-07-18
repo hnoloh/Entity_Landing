@@ -1,3 +1,5 @@
+import './style.css';
+
 document.querySelector('#app').innerHTML = `
   <header>
     <h1>Entity Landing</h1>
