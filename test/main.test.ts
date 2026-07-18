@@ -46,5 +46,10 @@ describe('App Bootstrap', () => {
 
     // FIA-009 contract
     expect(app.querySelector('#intro-entity')).not.toBeNull();
+
+    // FIA-010 contract
+    const producto = app.querySelector('#producto');
+    expect(producto).not.toBeNull();
+    expect(producto?.querySelector('.producto-visual')).not.toBeNull();
   });
 });
