@@ -48,7 +48,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="join" class="region">
       <h2>Join the Beta</h2>
-      <p>Placeholder content</p>
+      <p>Sé uno de los primeros en experimentar el poder de Entity. Únete a nuestra lista de espera.</p>
+      <button class="join-cta">Solicitar acceso</button>
     </section>
     <section id="cta" class="region">
       <h2>CTA Final</h2>
