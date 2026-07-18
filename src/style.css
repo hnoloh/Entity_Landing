@@ -34,10 +34,10 @@ body {
 }
 
 header {
-  padding: 2rem 0;
+  padding: 1rem 0 0 0; /* Ajustado a la parte superior */
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Mantenemos centro para que h1 y btn estén alineados entre sí */
 }
 
 header h1 {
@@ -48,6 +48,7 @@ header h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+  margin: 0; /* Aseguramos que no haya margen extra empujando hacia abajo */
 }
 
 main {
@@ -80,23 +81,23 @@ main {
 }
 
 .btn {
-  background-color: var(--accent-color);
-  color: #000;
+  background: transparent;
+  color: var(--accent-color);
   font-family: inherit;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 500;
+  font-size: 0.9rem;
   border: none;
-  border-radius: 6px;
-  padding: 0.75rem 1.5rem;
+  padding: 0;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 10px rgba(0, 229, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .btn:hover {
-  background-color: #33ebff;
-  box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+  color: #ffffff;
   transform: translateY(-1px);
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
 }
 
 footer {
