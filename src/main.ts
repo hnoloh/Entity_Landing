@@ -35,6 +35,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h2>Visión</h2>
       <p>Placeholder content</p>
     </section>
+    <section id="intro-entity" class="region">
+      <h2>Introducción de Entity</h2>
+      <p>Placeholder content</p>
+    </section>
     <section id="producto" class="region">
       <h2>Producto</h2>
       <p>Placeholder content</p>
