@@ -9,8 +9,8 @@ describe('App Bootstrap', () => {
     await import('../src/main.js?t=' + Date.now()); // force reload module
     const app = document.querySelector('#app');
     
-    // FIA-001 contract
-    expect(app.innerHTML).toContain('Entity Landing');
+    // FIA-001 contract updated AS-BUILT
+    expect(app.innerHTML).toContain('Entity');
     expect(app.innerHTML).toContain('Status: MVP Bootstrap');
 
     // FIA-002 contract

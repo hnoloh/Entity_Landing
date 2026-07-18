@@ -2,7 +2,7 @@ import './style.css';
 
 document.querySelector('#app').innerHTML = `
   <header>
-    <h1>Entity Landing</h1>
+    <h1>Entity</h1>
   </header>
   <main>
     <p>Status: MVP Bootstrap</p>
