@@ -6,6 +6,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h1>Entity</h1>
       <img src="/ghost_v2.png" alt="Entity Ghost" class="ghost-hero" />
     </div>
+    <nav class="visual-nav">
+      <span class="nav-item">Inicio</span>
+      <span class="nav-item">Producto</span>
+      <span class="nav-item">Beta</span>
+      <span class="nav-item">GitHub</span>
+    </nav>
     <button class="btn">Comenzar</button>
   </header>
   <main>

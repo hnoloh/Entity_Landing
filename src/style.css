@@ -95,6 +95,25 @@ main {
   gap: 1rem;
 }
 
+.visual-nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-item {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
 .ghost-hero {
   max-width: 80px; /* Reducido un poco para que encaje mejor al lado del título */
   height: auto;
