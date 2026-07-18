@@ -17,6 +17,16 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </nav>
   </header>
   <main>
+    <section id="hero" class="region">
+      <div class="hero-content">
+        <h2 class="hero-headline">Headline Placeholder</h2>
+        <p class="hero-supporting">Supporting copy placeholder for the hero section.</p>
+        <button class="hero-cta btn">Call to Action</button>
+      </div>
+      <div class="hero-visual">
+        <p>Visual Zone Placeholder</p>
+      </div>
+    </section>
     <section id="problema" class="region">
       <h2>Problema</h2>
       <p>Placeholder content</p>
