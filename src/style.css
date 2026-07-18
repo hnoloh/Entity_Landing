@@ -199,6 +199,22 @@ main {
   color: var(--text-secondary);
 }
 
+/* Product Shell (FIA-010) */
+.producto-visual {
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  margin-top: 3rem;
+  background: rgba(0, 229, 255, 0.02);
+  border: 1px solid rgba(0, 229, 255, 0.1);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
 @keyframes float {
   0% {
     transform: translateY(0px);
@@ -272,5 +288,9 @@ footer {
 
   .hero-visual {
     min-height: 250px;
+  }
+
+  .producto-visual {
+    height: 300px;
   }
 }

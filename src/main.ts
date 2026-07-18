@@ -41,7 +41,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="producto" class="region">
       <h2>Producto</h2>
-      <p>Placeholder content</p>
+      <p>Placeholder content for the product features and capabilities.</p>
+      <div class="producto-visual">
+        <p>Product Area Placeholder</p>
+      </div>
     </section>
     <section id="join" class="region">
       <h2>Join the Beta</h2>
