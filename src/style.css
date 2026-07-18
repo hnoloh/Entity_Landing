@@ -4,7 +4,7 @@
   --bg-color: #0d1b26;
   --text-primary: #f0f0f0;
   --text-secondary: #a0a0a5;
-  --accent-color: #3b82f6;
+  --accent-color: #00e5ff;
   --max-width: 1200px;
 }
 
@@ -35,17 +35,17 @@ body {
 
 header {
   padding: 2rem 0;
-  text-align: center;
+  text-align: left;
 }
 
 header h1 {
   font-weight: 600;
   font-size: 3.5rem;
   letter-spacing: -0.05em;
-  background: linear-gradient(135deg, #ffffff 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+  text-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
 }
 
 main {
@@ -64,5 +64,5 @@ main p {
 footer {
   padding: 2rem 0;
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(0, 229, 255, 0.3);
 }
