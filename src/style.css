@@ -662,20 +662,35 @@ main {
 .form-input {
   width: 100%;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(0, 229, 255, 0.15);
+  background: rgba(0, 229, 255, 0.04);
+  border: 1px solid rgba(0, 229, 255, 0.25);
   border-radius: 8px;
   padding: 0.8rem 1rem;
-  color: var(--text-primary);
+  color: #e0f7fa; /* Cian muy claro para el texto de entrada */
   font-family: inherit;
   font-size: 1rem;
   transition: all 0.2s ease;
 }
 
+.form-input::placeholder {
+  color: rgba(0, 229, 255, 0.35);
+}
+
 .form-input:focus {
   outline: none;
   border-color: var(--accent-color);
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+/* Evitar que el autocompletado del navegador pinte el campo de blanco */
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover, 
+.form-input:-webkit-autofill:focus,
+.form-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #e0f7fa !important;
+  -webkit-box-shadow: 0 0 0px 1000px rgba(8, 28, 32, 0.95) inset !important;
+  border: 1px solid rgba(0, 229, 255, 0.4) !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-input.invalid {
