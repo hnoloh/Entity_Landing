@@ -44,7 +44,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="narrativa-grid">
         <!-- Tarjeta Problema -->
         <div id="problema" class="narrativa-card">
-          <div class="card-icon">⚡</div>
           <h3>Trabajar con IA se ha vuelto caótico.</h3>
           <ul class="problema-bullets-mini">
             <li>Más modelos.</li>
@@ -59,7 +58,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         
         <!-- Tarjeta Visión -->
         <div id="vision" class="narrativa-card">
-          <div class="card-icon">🌀</div>
           <h3>La IA necesita un Workspace.</h3>
           <p class="vision-text-mini">
             Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado donde cada agente tiene un propósito y cada decisión sigue estando en manos del usuario.
@@ -68,10 +66,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         
         <!-- Tarjeta Workspace -->
         <div id="intro-entity" class="narrativa-card">
-          <div class="card-icon">🚀</div>
           <h3>Todo ocurre en un único lugar.</h3>
           <p class="intro-text-mini">
-            Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.
+            Configuración, conversaciones, Entis, grupos secuenciales e historial dentro de un mismo Workspace.
           </p>
         </div>
       </div>

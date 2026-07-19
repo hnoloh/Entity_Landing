@@ -62,7 +62,7 @@ describe('App Bootstrap', () => {
     const introEntity = app.querySelector('#intro-entity');
     expect(introEntity).not.toBeNull();
     expect(introEntity?.textContent).toContain('Todo ocurre en un único lugar.');
-    expect(introEntity?.textContent).toContain('Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.');
+    expect(introEntity?.textContent).toContain('Configuración, conversaciones, Entis, grupos secuenciales e historial dentro de un mismo Workspace.');
 
     // FIA-024 contract
     const problema = app.querySelector('#problema');
