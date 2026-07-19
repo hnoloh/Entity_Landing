@@ -197,11 +197,12 @@ main {
   flex-direction: row;
   gap: 6rem; /* Separación generosa de las columnas */
   text-align: left;
-  padding-top: 7rem; /* Aire generoso entre el slogan y el titular */
-  min-height: 100vh;
+  padding-top: 4.5rem; /* Reducido para subir titular y preholder */
+  min-height: auto;
+  padding-bottom: 6rem;
   width: 100%;
   border-bottom: 1px solid rgba(0, 229, 255, 0.1);
-  align-items: center;
+  align-items: flex-start; /* Eleva ambos a la misma altura inicial */
 }
 
 .hero-content {
