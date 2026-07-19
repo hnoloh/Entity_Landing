@@ -104,7 +104,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="join" class="region">
       <div class="join-container">
-        <h2>Join the Beta</h2>
+        <h2>Únete a la Beta</h2>
         <p class="join-subtitle">
           Entity se encuentra actualmente en fase de <strong>MVP y desarrollo activo</strong>. Estamos preparando nuestra primera <strong>beta privada</strong> con <strong>acceso anticipado</strong> limitado para dar forma al futuro del trabajo con inteligencia artificial.
         </p>
