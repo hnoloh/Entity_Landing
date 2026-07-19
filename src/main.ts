@@ -86,6 +86,23 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
       </div>
     </section>
+    <section id="especificaciones" class="spec-ribbon">
+      <div class="spec-item">
+        <span class="spec-dot"></span>
+        <span class="spec-title">Hibridación Activa:</span>
+        <span class="spec-desc">Modelos locales y cloud en un mismo grupo.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-dot"></span>
+        <span class="spec-title">Ejecución Local:</span>
+        <span class="spec-desc">Soporte nativo offline en tu propia máquina.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-dot"></span>
+        <span class="spec-title">100% Agnóstico:</span>
+        <span class="spec-desc">Libertad total para conectar cualquier API de IA.</span>
+      </div>
+    </section>
     <section id="join" class="region">
       <h2>Join the Beta</h2>
       <p>Sé uno de los primeros en experimentar el poder de Entity. Únete a nuestra lista de espera.</p>

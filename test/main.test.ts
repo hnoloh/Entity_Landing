@@ -128,6 +128,12 @@ describe('App Bootstrap', () => {
     expect(captureImg?.getAttribute('src')).toBe('/FIA-33_Implementar vista secuencial grupos.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
 
+    // specifications ribbon (agnostic local/cloud features)
+    const specRibbon = app.querySelector('#especificaciones');
+    expect(specRibbon).not.toBeNull();
+    expect(specRibbon?.textContent).toContain('Hibridación Activa:');
+    expect(specRibbon?.textContent).toContain('Modelos locales y cloud en un mismo grupo.');
+
     // FIA-011 contract
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();

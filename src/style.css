@@ -975,3 +975,51 @@ main {
   outline-offset: 2px;
   border-radius: 20px;
 }
+
+/* Especificaciones Ribbon (FIA-035 Custom Redesign) */
+.spec-ribbon {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 4rem auto;
+  border-top: 1px solid rgba(0, 229, 255, 0.1);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+  padding: 1.8rem 1rem;
+}
+
+.spec-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.spec-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent-color);
+  flex-shrink: 0;
+}
+
+.spec-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.spec-desc {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .spec-ribbon {
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 1.5rem 1rem;
+    margin: 3rem auto;
+  }
+}
