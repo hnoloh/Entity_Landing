@@ -74,7 +74,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h2>Producto</h2>
       <div class="producto-visual">
         <div class="product-frame">
-          <img src="/FIA-32_Implementar vista entis.png" alt="Vista Entis de Entity" class="pf-capture" />
+          <img src="/FIA-33_Implementar vista secuencial grupos.png" alt="Vista de Sequential Groups de Entity" class="pf-capture" />
         </div>
       </div>
     </section>
