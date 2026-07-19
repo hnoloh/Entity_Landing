@@ -172,10 +172,11 @@ describe('App Bootstrap', () => {
     const errorSpan = form?.querySelector('#email-error');
     expect(errorSpan).not.toBeNull();
 
-    // 1. Submit vacío (obligatorio)
+    // 1. Submit vacío (obligatorio) - no debe activar loading
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
     expect(errorSpan?.textContent).toBe('El correo electrónico es obligatorio.');
+    expect(form?.classList.contains('is-submitting')).toBe(false);
 
     // 2. Limpieza al escribir
     if (emailInput) {
@@ -185,13 +186,14 @@ describe('App Bootstrap', () => {
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 3. Submit con formato incorrecto
+    // 3. Submit con formato incorrecto - no debe activar loading
     if (emailInput) {
       (emailInput as HTMLInputElement).value = 'correo-invalido';
     }
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
     expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+    expect(form?.classList.contains('is-submitting')).toBe(false);
 
     // 4. Limpieza al escribir tras error de formato
     if (emailInput) {
@@ -207,6 +209,7 @@ describe('App Bootstrap', () => {
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
     expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+    expect(form?.classList.contains('is-submitting')).toBe(false);
 
     emailInput?.dispatchEvent(new window.Event('focus', { bubbles: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
@@ -216,18 +219,35 @@ describe('App Bootstrap', () => {
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
     expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+    expect(form?.classList.contains('is-submitting')).toBe(false);
 
     document.dispatchEvent(new window.Event('click', { bubbles: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 7. Submit con formato correcto
+    // 7. Submit con formato correcto - debe activar loading
     if (emailInput) {
       (emailInput as HTMLInputElement).value = 'user@example.com';
     }
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
+
+    // Comprobar estado de envío (loading)
+    expect(form?.classList.contains('is-submitting')).toBe(true);
+    expect(emailInput?.getAttribute('disabled')).not.toBeNull();
+    
+    const submitBtn = form?.querySelector('.join-cta') as HTMLButtonElement;
+    expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
+    expect(submitBtn?.textContent).toBe('Enviando...');
+    
+    const statusSpan = form?.querySelector('#form-status');
+    expect(statusSpan).not.toBeNull();
+    expect(statusSpan?.textContent).toBe('Enviando solicitud...');
+
+    // Intentar un segundo submit mientras está cargando
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(form?.classList.contains('is-submitting')).toBe(true);
 
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
