@@ -72,9 +72,72 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="producto" class="region">
       <h2>Producto</h2>
-      <p>Placeholder content for the product features and capabilities.</p>
       <div class="producto-visual">
-        <p>Product Area Placeholder</p>
+        <div class="product-frame">
+          <!-- Window Header (Mac-like buttons + Title) -->
+          <div class="pf-header">
+            <div class="pf-dots">
+              <span class="pf-dot pf-dot-close"></span>
+              <span class="pf-dot pf-dot-minimize"></span>
+              <span class="pf-dot pf-dot-expand"></span>
+            </div>
+            <div class="pf-title">Entity Workspace - Demo.env</div>
+            <div class="pf-actions-mock"></div>
+          </div>
+          <!-- Window Content -->
+          <div class="pf-body">
+            <!-- Sidebar -->
+            <div class="pf-sidebar">
+              <div class="pf-section-title">Workspace</div>
+              <div class="pf-item active">Sequential Group</div>
+              <div class="pf-item">Entis Explorer</div>
+              <div class="pf-item">Historial</div>
+              
+              <div class="pf-section-title" style="margin-top: 1.5rem;">Agentes Activos</div>
+              <div class="pf-item pf-agent"><span class="pf-status-dot online"></span>Coder Agent</div>
+              <div class="pf-item pf-agent"><span class="pf-status-dot online"></span>Reviewer Agent</div>
+              <div class="pf-item pf-agent"><span class="pf-status-dot idle"></span>Doc Agent</div>
+            </div>
+            <!-- Main view area -->
+            <div class="pf-main">
+              <!-- Sequential flow graph or agent board -->
+              <div class="pf-workspace-header">
+                <h3>Grupo Secuencial: Build & Test</h3>
+                <span class="pf-badge">En ejecución</span>
+              </div>
+              <div class="pf-canvas">
+                <!-- Group node 1 -->
+                <div class="pf-node pf-node-done">
+                  <div class="pf-node-header">
+                    <span class="pf-node-icon">✓</span>
+                    <span>1. Analizar Requisitos</span>
+                  </div>
+                  <p>Completado por Coder Agent</p>
+                </div>
+                <!-- Arrow -->
+                <div class="pf-flow-arrow">↓</div>
+                <!-- Group node 2 -->
+                <div class="pf-node pf-node-active">
+                  <div class="pf-node-header">
+                    <span class="pf-node-spinner"></span>
+                    <span>2. Implementar Tests</span>
+                  </div>
+                  <p>Ejecutando en Coder Agent...</p>
+                </div>
+                <!-- Arrow -->
+                <div class="pf-flow-arrow dashed">↓</div>
+                <!-- Group node 3 -->
+                <div class="pf-node pf-node-pending">
+                  <div class="pf-node-header">
+                    <span class="pf-node-icon">○</span>
+                    <span>3. Validar Cambios</span>
+                  </div>
+                  <p>Pendiente por Reviewer Agent</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section id="join" class="region">
