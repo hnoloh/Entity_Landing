@@ -28,28 +28,27 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <main>
     <section id="hero">
       <div class="hero-content">
-        <h1 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h1>
+        <h1 class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
         <div class="hero-body-row">
           <p class="hero-supporting">Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
-          <div class="hero-trust-badges-list">
-            <div class="badge-item">
-              <span class="badge-dot"></span>
-              <span><strong>Híbrido</strong> (Local + Cloud)</span>
-            </div>
-            <div class="badge-item">
-              <span class="badge-dot"></span>
-              <span><strong>Agnóstico</strong> (Cualquier API)</span>
-            </div>
-            <div class="badge-item">
-              <span class="badge-dot"></span>
-              <span><strong>Privado</strong> (Modelos Offline)</span>
-            </div>
+          <div class="hero-visual">
+            <p>Visual Zone Placeholder</p>
           </div>
         </div>
-
-      </div>
-      <div class="hero-visual">
-        <p>Visual Zone Placeholder</p>
+        <div class="hero-trust-badges-inline">
+          <div class="badge-item">
+            <span class="badge-dot"></span>
+            <span><strong>Híbrido</strong> (Local + Cloud)</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-dot"></span>
+            <span><strong>Agnóstico</strong> (Cualquier API)</span>
+          </div>
+          <div class="badge-item">
+            <span class="badge-dot"></span>
+            <span><strong>Privado</strong> (Modelos Offline)</span>
+          </div>
+        </div>
       </div>
     </section>
     <section id="narrativa" class="region">

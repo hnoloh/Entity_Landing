@@ -129,7 +129,7 @@ describe('App Bootstrap', () => {
     expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
-    const trustBadgesList = hero?.querySelector('.hero-trust-badges-list');
+    const trustBadgesList = hero?.querySelector('.hero-trust-badges-inline');
     expect(trustBadgesList).not.toBeNull();
     expect(trustBadgesList?.textContent).toContain('Híbrido');
     expect(trustBadgesList?.textContent).toContain('Agnóstico');
