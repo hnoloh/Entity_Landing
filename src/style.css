@@ -171,6 +171,14 @@ main {
   display: none;
 }
 
+.nav-item:focus-visible,
+.mobile-menu-btn:focus-visible,
+.mobile-nav-item:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
 .ghost-hero {
   max-width: 80px; /* Reducido un poco para que encaje mejor al lado del título */
   height: auto;
