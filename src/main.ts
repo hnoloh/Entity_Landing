@@ -117,7 +117,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <p class="join-description">
             Si deseas experimentar cómo los agentes especializados colaboran de manera conjunta y coordinada bajo tu control directo en un entorno de escritorio, solicita tu plaza en nuestra lista de espera.
           </p>
-          <button class="join-cta btn">Solicitar acceso a la Beta</button>
+          <form id="beta-form" class="beta-form" onsubmit="event.preventDefault();">
+            <div class="form-group">
+              <label for="beta-email" class="form-label">Correo Electrónico</label>
+              <input type="email" id="beta-email" class="form-input" required placeholder="tu@email.com" />
+            </div>
+            <button type="submit" class="join-cta btn">Solicitar acceso a la Beta</button>
+          </form>
         </div>
       </div>
     </section>

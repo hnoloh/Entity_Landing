@@ -150,11 +150,24 @@ describe('App Bootstrap', () => {
     expect(trustBadgesList?.textContent).toContain('Agnóstico');
     expect(trustBadgesList?.textContent).toContain('Privado');
 
-    // FIA-037 contract (Join the Beta visible y contenido MVP/Private Beta)
+    // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();
-    expect(join?.querySelector('.join-cta')).not.toBeNull();
-    expect(join?.querySelector('form')).toBeNull(); // No existe formulario activo
+    const form = join?.querySelector('form');
+    expect(form).not.toBeNull();
+
+    const emailInput = form?.querySelector('input[type="email"]');
+    expect(emailInput).not.toBeNull();
+    expect(emailInput?.getAttribute('required')).not.toBeNull();
+    expect(emailInput?.getAttribute('id')).toBe('beta-email');
+
+    const label = form?.querySelector('label');
+    expect(label).not.toBeNull();
+    expect(label?.getAttribute('for')).toBe('beta-email');
+
+    const ctaButton = form?.querySelector('.join-cta');
+    expect(ctaButton).not.toBeNull();
+
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
     expect(join?.textContent).toContain('acceso anticipado');
