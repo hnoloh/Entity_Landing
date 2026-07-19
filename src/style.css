@@ -437,20 +437,21 @@ main {
   
   header {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding-top: 2rem;
     gap: 2rem;
     position: relative;
+    width: 100%;
   }
 
   .header-left {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .slogan {
-    text-align: center;
-    margin-left: 0;
+    text-align: left;
+    margin-left: 0.2rem;
   }
 
   .visual-nav {
