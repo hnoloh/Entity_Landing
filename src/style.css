@@ -415,6 +415,74 @@ main {
   font-size: 0.8rem;
 }
 
+/* Problema Section styling */
+#problema {
+  min-height: auto;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#problema h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.problema-card {
+  max-width: 650px;
+  width: 100%;
+  background: rgba(13, 27, 38, 0.4);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  text-align: left;
+}
+
+.problema-card h3 {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.problema-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.problema-bullets li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.problema-bullets li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.problema-conclusion {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  border-left: 3px solid var(--accent-color);
+  padding-left: 1rem;
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   #app {
