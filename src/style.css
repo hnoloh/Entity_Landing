@@ -193,10 +193,15 @@ main {
 
 /* Hero Shell */
 #hero {
+  display: flex;
   flex-direction: row;
-  gap: 4rem;
+  gap: 6rem; /* Separación generosa de las columnas */
   text-align: left;
   padding-top: 7rem; /* Aire generoso entre el slogan y el titular */
+  min-height: 100vh;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+  align-items: center;
 }
 
 .hero-content {
@@ -879,8 +884,10 @@ main {
   }
 
   #hero {
+    display: flex;
     flex-direction: column;
-    padding-top: 3rem;
+    gap: 4rem; /* Separación generosa cuando se apilan verticalmente */
+    padding-top: 5rem;
     text-align: center;
   }
 
