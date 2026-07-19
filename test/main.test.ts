@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 describe('App Bootstrap', () => {
   beforeEach(() => {
@@ -225,7 +225,8 @@ describe('App Bootstrap', () => {
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 7. Submit con formato correcto - debe activar loading
+    // 7. Submit con formato correcto - debe activar loading y luego confirmación
+    vi.useFakeTimers();
     if (emailInput) {
       (emailInput as HTMLInputElement).value = 'user@example.com';
     }
@@ -245,9 +246,24 @@ describe('App Bootstrap', () => {
     expect(statusSpan).not.toBeNull();
     expect(statusSpan?.textContent).toBe('Enviando solicitud...');
 
-    // Intentar un segundo submit mientras está cargando
+    // Intentar un segundo submit mientras está cargando (no debe hacer nada)
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(form?.classList.contains('is-submitting')).toBe(true);
+
+    // Completar el estado de envío (avanzar timers)
+    vi.advanceTimersByTime(1000);
+
+    // Comprobar estado de confirmación simulada
+    expect(form?.classList.contains('is-submitting')).toBe(false);
+    expect(form?.classList.contains('is-submitted')).toBe(true);
+    expect(statusSpan?.textContent).toBe('¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.');
+    
+    // Inputs y botones deben seguir desactivados
+    expect(emailInput?.getAttribute('disabled')).not.toBeNull();
+    expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
+    expect(submitBtn?.textContent).toBe('Solicitud Enviada');
+
+    vi.useRealTimers();
 
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
