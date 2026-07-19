@@ -29,7 +29,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section id="hero" class="region">
       <div class="hero-content">
         <h2 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h2>
-        <p class="hero-supporting">Supporting copy placeholder for the hero section.</p>
+        <p class="hero-supporting">Entity es un Workspace de escritorio donde agentes especializados colaboran bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
         <button class="hero-cta btn">Call to Action</button>
       </div>
       <div class="hero-visual">
