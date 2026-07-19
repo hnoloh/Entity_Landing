@@ -288,12 +288,27 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         formStatusSpan.textContent = 'Enviando solicitud...';
         formStatusSpan.style.display = 'block';
       }
+
+      // Confirmación simulada tras completar el estado de envío (FIA-045)
+      setTimeout(() => {
+        betaForm.classList.remove('is-submitting');
+        betaForm.classList.add('is-submitted');
+        betaForm.removeAttribute('aria-busy');
+        
+        if (submitBtn) {
+          submitBtn.textContent = 'Solicitud Enviada';
+        }
+        
+        if (formStatusSpan) {
+          formStatusSpan.textContent = '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
+        }
+      }, 1000);
     }
   });
 
   const clearError = () => {
-    // No limpiar si ya se está enviando
-    if (betaForm.classList.contains('is-submitting')) {
+    // No limpiar si ya se está enviando o ya se envió
+    if (betaForm.classList.contains('is-submitting') || betaForm.classList.contains('is-submitted')) {
       return;
     }
     betaEmailInput.classList.remove('invalid');
