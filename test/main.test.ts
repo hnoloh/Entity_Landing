@@ -79,5 +79,9 @@ describe('App Bootstrap', () => {
     expect(footer?.querySelector('.footer-brand')).not.toBeNull();
     expect(footer?.querySelector('.footer-links')).not.toBeNull();
     expect(footer?.querySelector('.footer-bottom')).not.toBeNull();
+
+    // FIA-017 contract
+    const mobileBtn = app.querySelector('header .mobile-menu-btn');
+    expect(mobileBtn).not.toBeNull();
   });
 });
