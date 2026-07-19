@@ -97,7 +97,7 @@ describe('App Bootstrap', () => {
     expect(drawerLinks?.[2].getAttribute('href')).toBe('#join');
     expect(drawerLinks?.[3].getAttribute('href')).toBe('#github');
 
-    // Simulate click on mobile menu button
+    // Simulate click on mobile menu button (Open)
     const headerEl = app.querySelector('header');
     expect(headerEl?.classList.contains('mobile-menu-open')).toBe(false);
     
@@ -105,5 +105,19 @@ describe('App Bootstrap', () => {
     
     expect(mobileBtn?.getAttribute('aria-expanded')).toBe('true');
     expect(headerEl?.classList.contains('mobile-menu-open')).toBe(true);
+
+    // Simulate click on mobile menu button again (Close)
+    mobileBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(mobileBtn?.getAttribute('aria-expanded')).toBe('false');
+    expect(headerEl?.classList.contains('mobile-menu-open')).toBe(false);
+
+    // Open again to test closing on option click
+    mobileBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(headerEl?.classList.contains('mobile-menu-open')).toBe(true);
+
+    // Click on a mobile nav link (should close the menu)
+    drawerLinks?.[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(mobileBtn?.getAttribute('aria-expanded')).toBe('false');
+    expect(headerEl?.classList.contains('mobile-menu-open')).toBe(false);
   });
 });
