@@ -69,7 +69,7 @@ describe('App Bootstrap', () => {
     expect(problema?.textContent).toContain('Más modelos.');
     expect(problema?.textContent).toContain('Más chats.');
     expect(problema?.textContent).toContain('Más herramientas.');
-    expect(problema?.textContent).toContain('Más contexto perdido.');
+    expect(problema?.textContent).toContain('Más desorden.');
     expect(problema?.textContent).toContain('La IA ha evolucionado.');
     expect(problema?.textContent).toContain('Nuestra forma de trabajar con ella todavía no.');
 

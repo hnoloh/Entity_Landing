@@ -44,7 +44,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <li>Más modelos.</li>
           <li>Más chats.</li>
           <li>Más herramientas.</li>
-          <li>Más contexto perdido.</li>
+          <li>Más desorden.</li>
         </ul>
         <p class="problema-conclusion">
           La IA ha evolucionado.<br />
