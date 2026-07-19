@@ -117,7 +117,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <p class="join-description">
             Si deseas experimentar cómo los agentes especializados colaboran de manera conjunta y coordinada bajo tu control directo en un entorno de escritorio, solicita tu plaza en nuestra lista de espera.
           </p>
-          <form id="beta-form" class="beta-form" onsubmit="event.preventDefault();">
+          <form id="beta-form" class="beta-form" onsubmit="event.preventDefault();" novalidate>
             <div class="form-group">
               <label for="beta-email" class="form-label">Correo Electrónico</label>
               <input type="email" id="beta-email" class="form-input" required placeholder="tu@email.com" aria-describedby="email-error" />
