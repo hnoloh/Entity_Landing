@@ -53,7 +53,9 @@ describe('App Bootstrap', () => {
     const headline = hero?.querySelector('.hero-headline');
     expect(headline).not.toBeNull();
     expect(headline?.textContent).toBe('Organiza el trabajo con inteligencia artificial.');
-    expect(hero?.querySelector('.hero-supporting')).not.toBeNull();
+    const supporting = hero?.querySelector('.hero-supporting');
+    expect(supporting).not.toBeNull();
+    expect(supporting?.textContent).toBe('Entity es un Workspace de escritorio donde agentes especializados colaboran bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.');
     expect(hero?.querySelector('.hero-cta')).not.toBeNull();
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
 
