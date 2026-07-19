@@ -38,7 +38,19 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="problema" class="region">
       <h2>Problema</h2>
-      <p>Placeholder content</p>
+      <div class="problema-content">
+        <h3>Trabajar con IA se ha vuelto caótico.</h3>
+        <ul class="problema-bullets">
+          <li>Más modelos.</li>
+          <li>Más chats.</li>
+          <li>Más herramientas.</li>
+          <li>Más contexto perdido.</li>
+        </ul>
+        <p class="problema-conclusion">
+          La IA ha evolucionado.<br />
+          Nuestra forma de trabajar con ella todavía no.
+        </p>
+      </div>
     </section>
     <section id="vision" class="region">
       <h2>Visión</h2>
