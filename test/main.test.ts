@@ -119,5 +119,16 @@ describe('App Bootstrap', () => {
     drawerLinks?.[0].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(mobileBtn?.getAttribute('aria-expanded')).toBe('false');
     expect(headerEl?.classList.contains('mobile-menu-open')).toBe(false);
+
+    // FIA-020 contract
+    // Verify that the controls can be focused natively
+    (navLinks?.[0] as HTMLElement).focus();
+    expect(document.activeElement).toBe(navLinks?.[0]);
+
+    (mobileBtn as HTMLElement).focus();
+    expect(document.activeElement).toBe(mobileBtn);
+
+    (drawerLinks?.[0] as HTMLElement).focus();
+    expect(document.activeElement).toBe(drawerLinks?.[0]);
   });
 });
