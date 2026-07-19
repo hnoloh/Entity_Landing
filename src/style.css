@@ -498,6 +498,14 @@ main {
   50% { opacity: 0.8; }
 }
 
+.pf-capture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
 /* Join Beta Shell (FIA-011) */
 .join-cta {
   font-size: 1.2rem;
