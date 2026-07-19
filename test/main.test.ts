@@ -73,6 +73,12 @@ describe('App Bootstrap', () => {
     expect(problema?.textContent).toContain('La IA ha evolucionado.');
     expect(problema?.textContent).toContain('Nuestra forma de trabajar con ella todavía no.');
 
+    // FIA-025 contract
+    const vision = app.querySelector('#vision');
+    expect(vision).not.toBeNull();
+    expect(vision?.textContent).toContain('La IA necesita un Workspace.');
+    expect(vision?.textContent).toContain('Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado donde cada agente tiene un propósito y cada decisión sigue estando en manos del usuario.');
+
     // FIA-010 contract
     const producto = app.querySelector('#producto');
     expect(producto).not.toBeNull();
