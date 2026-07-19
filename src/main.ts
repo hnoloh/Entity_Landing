@@ -74,7 +74,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h2>Producto</h2>
       <div class="producto-visual">
         <div class="product-frame">
-          <img src="/FIA-30_Integrar captura principal.png" alt="Captura principal de la interfaz de Entity Workspace" class="pf-capture" />
+          <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" />
         </div>
       </div>
     </section>
