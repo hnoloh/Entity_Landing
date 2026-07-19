@@ -50,7 +50,9 @@ describe('App Bootstrap', () => {
     // FIA-008 contract
     const hero = app.querySelector('#hero');
     expect(hero).not.toBeNull();
-    expect(hero?.querySelector('.hero-headline')).not.toBeNull();
+    const headline = hero?.querySelector('.hero-headline');
+    expect(headline).not.toBeNull();
+    expect(headline?.textContent).toBe('Organiza el trabajo con inteligencia artificial.');
     expect(hero?.querySelector('.hero-supporting')).not.toBeNull();
     expect(hero?.querySelector('.hero-cta')).not.toBeNull();
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
