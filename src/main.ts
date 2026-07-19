@@ -285,22 +285,41 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
       }
       
       if (formStatusSpan) {
+        formStatusSpan.classList.remove('error');
         formStatusSpan.textContent = 'Enviando solicitud...';
         formStatusSpan.style.display = 'block';
       }
 
-      // Confirmación simulada tras completar el estado de envío (FIA-045)
+      // Confirmación o error simulado tras completar el estado de envío (FIA-045 & FIA-046)
       setTimeout(() => {
-        betaForm.classList.remove('is-submitting');
-        betaForm.classList.add('is-submitted');
         betaForm.removeAttribute('aria-busy');
         
-        if (submitBtn) {
-          submitBtn.textContent = 'Solicitud Enviada';
-        }
-        
-        if (formStatusSpan) {
-          formStatusSpan.textContent = '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
+        if (value === 'qa.error@entity.test') {
+          // Rama de error simulado determinista (FIA-046)
+          betaForm.classList.remove('is-submitting');
+          betaEmailInput.disabled = false;
+          
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Solicitar acceso a la Beta';
+          }
+          
+          if (formStatusSpan) {
+            formStatusSpan.classList.add('error');
+            formStatusSpan.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
+          }
+        } else {
+          // Rama de éxito / confirmación simulada (FIA-045)
+          betaForm.classList.remove('is-submitting');
+          betaForm.classList.add('is-submitted');
+          
+          if (submitBtn) {
+            submitBtn.textContent = 'Solicitud Enviada';
+          }
+          
+          if (formStatusSpan) {
+            formStatusSpan.textContent = '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
+          }
         }
       }, 1000);
     }
@@ -315,6 +334,12 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
     betaEmailInput.removeAttribute('aria-invalid');
     emailErrorSpan.textContent = '';
     emailErrorSpan.style.display = 'none';
+    
+    if (formStatusSpan) {
+      formStatusSpan.textContent = '';
+      formStatusSpan.style.display = 'none';
+      formStatusSpan.classList.remove('error');
+    }
   };
 
   // Clear error on input
