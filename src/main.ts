@@ -79,7 +79,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
       <div class="producto-visual">
         <div class="product-frame">
-          <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" />
+          <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" decoding="async" fetchpriority="high" />
         </div>
       </div>
     </section>
@@ -169,6 +169,12 @@ const viewAssets: Record<string, { src: string; alt: string }> = {
     alt: 'Vista de Sequential Groups de Entity'
   }
 };
+
+// Preload assets for instant switching without lag (FIA-035 optimization)
+Object.values(viewAssets).forEach(asset => {
+  const img = new Image();
+  img.src = asset.src;
+});
 
 pfTabs.forEach(tab => {
   tab.addEventListener('click', () => {
