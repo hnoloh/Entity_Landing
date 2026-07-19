@@ -84,7 +84,14 @@ describe('App Bootstrap', () => {
     // FIA-010 contract
     const producto = app.querySelector('#producto');
     expect(producto).not.toBeNull();
-    expect(producto?.querySelector('.producto-visual')).not.toBeNull();
+    const productVisual = producto?.querySelector('.producto-visual');
+    expect(productVisual).not.toBeNull();
+
+    // FIA-029 contract (Product Frame)
+    const productFrame = productVisual?.querySelector('.product-frame');
+    expect(productFrame).not.toBeNull();
+    // No contiene imágenes
+    expect(productFrame?.querySelectorAll('img').length).toBe(0);
 
     // FIA-011 contract
     const join = app.querySelector('#join');
