@@ -225,10 +225,10 @@ describe('App Bootstrap', () => {
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 7. Submit con formato correcto - debe activar loading y luego confirmación
+    // 7. Submit con formato correcto - Escenario de Error (qa.error@entity.test)
     vi.useFakeTimers();
     if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'user@example.com';
+      (emailInput as HTMLInputElement).value = 'qa.error@entity.test';
     }
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
@@ -253,12 +253,35 @@ describe('App Bootstrap', () => {
     // Completar el estado de envío (avanzar timers)
     vi.advanceTimersByTime(1000);
 
-    // Comprobar estado de confirmación simulada
+    // Comprobar estado de error simulado
+    expect(form?.classList.contains('is-submitting')).toBe(false);
+    expect(form?.classList.contains('is-submitted')).toBe(false);
+    expect(statusSpan?.textContent).toBe('Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
+    expect(statusSpan?.classList.contains('error')).toBe(true);
+    
+    // Inputs y botones deben volver a estar habilitados y conservar el email
+    expect(emailInput?.getAttribute('disabled')).toBeNull();
+    expect(submitBtn?.getAttribute('disabled')).toBeNull();
+    expect(submitBtn?.textContent).toBe('Solicitar acceso a la Beta');
+    expect((emailInput as HTMLInputElement).value).toBe('qa.error@entity.test');
+
+    // 8. Reintento con formato correcto - Escenario de Éxito (qa.success@entity.test)
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'qa.success@entity.test';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(form?.classList.contains('is-submitting')).toBe(true);
+    expect(statusSpan?.textContent).toBe('Enviando solicitud...');
+    expect(statusSpan?.classList.contains('error')).toBe(false);
+
+    vi.advanceTimersByTime(1000);
+
+    // Comprobar estado de confirmación simulada (éxito permanente)
     expect(form?.classList.contains('is-submitting')).toBe(false);
     expect(form?.classList.contains('is-submitted')).toBe(true);
     expect(statusSpan?.textContent).toBe('¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.');
+    expect(statusSpan?.classList.contains('error')).toBe(false);
     
-    // Inputs y botones deben seguir desactivados
     expect(emailInput?.getAttribute('disabled')).not.toBeNull();
     expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
     expect(submitBtn?.textContent).toBe('Solicitud Enviada');
