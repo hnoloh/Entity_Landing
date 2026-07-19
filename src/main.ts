@@ -281,6 +281,10 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
   // Clear error on focus (when user clicks back on the writing field)
   betaEmailInput.addEventListener('focus', clearError);
 
+  // Clear error on click/mousedown (for click triggers even if already focused)
+  betaEmailInput.addEventListener('click', clearError);
+  betaEmailInput.addEventListener('mousedown', clearError);
+
   // Clear error when clicking anywhere else on the document
   document.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
