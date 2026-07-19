@@ -568,14 +568,54 @@ main {
   display: block;
 }
 
-/* Join Beta Shell (FIA-011) */
-.join-cta {
+/* Join Beta Shell (FIA-011 / FIA-037) */
+.join-container {
+  max-width: 700px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+
+.join-subtitle {
   font-size: 1.2rem;
-  padding: 1rem 2rem;
-  margin-top: 2rem;
-  background: rgba(0, 229, 255, 0.1);
+  line-height: 1.7;
+  color: var(--text-primary);
+  max-width: 600px;
+  margin: 0;
+  text-align: center;
+}
+
+.join-box {
+  background: rgba(0, 229, 255, 0.02);
+  border: 1px solid rgba(0, 229, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.join-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 550px;
+  margin: 0;
+  text-align: center;
+}
+
+.join-cta {
+  font-size: 1.1rem;
+  padding: 0.9rem 2rem;
+  background: rgba(0, 229, 255, 0.08);
   border: 1px solid var(--accent-color);
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--accent-color);
   cursor: pointer;
   text-transform: uppercase;
@@ -584,7 +624,7 @@ main {
 }
 
 .join-cta:hover {
-  background: rgba(0, 229, 255, 0.2);
+  background: rgba(0, 229, 255, 0.18);
   transform: translateY(-2px);
   box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 }

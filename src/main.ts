@@ -103,9 +103,18 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
     <section id="join" class="region">
-      <h2>Join the Beta</h2>
-      <p>Sé uno de los primeros en experimentar el poder de Entity. Únete a nuestra lista de espera.</p>
-      <button class="join-cta">Solicitar acceso</button>
+      <div class="join-container">
+        <h2>Join the Beta</h2>
+        <p class="join-subtitle">
+          Entity se encuentra actualmente en fase de <strong>MVP y desarrollo activo</strong>. Estamos preparando nuestra primera <strong>beta privada</strong> con <strong>acceso anticipado</strong> limitado para dar forma al futuro del trabajo con inteligencia artificial.
+        </p>
+        <div class="join-box">
+          <p class="join-description">
+            Si deseas experimentar cómo los agentes especializados colaboran de manera conjunta y coordinada bajo tu control directo en un entorno de escritorio, solicita tu plaza en nuestra lista de espera.
+          </p>
+          <button class="join-cta btn">Solicitar acceso a la Beta</button>
+        </div>
+      </div>
     </section>
 
   </main>

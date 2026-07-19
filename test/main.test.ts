@@ -147,10 +147,14 @@ describe('App Bootstrap', () => {
     expect(trustBadgesList?.textContent).toContain('Agnóstico');
     expect(trustBadgesList?.textContent).toContain('Privado');
 
-    // FIA-011 contract
+    // FIA-037 contract (Join the Beta visible y contenido MVP/Private Beta)
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();
     expect(join?.querySelector('.join-cta')).not.toBeNull();
+    expect(join?.querySelector('form')).toBeNull(); // No existe formulario activo
+    expect(join?.textContent).toContain('MVP');
+    expect(join?.textContent).toContain('beta privada');
+    expect(join?.textContent).toContain('acceso anticipado');
 
 
     // FIA-013 contract
