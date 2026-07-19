@@ -57,6 +57,9 @@ describe('App Bootstrap', () => {
     expect(supporting?.textContent).toBe('Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.');
 
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
+    const heroCtaLink = hero?.querySelector('.hero-cta a');
+    expect(heroCtaLink).not.toBeNull();
+    expect(heroCtaLink?.getAttribute('href')).toBe('#join');
 
     // FIA-009 / FIA-026 contract
     const introEntity = app.querySelector('#intro-entity');

@@ -30,7 +30,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="hero-content">
         <h1 class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
         <div class="hero-body-row">
-          <p class="hero-supporting">Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
+          <div class="hero-left-col">
+            <p class="hero-supporting">Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
+            <div class="hero-cta">
+              <a href="#join" class="hero-btn">Únete a la Beta</a>
+            </div>
+          </div>
           <div class="hero-visual">
             <p>Visual Zone Placeholder</p>
           </div>

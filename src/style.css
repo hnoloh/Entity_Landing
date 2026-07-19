@@ -227,38 +227,58 @@ main {
   letter-spacing: -0.02em;
   text-shadow: 0 0 8px rgba(0, 229, 255, 0.4); /* Efecto de brillo de neon igual al slogan */
 }
-
 .hero-body-row {
   display: flex;
   flex-direction: row;
-  align-items: center; /* Centrado vertical con el párrafo */
+  align-items: center; /* Centrado vertical con el visual placeholder */
   justify-content: space-between;
   gap: 4rem;
   width: 100%;
+}
+
+.hero-left-col {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 215px; /* Altura idéntica al Visual Zone Placeholder para simetría perfecta */
+  box-sizing: border-box;
 }
 
 .hero-supporting {
   font-size: 1.15rem;
   line-height: 1.7; /* Más espacio de interlineado */
   color: var(--text-secondary);
-  max-width: 600px; /* Ensanchado para mejor proporción */
+  max-width: 600px;
   margin: 0;
 }
 
-.hero-trust-badges-list {
+.hero-cta {
   display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  flex-shrink: 0;
-  background: rgba(0, 229, 255, 0.02);
-  border: 1px solid rgba(0, 229, 255, 0.12);
-  border-radius: 12px;
-  padding: 1.2rem 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  align-items: center;
 }
 
-.hero-cta {
-  margin-top: 1rem;
+.hero-btn {
+  display: inline-block;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.8rem;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  color: var(--accent-color);
+  text-decoration: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.hero-btn:hover {
+  background: rgba(0, 229, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
 }
 
 .hero-visual {
@@ -982,6 +1002,12 @@ main {
 
   .hero-headline {
     font-size: 2.5rem;
+  }
+
+  .hero-left-col {
+    height: auto;
+    align-items: center;
+    gap: 1.5rem;
   }
 
   .hero-visual {
