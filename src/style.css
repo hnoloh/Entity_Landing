@@ -167,6 +167,10 @@ main {
   text-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
 }
 
+.mobile-menu-drawer {
+  display: none;
+}
+
 .ghost-hero {
   max-width: 80px; /* Reducido un poco para que encaje mejor al lado del título */
   height: auto;
@@ -463,6 +467,33 @@ main {
     position: absolute;
     top: 2rem;
     right: 0;
+  }
+
+  header.mobile-menu-open .mobile-menu-drawer {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding-left: 0.2rem;
+  }
+
+  .mobile-nav-item {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-nav-item:hover {
+    color: var(--text-primary);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
   }
 
   header h1 {

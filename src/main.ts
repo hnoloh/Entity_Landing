@@ -15,7 +15,15 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <a href="#join" class="nav-item">Beta</a>
       <a href="#github" class="nav-item">GitHub</a>
     </nav>
-    <button class="mobile-menu-btn" aria-label="Menú">☰</button>
+    <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
+    <div class="mobile-menu-drawer">
+      <nav class="mobile-nav">
+        <a href="#hero" class="mobile-nav-item">Inicio</a>
+        <a href="#producto" class="mobile-nav-item">Producto</a>
+        <a href="#join" class="mobile-nav-item">Beta</a>
+        <a href="#github" class="mobile-nav-item">GitHub</a>
+      </nav>
+    </div>
   </header>
   <main>
     <section id="hero" class="region">
@@ -89,3 +97,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </footer>
 `;
+
+const mobileMenuBtn = document.querySelector<HTMLButtonElement>('.mobile-menu-btn');
+const headerEl = document.querySelector<HTMLElement>('header');
+
+mobileMenuBtn?.addEventListener('click', () => {
+  mobileMenuBtn.setAttribute('aria-expanded', 'true');
+  headerEl?.classList.add('mobile-menu-open');
+});
