@@ -87,11 +87,15 @@ describe('App Bootstrap', () => {
     const productVisual = producto?.querySelector('.producto-visual');
     expect(productVisual).not.toBeNull();
 
-    // FIA-029 contract (Product Frame)
+    // FIA-029/030 contract (Product Frame with capture)
     const productFrame = productVisual?.querySelector('.product-frame');
     expect(productFrame).not.toBeNull();
-    // No contiene imágenes
-    expect(productFrame?.querySelectorAll('img').length).toBe(0);
+    
+    // FIA-030: contiene la captura principal autorizada
+    const captureImg = productFrame?.querySelector('img.pf-capture');
+    expect(captureImg).not.toBeNull();
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-30_Integrar captura principal.png');
+    expect(captureImg?.getAttribute('alt')).toContain('Captura principal');
 
     // FIA-011 contract
     const join = app.querySelector('#join');
