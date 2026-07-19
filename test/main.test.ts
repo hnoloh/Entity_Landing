@@ -129,11 +129,11 @@ describe('App Bootstrap', () => {
     expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
-    const trustBadges = hero?.querySelector('.hero-trust-badges');
-    expect(trustBadges).not.toBeNull();
-    expect(trustBadges?.textContent).toContain('Híbrido');
-    expect(trustBadges?.textContent).toContain('Agnóstico');
-    expect(trustBadges?.textContent).toContain('Privado');
+    const trustBadgesList = hero?.querySelector('.hero-trust-badges-list');
+    expect(trustBadgesList).not.toBeNull();
+    expect(trustBadgesList?.textContent).toContain('Híbrido');
+    expect(trustBadgesList?.textContent).toContain('Agnóstico');
+    expect(trustBadgesList?.textContent).toContain('Privado');
 
     // FIA-011 contract
     const join = app.querySelector('#join');

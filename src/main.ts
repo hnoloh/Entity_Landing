@@ -29,10 +29,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section id="hero">
       <div class="hero-content">
         <h1 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h1>
-        <p class="hero-supporting">Entity es un Workspace de escritorio donde agentes especializados colaboran bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
-        <div class="hero-cta">
-          <a href="#join" class="hero-btn btn">Inscríbete a la beta</a>
-          <div class="hero-trust-badges">
+        <div class="hero-body-row">
+          <p class="hero-supporting">Entity es un Workspace de escritorio donde agentes especializados colaboran bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
+          <div class="hero-trust-badges-list">
             <div class="badge-item">
               <span class="badge-dot"></span>
               <span><strong>Híbrido</strong> (Local + Cloud)</span>
@@ -46,6 +45,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               <span><strong>Privado</strong> (Modelos Offline)</span>
             </div>
           </div>
+        </div>
+        <div class="hero-cta">
+          <a href="#join" class="hero-btn btn">Inscríbete a la beta</a>
         </div>
       </div>
       <div class="hero-visual">
