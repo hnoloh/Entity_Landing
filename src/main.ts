@@ -62,8 +62,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
     <section id="intro-entity" class="region">
-      <h2>Introducción de Entity</h2>
-      <p>Placeholder content</p>
+      <h2>Todo ocurre en un único lugar.</h2>
+      <div class="intro-card">
+        <p class="intro-text">
+          Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.
+        </p>
+      </div>
     </section>
     <section id="producto" class="region">
       <h2>Producto</h2>
