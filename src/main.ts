@@ -124,6 +124,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
               <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             <button type="submit" class="join-cta btn">Solicitar acceso a la Beta</button>
+            <span id="form-status" class="status-message" role="status" aria-live="polite"></span>
           </form>
         </div>
       </div>
@@ -244,10 +245,16 @@ pfTabs.forEach(tab => {
 const betaForm = document.getElementById('beta-form');
 const betaEmailInput = document.getElementById('beta-email') as HTMLInputElement | null;
 const emailErrorSpan = document.getElementById('email-error');
+const formStatusSpan = document.getElementById('form-status');
 
 if (betaForm && betaEmailInput && emailErrorSpan) {
   betaForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    // Prevent double submit
+    if (betaForm.classList.contains('is-submitting')) {
+      return;
+    }
     
     const value = betaEmailInput.value.trim();
     if (!value) {
@@ -265,10 +272,30 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
       betaEmailInput.removeAttribute('aria-invalid');
       emailErrorSpan.textContent = '';
       emailErrorSpan.style.display = 'none';
+      
+      // Activar estado de envío local y accesible (FIA-044)
+      betaForm.classList.add('is-submitting');
+      betaForm.setAttribute('aria-busy', 'true');
+      betaEmailInput.disabled = true;
+      
+      const submitBtn = betaForm.querySelector('.join-cta') as HTMLButtonElement | null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+      }
+      
+      if (formStatusSpan) {
+        formStatusSpan.textContent = 'Enviando solicitud...';
+        formStatusSpan.style.display = 'block';
+      }
     }
   });
 
   const clearError = () => {
+    // No limpiar si ya se está enviando
+    if (betaForm.classList.contains('is-submitting')) {
+      return;
+    }
     betaEmailInput.classList.remove('invalid');
     betaEmailInput.removeAttribute('aria-invalid');
     emailErrorSpan.textContent = '';
