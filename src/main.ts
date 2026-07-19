@@ -74,20 +74,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <h2>Producto</h2>
       <div class="producto-visual">
         <div class="product-frame">
-          <!-- Window Header (Mac-like buttons + Title) -->
-          <div class="pf-header">
-            <div class="pf-dots">
-              <span class="pf-dot pf-dot-close"></span>
-              <span class="pf-dot pf-dot-minimize"></span>
-              <span class="pf-dot pf-dot-expand"></span>
-            </div>
-            <div class="pf-title">Entity Workspace - Demo.env</div>
-            <div class="pf-actions-mock"></div>
-          </div>
-          <!-- Window Content -->
-          <div class="pf-body">
-            <img src="/FIA-30_Integrar captura principal.png" alt="Captura principal de la interfaz de Entity Workspace" class="pf-capture" />
-          </div>
+          <img src="/FIA-30_Integrar captura principal.png" alt="Captura principal de la interfaz de Entity Workspace" class="pf-capture" />
         </div>
       </div>
     </section>
