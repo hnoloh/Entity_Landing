@@ -168,20 +168,43 @@ describe('App Bootstrap', () => {
     const ctaButton = form?.querySelector('.join-cta');
     expect(ctaButton).not.toBeNull();
 
-    // FIA-042 contract (Validación de campos obligatorios)
+    // FIA-042 & FIA-043 contracts (Validación de email obligatorio y formato)
     const errorSpan = form?.querySelector('#email-error');
     expect(errorSpan).not.toBeNull();
 
-    // Submit vacío
+    // 1. Submit vacío (obligatorio)
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
     expect(errorSpan?.textContent).toBe('El correo electrónico es obligatorio.');
 
-    // Rellenar input y comprobar que limpia el error
+    // 2. Limpieza al escribir
     if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'user@example.com';
+      (emailInput as HTMLInputElement).value = 'a';
       emailInput.dispatchEvent(new window.Event('input', { bubbles: true }));
     }
+    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
+    expect(errorSpan?.textContent).toBe('');
+
+    // 3. Submit con formato incorrecto
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'correo-invalido';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
+    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+
+    // 4. Limpieza al escribir tras error de formato
+    if (emailInput) {
+      emailInput.dispatchEvent(new window.Event('input', { bubbles: true }));
+    }
+    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
+    expect(errorSpan?.textContent).toBe('');
+
+    // 5. Submit con formato correcto
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'user@example.com';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 

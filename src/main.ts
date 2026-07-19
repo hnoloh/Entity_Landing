@@ -255,6 +255,11 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
       betaEmailInput.setAttribute('aria-invalid', 'true');
       emailErrorSpan.textContent = 'El correo electrónico es obligatorio.';
       emailErrorSpan.style.display = 'block';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      betaEmailInput.classList.add('invalid');
+      betaEmailInput.setAttribute('aria-invalid', 'true');
+      emailErrorSpan.textContent = 'El formato del correo electrónico no es válido.';
+      emailErrorSpan.style.display = 'block';
     } else {
       betaEmailInput.classList.remove('invalid');
       betaEmailInput.removeAttribute('aria-invalid');
