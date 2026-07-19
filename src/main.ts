@@ -26,11 +26,27 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </header>
   <main>
-    <section id="hero" class="region">
+    <section id="hero">
       <div class="hero-content">
-        <h2 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h2>
+        <h1 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h1>
         <p class="hero-supporting">Entity es un Workspace de escritorio donde agentes especializados colaboran bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
-        <button class="hero-cta btn">Call to Action</button>
+        <div class="hero-cta">
+          <a href="#join" class="hero-btn btn">Inscríbete a la beta</a>
+          <div class="hero-trust-badges">
+            <div class="badge-item">
+              <span class="badge-dot"></span>
+              <span><strong>Híbrido</strong> (Local + Cloud)</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-dot"></span>
+              <span><strong>Agnóstico</strong> (Cualquier API)</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-dot"></span>
+              <span><strong>Privado</strong> (Modelos Offline)</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="hero-visual">
         <p>Visual Zone Placeholder</p>
@@ -84,23 +100,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="product-frame">
           <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" decoding="async" fetchpriority="high" />
         </div>
-      </div>
-    </section>
-    <section id="especificaciones" class="spec-ribbon">
-      <div class="spec-item">
-        <span class="spec-dot"></span>
-        <span class="spec-title">Hibridación Activa:</span>
-        <span class="spec-desc">Modelos locales y cloud en un mismo grupo.</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-dot"></span>
-        <span class="spec-title">Ejecución Local:</span>
-        <span class="spec-desc">Soporte nativo offline en tu propia máquina.</span>
-      </div>
-      <div class="spec-item">
-        <span class="spec-dot"></span>
-        <span class="spec-title">100% Agnóstico:</span>
-        <span class="spec-desc">Libertad total para conectar cualquier API de IA.</span>
       </div>
     </section>
     <section id="join" class="region">
