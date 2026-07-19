@@ -72,9 +72,14 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="producto" class="region">
       <h2>Producto</h2>
+      <div class="pf-selector" role="tablist">
+        <button class="pf-tab active" role="tab" aria-selected="true" data-target="workspace">Workspace</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="entis">Entis</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="sequential">Grupos Secuenciales</button>
+      </div>
       <div class="producto-visual">
         <div class="product-frame">
-          <img src="/FIA-33_Implementar vista secuencial grupos.png" alt="Vista de Sequential Groups de Entity" class="pf-capture" />
+          <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" />
         </div>
       </div>
     </section>
@@ -144,4 +149,43 @@ document.addEventListener('click', (e) => {
     mobileMenuBtn?.setAttribute('aria-expanded', 'false');
     headerEl.classList.remove('mobile-menu-open');
   }
+});
+
+// Demo Selector logic (FIA-034)
+const pfTabs = document.querySelectorAll('.pf-tab');
+const pfCaptureImg = document.querySelector<HTMLImageElement>('.pf-capture');
+
+const viewAssets: Record<string, { src: string; alt: string }> = {
+  workspace: {
+    src: '/FIA-31_Implementar vista workspace.png',
+    alt: 'Vista Workspace de Entity'
+  },
+  entis: {
+    src: '/FIA-32_Implementar vista entis.png',
+    alt: 'Vista Entis de Entity'
+  },
+  sequential: {
+    src: '/FIA-33_Implementar vista secuencial grupos.png',
+    alt: 'Vista de Sequential Groups de Entity'
+  }
+};
+
+pfTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.getAttribute('data-target') || 'workspace';
+    
+    // Update active tab styling
+    pfTabs.forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    
+    // Update image
+    if (pfCaptureImg && viewAssets[target]) {
+      pfCaptureImg.src = viewAssets[target].src;
+      pfCaptureImg.alt = viewAssets[target].alt;
+    }
+  });
 });
