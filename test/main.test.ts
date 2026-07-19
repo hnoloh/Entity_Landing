@@ -87,13 +87,40 @@ describe('App Bootstrap', () => {
     const productVisual = producto?.querySelector('.producto-visual');
     expect(productVisual).not.toBeNull();
 
-    // FIA-029/030 contract (Product Frame with capture)
+    // FIA-029/030/031/034 contract (Product Frame with interactive selector)
     const productFrame = productVisual?.querySelector('.product-frame');
     expect(productFrame).not.toBeNull();
     
-    // FIA-033: contiene la vista de Sequential Groups autorizada
     const captureImg = productFrame?.querySelector('img.pf-capture');
     expect(captureImg).not.toBeNull();
+
+    // FIA-034: Selector de demostración presente
+    const selector = app.querySelector('.pf-selector');
+    expect(selector).not.toBeNull();
+    
+    const tabs = selector?.querySelectorAll('.pf-tab');
+    expect(tabs?.length).toBe(3);
+    
+    // Vista por defecto: Workspace activo
+    expect(tabs?.[0].classList.contains('active')).toBe(true);
+    expect(tabs?.[1].classList.contains('active')).toBe(false);
+    expect(tabs?.[2].classList.contains('active')).toBe(false);
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Vista Workspace de Entity');
+    
+    // Clic en pestaña Entis
+    tabs?.[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(tabs?.[0].classList.contains('active')).toBe(false);
+    expect(tabs?.[1].classList.contains('active')).toBe(true);
+    expect(tabs?.[2].classList.contains('active')).toBe(false);
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Vista Entis de Entity');
+    
+    // Clic en pestaña Grupos Secuenciales
+    tabs?.[2].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(tabs?.[0].classList.contains('active')).toBe(false);
+    expect(tabs?.[1].classList.contains('active')).toBe(false);
+    expect(tabs?.[2].classList.contains('active')).toBe(true);
     expect(captureImg?.getAttribute('src')).toBe('/FIA-33_Implementar vista secuencial grupos.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
 
