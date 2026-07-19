@@ -93,6 +93,10 @@ describe('App Bootstrap', () => {
     
     const captureImg = productFrame?.querySelector('img.pf-capture');
     expect(captureImg).not.toBeNull();
+    
+    // FIA-035: Optimización de assets presente
+    expect(captureImg?.getAttribute('decoding')).toBe('async');
+    expect(captureImg?.getAttribute('fetchpriority')).toBe('high');
 
     // FIA-034: Selector de demostración presente
     const selector = app.querySelector('.pf-selector');
