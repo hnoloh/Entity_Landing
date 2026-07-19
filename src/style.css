@@ -730,6 +730,23 @@ main {
   box-shadow: none !important;
 }
 
+.beta-form.is-submitted .form-input {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(0, 229, 255, 0.02);
+  border-color: rgba(0, 229, 255, 0.15);
+}
+
+.beta-form.is-submitted .join-cta {
+  background: rgba(0, 229, 255, 0.02) !important;
+  border-color: rgba(0, 229, 255, 0.15) !important;
+  color: rgba(0, 229, 255, 0.4) !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
 .beta-form .join-cta {
   width: 100%;
   text-align: center;
