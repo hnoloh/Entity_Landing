@@ -440,6 +440,7 @@ main {
     align-items: center;
     padding-top: 2rem;
     gap: 2rem;
+    position: relative;
   }
 
   .header-left {
@@ -458,6 +459,9 @@ main {
 
   .mobile-menu-btn {
     display: block;
+    position: absolute;
+    top: 2rem;
+    right: 0;
   }
 
   header h1 {
