@@ -62,8 +62,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
     <section id="intro-entity" class="region">
-      <h2>Todo ocurre en un único lugar.</h2>
+      <h2>Workspace</h2>
       <div class="intro-card">
+        <h3>Todo ocurre en un único lugar.</h3>
         <p class="intro-text">
           Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.
         </p>
