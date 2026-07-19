@@ -94,6 +94,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <button class="pf-tab active" role="tab" aria-selected="true" data-target="workspace">Workspace</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="entis">Entis</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="sequential">Grupos Secuenciales</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="chat">Chat Desacoplado</button>
       </div>
       <div class="producto-visual">
         <div class="product-frame">
@@ -185,6 +186,10 @@ const viewAssets: Record<string, { src: string; alt: string }> = {
   sequential: {
     src: '/FIA-33_Implementar vista secuencial grupos.png',
     alt: 'Vista de Sequential Groups de Entity'
+  },
+  chat: {
+    src: '/Floating Chat.png',
+    alt: 'Vista de Chat Desacoplado de Entity'
   }
 };
 

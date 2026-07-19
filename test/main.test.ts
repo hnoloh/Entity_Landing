@@ -103,12 +103,13 @@ describe('App Bootstrap', () => {
     expect(selector).not.toBeNull();
     
     const tabs = selector?.querySelectorAll('.pf-tab');
-    expect(tabs?.length).toBe(3);
+    expect(tabs?.length).toBe(4);
     
     // Vista por defecto: Workspace activo
     expect(tabs?.[0].classList.contains('active')).toBe(true);
     expect(tabs?.[1].classList.contains('active')).toBe(false);
     expect(tabs?.[2].classList.contains('active')).toBe(false);
+    expect(tabs?.[3].classList.contains('active')).toBe(false);
     expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista Workspace de Entity');
     
@@ -117,6 +118,7 @@ describe('App Bootstrap', () => {
     expect(tabs?.[0].classList.contains('active')).toBe(false);
     expect(tabs?.[1].classList.contains('active')).toBe(true);
     expect(tabs?.[2].classList.contains('active')).toBe(false);
+    expect(tabs?.[3].classList.contains('active')).toBe(false);
     expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista Entis de Entity');
     
@@ -125,8 +127,18 @@ describe('App Bootstrap', () => {
     expect(tabs?.[0].classList.contains('active')).toBe(false);
     expect(tabs?.[1].classList.contains('active')).toBe(false);
     expect(tabs?.[2].classList.contains('active')).toBe(true);
+    expect(tabs?.[3].classList.contains('active')).toBe(false);
     expect(captureImg?.getAttribute('src')).toBe('/FIA-33_Implementar vista secuencial grupos.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
+
+    // Clic en pestaña Chat Desacoplado
+    tabs?.[3].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(tabs?.[0].classList.contains('active')).toBe(false);
+    expect(tabs?.[1].classList.contains('active')).toBe(false);
+    expect(tabs?.[2].classList.contains('active')).toBe(false);
+    expect(tabs?.[3].classList.contains('active')).toBe(true);
+    expect(captureImg?.getAttribute('src')).toBe('/Floating Chat.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Vista de Chat Desacoplado de Entity');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
     const trustBadgesList = hero?.querySelector('.hero-trust-badges-inline');
