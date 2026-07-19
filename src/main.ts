@@ -28,7 +28,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <main>
     <section id="hero" class="region">
       <div class="hero-content">
-        <h2 class="hero-headline">Headline Placeholder</h2>
+        <h2 class="hero-headline">Organiza el trabajo con inteligencia artificial.</h2>
         <p class="hero-supporting">Supporting copy placeholder for the hero section.</p>
         <button class="hero-cta btn">Call to Action</button>
       </div>
