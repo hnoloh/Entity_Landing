@@ -36,38 +36,44 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <p>Visual Zone Placeholder</p>
       </div>
     </section>
-    <section id="problema" class="region">
-      <h2>Problema</h2>
-      <div class="problema-content">
-        <h3>Trabajar con IA se ha vuelto caótico.</h3>
-        <ul class="problema-bullets">
-          <li>Más modelos.</li>
-          <li>Más chats.</li>
-          <li>Más herramientas.</li>
-          <li>Más desorden.</li>
-        </ul>
-        <p class="problema-conclusion">
-          La IA ha evolucionado.<br />
-          Nuestra forma de trabajar con ella todavía no.
-        </p>
+    <section id="narrativa" class="region">
+      <div class="narrativa-header">
+        <h2>La IA necesita un Workspace.</h2>
+        <p>Entity propone dejar atrás el caos de las conversaciones infinitas para estructurar tu flujo en un espacio organizado.</p>
       </div>
-    </section>
-    <section id="vision" class="region">
-      <h2>Visión</h2>
-      <div class="vision-card">
-        <h3>La IA necesita un Workspace.</h3>
-        <p class="vision-text">
-          Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado donde cada agente tiene un propósito y cada decisión sigue estando en manos del usuario.
-        </p>
-      </div>
-    </section>
-    <section id="intro-entity" class="region">
-      <h2>Workspace</h2>
-      <div class="intro-card">
-        <h3>Todo ocurre en un único lugar.</h3>
-        <p class="intro-text">
-          Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.
-        </p>
+      <div class="narrativa-grid">
+        <!-- Tarjeta Problema -->
+        <div id="problema" class="narrativa-card">
+          <div class="card-icon">⚡</div>
+          <h3>Trabajar con IA se ha vuelto caótico.</h3>
+          <ul class="problema-bullets-mini">
+            <li>Más modelos.</li>
+            <li>Más chats.</li>
+            <li>Más herramientas.</li>
+            <li>Más desorden.</li>
+          </ul>
+          <p class="problema-conclusion-mini">
+            La IA ha evolucionado. Nuestra forma de trabajar con ella todavía no.
+          </p>
+        </div>
+        
+        <!-- Tarjeta Visión -->
+        <div id="vision" class="narrativa-card">
+          <div class="card-icon">🌀</div>
+          <h3>La IA necesita un Workspace.</h3>
+          <p class="vision-text-mini">
+            Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado donde cada agente tiene un propósito y cada decisión sigue estando en manos del usuario.
+          </p>
+        </div>
+        
+        <!-- Tarjeta Workspace -->
+        <div id="intro-entity" class="narrativa-card">
+          <div class="card-icon">🚀</div>
+          <h3>Todo ocurre en un único lugar.</h3>
+          <p class="intro-text-mini">
+            Configuración, conversaciones, Entis, Sequential Groups e historial dentro de un mismo Workspace.
+          </p>
+        </div>
       </div>
     </section>
     <section id="producto" class="region">

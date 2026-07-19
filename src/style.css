@@ -639,86 +639,116 @@ main {
   font-size: 0.8rem;
 }
 
-/* Narrativa real cards styling (Problema, Visión, Workspace) */
-#problema,
-#vision,
-#intro-entity {
+/* Narrativa Grid (Rediseño Unificado de Concepto) */
+#narrativa {
   min-height: auto;
-  padding: 8rem 2rem;
+  padding: 6rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-
-#problema h2,
-#vision h2,
-#intro-entity h2 {
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.problema-card,
-.vision-card,
-.intro-card {
-  max-width: 650px;
   width: 100%;
+}
+
+.narrativa-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 700px;
+}
+
+.narrativa-header h2 {
+  font-size: 2.8rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 15px rgba(0, 229, 255, 0.2);
+}
+
+.narrativa-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.narrativa-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.narrativa-card {
   background: rgba(13, 27, 38, 0.4);
-  border: 1px solid rgba(0, 229, 255, 0.15);
-  border-radius: 12px;
-  padding: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  text-align: left;
-}
-
-.problema-card h3,
-.vision-card h3,
-.intro-card h3 {
-  color: var(--accent-color);
-  font-size: 1.5rem;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
-}
-
-.problema-bullets {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 2rem 0;
+  border: 1px solid rgba(0, 229, 255, 0.12);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  align-items: flex-start;
+  text-align: left;
+  transition: all 0.3s ease;
 }
 
-.problema-bullets li {
+.narrativa-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 229, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 229, 255, 0.08);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.narrativa-card h3 {
+  color: var(--text-primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.problema-bullets-mini {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.problema-bullets-mini li {
   position: relative;
-  padding-left: 1.5rem;
-  font-size: 1.1rem;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
 }
 
-.problema-bullets li::before {
+.problema-bullets-mini li::before {
   content: "→";
   position: absolute;
   left: 0;
   color: var(--accent-color);
-  font-weight: bold;
 }
 
-.problema-conclusion {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: var(--text-primary);
-  border-left: 3px solid var(--accent-color);
-  padding-left: 1rem;
+.problema-conclusion-mini {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--accent-color);
+  border-left: 2px solid var(--accent-color);
+  padding-left: 0.8rem;
   margin: 0;
 }
 
-.vision-text,
-.intro-text {
-  font-size: 1.1rem;
-  line-height: 1.7;
+.vision-text-mini,
+.intro-text-mini {
+  font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--text-secondary);
   margin: 0;
 }
@@ -896,9 +926,11 @@ main {
     text-align: center;
   }
 
-  .problema-card,
-  .vision-card,
-  .intro-card {
+  .narrativa-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .narrativa-card {
     padding: 1.5rem;
   }
 }
