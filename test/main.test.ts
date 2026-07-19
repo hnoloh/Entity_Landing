@@ -91,11 +91,11 @@ describe('App Bootstrap', () => {
     const productFrame = productVisual?.querySelector('.product-frame');
     expect(productFrame).not.toBeNull();
     
-    // FIA-030: contiene la captura principal autorizada
+    // FIA-031: contiene la vista Workspace autorizada
     const captureImg = productFrame?.querySelector('img.pf-capture');
     expect(captureImg).not.toBeNull();
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-30_Integrar captura principal.png');
-    expect(captureImg?.getAttribute('alt')).toContain('Captura principal');
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Vista Workspace de Entity');
 
     // FIA-011 contract
     const join = app.querySelector('#join');
