@@ -671,4 +671,10 @@ main {
     align-items: center;
     text-align: center;
   }
+
+  .problema-card,
+  .vision-card,
+  .intro-card {
+    padding: 1.5rem;
+  }
 }
