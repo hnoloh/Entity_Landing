@@ -15,6 +15,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <a href="#join" class="nav-item">Beta</a>
       <a href="#github" class="nav-item">GitHub</a>
     </nav>
+    <button class="mobile-menu-btn" aria-label="Menú">☰</button>
   </header>
   <main>
     <section id="hero" class="region">

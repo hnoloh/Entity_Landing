@@ -149,6 +149,24 @@ main {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--accent-color);
+  font-size: 2.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+  color: var(--text-primary);
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.8);
+}
+
 .ghost-hero {
   max-width: 80px; /* Reducido un poco para que encaje mejor al lado del título */
   height: auto;
@@ -435,9 +453,11 @@ main {
   }
 
   .visual-nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: block;
   }
 
   header h1 {
