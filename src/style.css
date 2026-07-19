@@ -195,7 +195,7 @@ main {
 #hero {
   display: flex;
   flex-direction: row;
-  gap: 6rem; /* Separación generosa de las columnas */
+  gap: 4rem; /* Reducido para acortar el espacio vacío */
   text-align: left;
   padding-top: 4.5rem; /* Reducido para subir titular y preholder */
   min-height: auto;
@@ -206,7 +206,7 @@ main {
 }
 
 .hero-content {
-  flex: 1.5;
+  flex: 1.2; /* Ajustada proporción para dar más peso al visual placeholder */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -257,9 +257,10 @@ main {
 }
 
 .hero-visual {
-  flex: 1;
+  flex: 1.2; /* Ensanchado para reducir el espacio vacío */
   width: 100%;
-  min-height: 400px;
+  min-height: 250px; /* Altura ajustada para igualar al titular */
+  height: 250px;
   background: rgba(0, 229, 255, 0.03);
   border: 1px dashed rgba(0, 229, 255, 0.2);
   border-radius: 12px;
