@@ -82,11 +82,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <p>Sé uno de los primeros en experimentar el poder de Entity. Únete a nuestra lista de espera.</p>
       <button class="join-cta">Solicitar acceso</button>
     </section>
-    <section id="cta" class="region">
-      <h2>¿Listo para el futuro?</h2>
-      <p>Únete a la revolución y comienza a construir con Entity hoy mismo.</p>
-      <button class="final-cta btn">Inscríbete ahora</button>
-    </section>
+
   </main>
   <footer class="footer">
     <div class="footer-content">
