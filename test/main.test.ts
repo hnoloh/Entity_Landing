@@ -28,13 +28,24 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('#join')).not.toBeNull();
     expect(app.querySelector('#cta')).not.toBeNull();
 
-    // FIA-007 contract
+    // FIA-007 contract updated in FIA-015
     const nav = app.querySelector('header nav');
     expect(nav).not.toBeNull();
-    expect(nav?.textContent).toContain('Inicio');
-    expect(nav?.textContent).toContain('Producto');
-    expect(nav?.textContent).toContain('Beta');
-    expect(nav?.textContent).toContain('GitHub');
+    
+    const navLinks = nav?.querySelectorAll('a.nav-item');
+    expect(navLinks?.length).toBe(4);
+    
+    expect(navLinks?.[0].getAttribute('href')).toBe('#hero');
+    expect(navLinks?.[0].textContent).toBe('Inicio');
+    
+    expect(navLinks?.[1].getAttribute('href')).toBe('#producto');
+    expect(navLinks?.[1].textContent).toBe('Producto');
+    
+    expect(navLinks?.[2].getAttribute('href')).toBe('#join');
+    expect(navLinks?.[2].textContent).toBe('Beta');
+    
+    expect(navLinks?.[3].getAttribute('href')).toBe('#github');
+    expect(navLinks?.[3].textContent).toBe('GitHub');
 
     // FIA-008 contract
     const hero = app.querySelector('#hero');
