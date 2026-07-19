@@ -268,11 +268,24 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
     }
   });
 
-  // Clear error on input
-  betaEmailInput.addEventListener('input', () => {
+  const clearError = () => {
     betaEmailInput.classList.remove('invalid');
     betaEmailInput.removeAttribute('aria-invalid');
     emailErrorSpan.textContent = '';
     emailErrorSpan.style.display = 'none';
+  };
+
+  // Clear error on input
+  betaEmailInput.addEventListener('input', clearError);
+
+  // Clear error on focus (when user clicks back on the writing field)
+  betaEmailInput.addEventListener('focus', clearError);
+
+  // Clear error when clicking anywhere else on the document
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (betaForm && !betaForm.contains(target)) {
+      clearError();
+    }
   });
 }

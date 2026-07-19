@@ -200,7 +200,28 @@ describe('App Bootstrap', () => {
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 5. Submit con formato correcto
+    // 5. Submit con formato incorrecto y limpiar en focus
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'correo-invalido';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
+    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+
+    emailInput?.dispatchEvent(new window.Event('focus', { bubbles: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
+    expect(errorSpan?.textContent).toBe('');
+
+    // 6. Submit con formato incorrecto y limpiar al clicar fuera
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
+    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
+
+    document.dispatchEvent(new window.Event('click', { bubbles: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
+    expect(errorSpan?.textContent).toBe('');
+
+    // 7. Submit con formato correcto
     if (emailInput) {
       (emailInput as HTMLInputElement).value = 'user@example.com';
     }
