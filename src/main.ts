@@ -46,9 +46,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             </div>
           </div>
         </div>
-        <div class="hero-cta">
-          <a href="#join" class="hero-btn btn">Inscríbete a la beta</a>
-        </div>
+
       </div>
       <div class="hero-visual">
         <p>Visual Zone Placeholder</p>
