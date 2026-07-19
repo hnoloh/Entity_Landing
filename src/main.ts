@@ -10,10 +10,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <span class="slogan">Y si el código...<br />Ya no fuera el centro?</span>
     </div>
     <nav class="visual-nav">
-      <span class="nav-item">Inicio</span>
-      <span class="nav-item">Producto</span>
-      <span class="nav-item">Beta</span>
-      <span class="nav-item">GitHub</span>
+      <a href="#hero" class="nav-item">Inicio</a>
+      <a href="#producto" class="nav-item">Producto</a>
+      <a href="#join" class="nav-item">Beta</a>
+      <a href="#github" class="nav-item">GitHub</a>
     </nav>
   </header>
   <main>
