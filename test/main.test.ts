@@ -83,5 +83,27 @@ describe('App Bootstrap', () => {
     // FIA-017 contract
     const mobileBtn = app.querySelector('header .mobile-menu-btn');
     expect(mobileBtn).not.toBeNull();
+
+    // FIA-018 contract
+    expect(mobileBtn?.getAttribute('aria-expanded')).toBe('false');
+    const drawer = app.querySelector('header .mobile-menu-drawer');
+    expect(drawer).not.toBeNull();
+    
+    // Links inside mobile menu drawer
+    const drawerLinks = drawer?.querySelectorAll('a.mobile-nav-item');
+    expect(drawerLinks?.length).toBe(4);
+    expect(drawerLinks?.[0].getAttribute('href')).toBe('#hero');
+    expect(drawerLinks?.[1].getAttribute('href')).toBe('#producto');
+    expect(drawerLinks?.[2].getAttribute('href')).toBe('#join');
+    expect(drawerLinks?.[3].getAttribute('href')).toBe('#github');
+
+    // Simulate click on mobile menu button
+    const headerEl = app.querySelector('header');
+    expect(headerEl?.classList.contains('mobile-menu-open')).toBe(false);
+    
+    mobileBtn?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    
+    expect(mobileBtn?.getAttribute('aria-expanded')).toBe('true');
+    expect(headerEl?.classList.contains('mobile-menu-open')).toBe(true);
   });
 });
