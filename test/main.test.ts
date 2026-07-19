@@ -62,6 +62,17 @@ describe('App Bootstrap', () => {
     // FIA-009 contract
     expect(app.querySelector('#intro-entity')).not.toBeNull();
 
+    // FIA-024 contract
+    const problema = app.querySelector('#problema');
+    expect(problema).not.toBeNull();
+    expect(problema?.textContent).toContain('Trabajar con IA se ha vuelto caótico.');
+    expect(problema?.textContent).toContain('Más modelos.');
+    expect(problema?.textContent).toContain('Más chats.');
+    expect(problema?.textContent).toContain('Más herramientas.');
+    expect(problema?.textContent).toContain('Más contexto perdido.');
+    expect(problema?.textContent).toContain('La IA ha evolucionado.');
+    expect(problema?.textContent).toContain('Nuestra forma de trabajar con ella todavía no.');
+
     // FIA-010 contract
     const producto = app.querySelector('#producto');
     expect(producto).not.toBeNull();
