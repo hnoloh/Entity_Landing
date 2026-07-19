@@ -168,6 +168,23 @@ describe('App Bootstrap', () => {
     const ctaButton = form?.querySelector('.join-cta');
     expect(ctaButton).not.toBeNull();
 
+    // FIA-042 contract (Validación de campos obligatorios)
+    const errorSpan = form?.querySelector('#email-error');
+    expect(errorSpan).not.toBeNull();
+
+    // Submit vacío
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
+    expect(errorSpan?.textContent).toBe('El correo electrónico es obligatorio.');
+
+    // Rellenar input y comprobar que limpia el error
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'user@example.com';
+      emailInput.dispatchEvent(new window.Event('input', { bubbles: true }));
+    }
+    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
+    expect(errorSpan?.textContent).toBe('');
+
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
     expect(join?.textContent).toContain('acceso anticipado');

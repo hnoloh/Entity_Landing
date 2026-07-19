@@ -120,7 +120,8 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <form id="beta-form" class="beta-form" onsubmit="event.preventDefault();">
             <div class="form-group">
               <label for="beta-email" class="form-label">Correo Electrónico</label>
-              <input type="email" id="beta-email" class="form-input" required placeholder="tu@email.com" />
+              <input type="email" id="beta-email" class="form-input" required placeholder="tu@email.com" aria-describedby="email-error" />
+              <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
             </div>
             <button type="submit" class="join-cta btn">Solicitar acceso a la Beta</button>
           </form>
@@ -238,3 +239,35 @@ pfTabs.forEach(tab => {
     }
   });
 });
+
+// Beta Form validation logic (FIA-042)
+const betaForm = document.getElementById('beta-form');
+const betaEmailInput = document.getElementById('beta-email') as HTMLInputElement | null;
+const emailErrorSpan = document.getElementById('email-error');
+
+if (betaForm && betaEmailInput && emailErrorSpan) {
+  betaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const value = betaEmailInput.value.trim();
+    if (!value) {
+      betaEmailInput.classList.add('invalid');
+      betaEmailInput.setAttribute('aria-invalid', 'true');
+      emailErrorSpan.textContent = 'El correo electrónico es obligatorio.';
+      emailErrorSpan.style.display = 'block';
+    } else {
+      betaEmailInput.classList.remove('invalid');
+      betaEmailInput.removeAttribute('aria-invalid');
+      emailErrorSpan.textContent = '';
+      emailErrorSpan.style.display = 'none';
+    }
+  });
+
+  // Clear error on input
+  betaEmailInput.addEventListener('input', () => {
+    betaEmailInput.classList.remove('invalid');
+    betaEmailInput.removeAttribute('aria-invalid');
+    emailErrorSpan.textContent = '';
+    emailErrorSpan.style.display = 'none';
+  });
+}

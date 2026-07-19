@@ -678,6 +678,20 @@ main {
   box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
 }
 
+.form-input.invalid {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.2);
+}
+
+.error-message {
+  font-size: 0.8rem;
+  color: var(--accent-red);
+  margin-top: 0.25rem;
+  font-weight: 500;
+  display: none;
+  text-shadow: 0 0 5px rgba(255, 68, 68, 0.2);
+}
+
 .beta-form .join-cta {
   width: 100%;
   text-align: center;
