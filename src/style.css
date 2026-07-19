@@ -483,6 +483,48 @@ main {
   margin: 0;
 }
 
+/* Vision Section styling */
+#vision {
+  min-height: auto;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#vision h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.vision-card {
+  max-width: 650px;
+  width: 100%;
+  background: rgba(13, 27, 38, 0.4);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  text-align: left;
+}
+
+.vision-card h3 {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+.vision-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   #app {

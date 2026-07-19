@@ -54,7 +54,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </section>
     <section id="vision" class="region">
       <h2>Visión</h2>
-      <p>Placeholder content</p>
+      <div class="vision-card">
+        <h3>La IA necesita un Workspace.</h3>
+        <p class="vision-text">
+          Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado donde cada agente tiene un propósito y cada decisión sigue estando en manos del usuario.
+        </p>
+      </div>
     </section>
     <section id="intro-entity" class="region">
       <h2>Introducción de Entity</h2>
