@@ -259,8 +259,8 @@ main {
 .hero-visual {
   flex: 1.2; /* Ensanchado para reducir el espacio vacío */
   width: 100%;
-  min-height: 250px; /* Altura ajustada para igualar al titular */
-  height: 250px;
+  min-height: 215px; /* Altura de 215px ajustada visualmente al bloque del título */
+  height: 215px;
   background: rgba(0, 229, 255, 0.03);
   border: 1px dashed rgba(0, 229, 255, 0.2);
   border-radius: 12px;
@@ -268,7 +268,7 @@ main {
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
-  margin-top: 1.8rem; /* Baja el preholder para alinearlo ópticamente y centrarlo con el título */
+  margin-top: 1.2rem; /* Alinea el borde superior con la línea imaginaria de la 'O' y la base con 'artificial' */
 }
 
 /* Product Shell (FIA-010) */
@@ -904,7 +904,7 @@ main {
   }
 
   .hero-visual {
-    min-height: 250px;
+    min-height: 215px;
     margin-top: 0; /* Resetear el margen de alineación de escritorio en móvil */
   }
 
