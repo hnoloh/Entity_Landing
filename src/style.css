@@ -268,6 +268,7 @@ main {
   align-items: center;
   justify-content: center;
   color: var(--text-secondary);
+  margin-top: 1.8rem; /* Baja el preholder para alinearlo ópticamente y centrarlo con el título */
 }
 
 /* Product Shell (FIA-010) */
@@ -904,6 +905,7 @@ main {
 
   .hero-visual {
     min-height: 250px;
+    margin-top: 0; /* Resetear el margen de alineación de escritorio en móvil */
   }
 
   .region {
