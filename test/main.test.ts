@@ -243,9 +243,13 @@ describe('App Bootstrap', () => {
 
     // 7. Submit con formato correcto - Escenario de Error (qa.error@entity.test) (FIA-047)
     const fetchMock = vi.fn().mockImplementation((_url, options) => {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         setTimeout(() => {
           const body = JSON.parse(options.body || '{}');
+          if (body.email === 'qa.network@entity.test') {
+            reject(new TypeError('Failed to fetch'));
+            return;
+          }
           if (body.email === 'qa.error@entity.test') {
             resolve({
               ok: false,
@@ -341,6 +345,29 @@ describe('App Bootstrap', () => {
     expect(submitBtn?.getAttribute('disabled')).toBeNull();
     expect(submitBtn?.textContent).toBe('Solicitar acceso a la Beta');
     expect((emailInput as HTMLInputElement).value).toBe('qa.error@entity.test');
+
+    // --- ESCENARIO DE FALLO DE RED (FIA-051) ---
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'qa.network@entity.test';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(form?.classList.contains('is-submitting')).toBe(true);
+
+    vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
+
+    // Verificar respuesta de fallo de red
+    expect(form?.classList.contains('is-submitting')).toBe(false);
+    expect(form?.classList.contains('is-submitted')).toBe(false);
+    expect(statusSpan?.textContent).toBe('Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
+    expect(statusSpan?.classList.contains('error')).toBe(true);
+
+    // Formulario recuperable conservando el email
+    expect(emailInput?.getAttribute('disabled')).toBeNull();
+    expect(submitBtn?.getAttribute('disabled')).toBeNull();
+    expect((emailInput as HTMLInputElement).value).toBe('qa.network@entity.test');
 
     // 8. Reintento con formato correcto - Escenario de Éxito (qa.success@entity.test)
     if (emailInput) {
