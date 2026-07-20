@@ -225,7 +225,29 @@ describe('App Bootstrap', () => {
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
 
-    // 7. Submit con formato correcto - Escenario de Error (qa.error@entity.test)
+    // 7. Submit con formato correcto - Escenario de Error (qa.error@entity.test) (FIA-047)
+    const fetchMock = vi.fn().mockImplementation((_url, options) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const body = JSON.parse(options.body || '{}');
+          if (body.email === 'qa.error@entity.test') {
+            resolve({
+              ok: false,
+              status: 500,
+              json: async () => ({ error: 'Error del servidor' })
+            });
+          } else {
+            resolve({
+              ok: true,
+              status: 200,
+              json: async () => ({ message: '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.' })
+            });
+          }
+        }, 1000);
+      });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
     vi.useFakeTimers();
     if (emailInput) {
       (emailInput as HTMLInputElement).value = 'qa.error@entity.test';
@@ -233,6 +255,13 @@ describe('App Bootstrap', () => {
     form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
     expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
     expect(errorSpan?.textContent).toBe('');
+    expect(fetchMock).toHaveBeenCalledWith('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: 'qa.error@entity.test' })
+    });
 
     // Comprobar estado de envío (loading)
     expect(form?.classList.contains('is-submitting')).toBe(true);
@@ -252,6 +281,9 @@ describe('App Bootstrap', () => {
 
     // Completar el estado de envío (avanzar timers)
     vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
 
     // Comprobar estado de error simulado
     expect(form?.classList.contains('is-submitting')).toBe(false);
@@ -275,6 +307,9 @@ describe('App Bootstrap', () => {
     expect(statusSpan?.classList.contains('error')).toBe(false);
 
     vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
 
     // Comprobar estado de confirmación simulada (éxito permanente)
     expect(form?.classList.contains('is-submitting')).toBe(false);
@@ -287,6 +322,7 @@ describe('App Bootstrap', () => {
     expect(submitBtn?.textContent).toBe('Solicitud Enviada');
 
     vi.useRealTimers();
+    vi.unstubAllGlobals();
 
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
