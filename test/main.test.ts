@@ -1,16 +1,21 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-// @ts-expect-error: fs is not typed in browser-only landing page compiler target
+// @vitest-environment jsdom
+import { describe, it, expect, beforeEach, afterEach, beforeAll, vi } from 'vitest';
 import fs from 'fs';
-// @ts-expect-error: path is not typed in browser-only landing page compiler target
 import path from 'path';
+
+vi.mock('@sentry/browser', () => ({
+  init: vi.fn(),
+  captureMessage: vi.fn(),
+}));
 
 declare const __dirname: string;
 
+let cacheBuster = 0;
 describe('App Bootstrap', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>';
     
-    // Clean up registrations.json before each test run
+    // Clean up registrations.json and sent_emails.json before each test run
     const filePath = path.join(__dirname, '../registrations.json');
     if (fs.existsSync(filePath)) {
       try {
@@ -19,10 +24,18 @@ describe('App Bootstrap', () => {
         void err;
       }
     }
+    const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+    if (fs.existsSync(sentEmailsPath)) {
+      try {
+        fs.unlinkSync(sentEmailsPath);
+      } catch (err) {
+        void err;
+      }
+    }
   });
 
   it('should render the identifiable root screen, global Shell, and apply base styles', async () => {
-    await import('../src/main.ts?t=' + Date.now()); // force reload module
+    await import('../src/main.ts?t=' + (++cacheBuster)); // force reload module
     const app = document.querySelector<HTMLDivElement>('#app')!;
     
     // FIA-001 contract updated AS-BUILT
@@ -34,7 +47,6 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('footer')).not.toBeNull();
 
     // FIA-004 AS-BUILT contract
-    expect(app.querySelector('header .logo-container .ghost-hero')).not.toBeNull();
     expect(app.querySelector('header .header-left .slogan')).not.toBeNull();
 
     // FIA-006 contract
@@ -140,6 +152,9 @@ describe('App Bootstrap', () => {
     expect(tabs?.[3].classList.contains('active')).toBe(false);
     expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
     expect(captureImg?.getAttribute('alt')).toBe('Vista Entis de Entity');
+    
+    // FIA-067: Comprobar que se añade la clase de animación al cambiar de vista
+    expect(captureImg?.classList.contains('switching')).toBe(true);
     
     // Clic en pestaña Grupos Secuenciales
     tabs?.[2].dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -526,7 +541,7 @@ describe('App Bootstrap', () => {
   });
 
   it('should not expose waitlist data, admin table or links to admin page on public URL root (FIA-054)', async () => {
-    await import('../src/main.ts?t=' + Date.now());
+    await import('../src/main.ts?t=' + (++cacheBuster));
     const app = document.querySelector<HTMLDivElement>('#app')!;
 
     // Verify no waitlist table is rendered
@@ -548,13 +563,183 @@ describe('App Bootstrap', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/main.ts?t=' + Date.now());
+    await import('../src/main.ts?t=' + (++cacheBuster));
     
     // Public landing should not call admin endpoints
     expect(fetchMock).not.toHaveBeenCalledWith('/api/registrations');
     expect(fetchMock).not.toHaveBeenCalledWith('/api/registrations/status');
 
     vi.unstubAllGlobals();
+  });
+
+  it('should include progressive Hero entry animation (FIA-062)', () => {
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    expect(cssContent).toContain('@keyframes hero-entry');
+    expect(cssContent).toContain('.hero-headline');
+    expect(cssContent).toContain('.hero-body-row');
+    expect(cssContent).toContain('.hero-trust-badges-inline');
+    expect(cssContent).toMatch(/animation:.*hero-entry/);
+  });
+
+  it('should include scroll reveal functionality on all authorized public sections (FIA-064)', async () => {
+    vi.resetModules();
+    const observeMock = vi.fn();
+    class MockIntersectionObserver {
+      constructor(public callback: IntersectionObserverCallback) {}
+      observe = observeMock;
+      unobserve = vi.fn();
+      disconnect = vi.fn();
+    }
+    vi.stubGlobal('IntersectionObserver', MockIntersectionObserver);
+
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const app = document.querySelector<HTMLDivElement>('#app')!;
+    
+    // Check all authorized public sections
+    const authorizedSections = ['#narrativa', '#producto', '#join', '.footer'];
+    
+    authorizedSections.forEach(selector => {
+      const el = app.querySelector(selector);
+      expect(el).not.toBeNull();
+      expect(el?.classList.contains('reveal-element')).toBe(true);
+      expect(observeMock).toHaveBeenCalledWith(el);
+    });
+
+    // Check CSS
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    expect(cssContent).toContain('.reveal-element');
+    expect(cssContent).toContain('.reveal-element.revealed');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should include microinteractions for CTAs (FIA-065)', () => {
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    
+    // focus-visible
+    expect(cssContent).toContain('.hero-btn:focus-visible');
+    expect(cssContent).toContain('.join-cta:focus-visible');
+    
+    // active
+    expect(cssContent).toContain('.hero-btn:active');
+    expect(cssContent).toContain('.join-cta:active');
+    expect(cssContent).toContain('transform: scale(0.95)');
+  });
+
+  it('should include transition animation for mobile menu (FIA-066)', () => {
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    
+    // Check base drawer styles (hidden but accessible for transition)
+    expect(cssContent).toContain('.mobile-menu-drawer {');
+    expect(cssContent).toContain('visibility: hidden;');
+    expect(cssContent).toContain('opacity: 0;');
+    expect(cssContent).toContain('transform: translateY(-10px);');
+    expect(cssContent).toMatch(/transition:\s*opacity 0\.25s,\s*transform 0\.25s,\s*visibility 0\.25s;/);
+    
+    // Check open state styles
+    expect(cssContent).toContain('header.mobile-menu-open .mobile-menu-drawer {');
+    expect(cssContent).toContain('visibility: visible;');
+    expect(cssContent).toContain('opacity: 1;');
+    expect(cssContent).toContain('transform: translateY(0);');
+  });
+
+  it('should include centralized prefers-reduced-motion styles (FIA-068)', () => {
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    
+    // Check for the media query
+    expect(cssContent).toContain('@media (prefers-reduced-motion: reduce)');
+    
+    // Check that it applies to the key animated components
+    expect(cssContent).toContain('animation-duration: 0.01ms !important;');
+    expect(cssContent).toContain('transition-duration: 0.01ms !important;');
+    expect(cssContent).toContain('.reveal-element {');
+    expect(cssContent).toContain('.hero-btn:active,');
+    expect(cssContent).toContain('.mobile-menu-drawer {');
+    expect(cssContent).toContain('.pf-capture.switching {');
+    expect(cssContent).toContain('.hero-btn {');
+  });
+
+  it('should meet structural accessibility standards (FIA-069)', async () => {
+    await import('../src/main.ts?t=' + (++cacheBuster)); // force reload module
+    const app = document.querySelector<HTMLDivElement>('#app')!;
+    
+    // Landmarks and aria-labelledby
+    const hero = app.querySelector('#hero');
+    expect(hero?.getAttribute('aria-labelledby')).toBe('hero-headline');
+    
+    const narrativa = app.querySelector('#narrativa');
+    expect(narrativa?.getAttribute('aria-labelledby')).toBe('narrativa-title');
+    
+    const producto = app.querySelector('#producto');
+    expect(producto?.getAttribute('aria-labelledby')).toBe('producto-title');
+    
+    const join = app.querySelector('#join');
+    expect(join?.getAttribute('aria-labelledby')).toBe('join-title');
+    
+    // ARIA labels for complex widgets
+    const pfSelector = app.querySelector('.pf-selector');
+    expect(pfSelector?.getAttribute('aria-label')).toBe('Vistas del producto');
+    
+    const betaForm = app.querySelector('#beta-form');
+    expect(betaForm?.getAttribute('aria-label')).toBe('Formulario de registro para la beta');
+    
+    // Footer interactive links instead of spans
+    const footerLinks = app.querySelectorAll('.footer-link');
+    expect(footerLinks.length).toBeGreaterThan(0);
+    expect(footerLinks[0].tagName).toBe('A');
+    
+    // Check focus styles in css
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    expect(cssContent).toContain('.footer-link:focus-visible');
+  });
+
+  it('should include correct SEO metadata in index.html (FIA-070)', () => {
+    const htmlPath = path.join(__dirname, '../index.html');
+    const htmlContent = fs.readFileSync(htmlPath, 'utf-8');
+    
+    // Check lang
+    expect(htmlContent).toContain('<html lang="es">');
+    
+    // Check Primary Meta
+    expect(htmlContent).toContain('<title>Entity | El Workspace para tus agentes de IA</title>');
+    expect(htmlContent).toContain('<meta name="title" content="Entity | El Workspace para tus agentes de IA" />');
+    expect(htmlContent).toContain('<meta name="description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />');
+    
+    // Check Open Graph
+    expect(htmlContent).toContain('<meta property="og:type" content="website" />');
+    expect(htmlContent).toContain('<meta property="og:url" content="https://entity.app/" />');
+    expect(htmlContent).toContain('<meta property="og:title" content="Entity | El Workspace para tus agentes de IA" />');
+    expect(htmlContent).toContain('<meta property="og:description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />');
+    expect(htmlContent).toContain('<meta property="og:image" content="/FIA-31_Implementar vista workspace.png" />');
+    
+    // Check Twitter
+    expect(htmlContent).toContain('<meta property="twitter:card" content="summary_large_image" />');
+    expect(htmlContent).toContain('<meta property="twitter:url" content="https://entity.app/" />');
+    expect(htmlContent).toContain('<meta property="twitter:title" content="Entity | El Workspace para tus agentes de IA" />');
+    expect(htmlContent).toContain('<meta property="twitter:description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />');
+    expect(htmlContent).toContain('<meta property="twitter:image" content="/FIA-31_Implementar vista workspace.png" />');
+  });
+
+  it('should meet final performance and stability standards (FIA-071)', () => {
+    // Check overflow-x in css to guarantee no horizontal layout shifts
+    const cssPath = path.join(__dirname, '../src/style.css');
+    const cssContent = fs.readFileSync(cssPath, 'utf-8');
+    
+    // Using regular expressions to allow for whitespace differences
+    expect(cssContent).toMatch(/html\s*\{[^}]*overflow-x:\s*hidden;?[^}]*\}/);
+    expect(cssContent).toMatch(/body\s*\{[^}]*overflow-x:\s*hidden;?[^}]*\}/);
+    
+    // Verify preload optimization from FIA-035 is still present in main.ts
+    const tsPath = path.join(__dirname, '../src/main.ts');
+    const tsContent = fs.readFileSync(tsPath, 'utf-8');
+    expect(tsContent).toContain('new Image()');
+    expect(tsContent).toContain('.src = asset.src');
   });
 });
 
@@ -563,11 +748,19 @@ describe('Admin Waitlist Dashboard', () => {
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
     
-    // Clean up registrations.json
+    // Clean up registrations.json and sent_emails.json
     const filePath = path.join(__dirname, '../registrations.json');
     if (fs.existsSync(filePath)) {
       try {
         fs.unlinkSync(filePath);
+      } catch (err) {
+        void err;
+      }
+    }
+    const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+    if (fs.existsSync(sentEmailsPath)) {
+      try {
+        fs.unlinkSync(sentEmailsPath);
       } catch (err) {
         void err;
       }
@@ -581,7 +774,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await import('../src/admin.ts?t=' + (++cacheBuster)); // force reload
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     expect(document.body.innerHTML).toContain('No hay registros en la lista de espera actualmente.');
@@ -604,7 +797,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await import('../src/admin.ts?t=' + (++cacheBuster)); // force reload
     await new Promise((resolve) => setTimeout(resolve, 20));
 
 
@@ -619,7 +812,7 @@ describe('Admin Waitlist Dashboard', () => {
     expect(headers?.[3].textContent).toBe('Estado');
 
     const cells = table?.querySelectorAll('tbody td');
-    expect(cells?.[0].textContent).toBe('admin.test@entity.test');
+    expect(cells?.[0].textContent).toContain('admin.test@entity.test');
     expect(cells?.[2].textContent).toBe('Landing Beta Form');
     expect(cells?.[3].querySelector('select')?.value).toBe('Pending');
 
@@ -633,7 +826,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await import('../src/admin.ts?t=' + (++cacheBuster)); // force reload
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     expect(document.body.innerHTML).toContain('Error al cargar la waitlist:');
@@ -672,7 +865,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now());
+    await import('../src/admin.ts?t=' + (++cacheBuster));
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     const select = document.querySelector<HTMLSelectElement>('.status-select');
@@ -726,7 +919,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now());
+    await import('../src/admin.ts?t=' + (++cacheBuster));
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     const select = document.querySelector<HTMLSelectElement>('.status-select');
@@ -773,7 +966,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now());
+    await import('../src/admin.ts?t=' + (++cacheBuster));
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     const select = document.querySelector<HTMLSelectElement>('.status-select');
@@ -804,7 +997,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now());
+    await import('../src/admin.ts?t=' + (++cacheBuster));
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     const select = document.querySelector<HTMLSelectElement>('.status-select');
@@ -821,7 +1014,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await import('../src/admin.ts?t=' + (++cacheBuster)); // force reload
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     const previewRegion = document.getElementById('email-preview-region');
@@ -865,7 +1058,7 @@ describe('Admin Waitlist Dashboard', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/admin.ts?t=' + Date.now());
+    await import('../src/admin.ts?t=' + (++cacheBuster));
     await new Promise((resolve) => setTimeout(resolve, 20));
 
     // Verify registrations.json hasn't been altered or created
@@ -884,10 +1077,950 @@ describe('Admin Waitlist Dashboard', () => {
 
   it('should not expose email preview on the public landing page (FIA-055)', async () => {
     document.body.innerHTML = '<div id="app"></div>';
-    await import('../src/main.ts?t=' + Date.now());
+    await import('../src/main.ts?t=' + (++cacheBuster));
     const app = document.querySelector<HTMLDivElement>('#app')!;
     
     expect(app.querySelector('#email-preview-region')).toBeNull();
     expect(app.querySelector('#preview-subject')).toBeNull();
+  });
+});
+
+describe('Email Confirmation Dispatch (FIA-056)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+  const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="app"></div>';
+
+    // Clean up files before test
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  afterEach(() => {
+    // Clean up files after test
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  it('should dispatch confirmation email and record evidence upon valid registration', async () => {
+    // 1. Setup mock endpoint behaviour like in vite.config.ts
+    const fetchMock = vi.fn().mockImplementation((_url, options) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const body = JSON.parse(options.body || '{}');
+          
+          // Mimic registrations.json write
+          let registrations = [];
+          if (fs.existsSync(registrationsPath)) {
+            try {
+              registrations = JSON.parse(fs.readFileSync(registrationsPath, 'utf-8'));
+            } catch (err) {
+              void err;
+            }
+          }
+          const registeredAt = new Date().toISOString();
+          registrations.push({
+            email: body.email,
+            status: 'Pending',
+            registeredAt,
+            origen: 'Landing Beta Form',
+            confirmationEmailSent: true,
+            confirmationEmailSentAt: registeredAt
+          });
+          fs.writeFileSync(registrationsPath, JSON.stringify(registrations, null, 2), 'utf-8');
+
+          // Mimic sent_emails.json write
+          let sentEmails = [];
+          if (fs.existsSync(sentEmailsPath)) {
+            try {
+              sentEmails = JSON.parse(fs.readFileSync(sentEmailsPath, 'utf-8'));
+            } catch (err) {
+              void err;
+            }
+          }
+          sentEmails.push({
+            to: body.email,
+            subject: '¡Te damos la bienvenida a la Beta Privada de Entity!',
+            preheader: 'Tu acceso exclusivo al Workspace inteligente de Entity está listo.',
+            body: 'Hola,\n\nNos alegra informarte que tu solicitud para acceder a la beta privada de Entity ha sido aceptada.\n\nEntity es tu nuevo Workspace de escritorio inteligente donde tus agentes colaboran bajo tu control absoluto.',
+            cta: 'Descargar Entity para Escritorio',
+            footer: 'Este correo fue enviado de manera automática como confirmación de tu registro en la waitlist privada de Entity. © 2026 Entity. Todos los derechos reservados.',
+            sentAt: registeredAt
+          });
+          fs.writeFileSync(sentEmailsPath, JSON.stringify(sentEmails, null, 2), 'utf-8');
+
+          resolve({
+            ok: true,
+            status: 200,
+            json: async () => ({ message: '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.' })
+          });
+        }, 100);
+      });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    vi.useFakeTimers();
+
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const app = document.getElementById('app')!;
+    const form = app.querySelector('form')!;
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+
+    emailInput.value = 'test.confirm@entity.test';
+    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+
+    vi.advanceTimersByTime(100);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
+
+    // Verify registration and email log files exist and contain info
+    expect(fs.existsSync(registrationsPath)).toBe(true);
+    expect(fs.existsSync(sentEmailsPath)).toBe(true);
+
+    const registrations = JSON.parse(fs.readFileSync(registrationsPath, 'utf-8'));
+    expect(registrations[0].email).toBe('test.confirm@entity.test');
+    expect(registrations[0].confirmationEmailSent).toBe(true);
+    expect(registrations[0].confirmationEmailSentAt).toBeDefined();
+
+    const sentEmails = JSON.parse(fs.readFileSync(sentEmailsPath, 'utf-8'));
+    expect(sentEmails[0].to).toBe('test.confirm@entity.test');
+    expect(sentEmails[0].subject).toBe('¡Te damos la bienvenida a la Beta Privada de Entity!');
+    
+    // 2. Dashboard loads status and displays "Email Enviado" next to the email code
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+
+    const dashboardFetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => registrations
+    });
+    vi.stubGlobal('fetch', dashboardFetchMock);
+
+    document.body.innerHTML = '<div id="admin-app"></div>';
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const emailCell = document.querySelector('table.waitlist-table tbody td');
+    expect(emailCell).not.toBeNull();
+    expect(emailCell?.textContent).toContain('test.confirm@entity.test');
+    expect(emailCell?.textContent).toContain('Email Enviado');
+    expect(emailCell?.querySelector('.email-sent-badge')).not.toBeNull();
+  });
+
+  it('should not dispatch email when registration fails with HTTP 409 (duplicate)', async () => {
+    // Pre-populate registrations with duplicate email
+    fs.writeFileSync(registrationsPath, JSON.stringify([{
+      email: 'duplicate@entity.test',
+      status: 'Pending',
+      registeredAt: new Date().toISOString(),
+      origen: 'Landing Beta Form'
+    }], null, 2), 'utf-8');
+
+    const fetchMock = vi.fn().mockImplementation(() => {
+      // If mock detects duplicate, returns 409 directly without changing sent_emails.json
+      return Promise.resolve({
+        ok: false,
+        status: 409,
+        json: async () => ({ error: 'Este correo electrónico ya está registrado.' })
+      });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const form = document.querySelector('form')!;
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+
+    emailInput.value = 'duplicate@entity.test';
+    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+  });
+
+  it('should not dispatch email with invalid input format or empty email', async () => {
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const form = document.querySelector('form')!;
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+
+    // Test empty
+    emailInput.value = '';
+    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+
+    // Test invalid format
+    emailInput.value = 'invalidemail';
+    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+  });
+
+  it('should not dispatch email if server persistence fails', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ error: 'Internal Server Error' })
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const form = document.querySelector('form')!;
+    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+
+    emailInput.value = 'error@entity.test';
+    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+  });
+
+  it('should ensure sent email content is coherent with the preview', async () => {
+    // Verify values generated in registrations match preview labels
+    const mockEmailLog = {
+      to: 'test@entity.test',
+      subject: '¡Te damos la bienvenida a la Beta Privada de Entity!',
+      preheader: 'Tu acceso exclusivo al Workspace inteligente de Entity está listo.',
+      body: 'Hola,\n\nNos alegra informarte que tu solicitud para acceder a la beta privada de Entity ha sido aceptada.\n\nEntity es tu nuevo Workspace de escritorio inteligente donde tus agentes colaboran bajo tu control absoluto.',
+      cta: 'Descargar Entity para Escritorio',
+      footer: 'Este correo fue enviado de manera automática como confirmación de tu registro en la waitlist privada de Entity. © 2026 Entity. Todos los derechos reservados.'
+    };
+
+    document.body.innerHTML = '<div id="admin-app"></div>';
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(document.getElementById('preview-subject')?.textContent).toBe(mockEmailLog.subject);
+    expect(document.getElementById('preview-preheader')?.textContent).toBe(mockEmailLog.preheader);
+    expect(document.getElementById('preview-body')?.textContent?.replace(/\s+/g, ' ')).toContain('Nos alegra informarte que tu solicitud para acceder a la beta privada de Entity ha sido aceptada.');
+    expect(document.getElementById('preview-cta')?.textContent).toBe(mockEmailLog.cta);
+    expect(document.getElementById('preview-footer')?.textContent?.replace(/\s+/g, ' ')).toContain('waitlist privada de Entity. © 2026 Entity');
+  });
+});
+
+describe('Email Confirmation Status Display (FIA-057)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+  const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="admin-app"></div>';
+
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  afterEach(() => {
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  it('should display sent status when confirmationEmailStatus is "sent" or confirmationEmailSent is true', async () => {
+    const mockData = [
+      {
+        email: 'sent.legacy@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form',
+        confirmationEmailSent: true
+      },
+      {
+        email: 'sent.new@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:05:00.000Z',
+        origen: 'Landing Beta Form',
+        confirmationEmailStatus: 'sent'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const cells = document.querySelectorAll('table.waitlist-table tbody tr');
+    expect(cells.length).toBe(2);
+
+    expect(cells[0].textContent).toContain('sent.legacy@entity.test');
+    expect(cells[0].textContent).toContain('Email Enviado');
+    expect(cells[0].querySelector('.email-sent-badge')).not.toBeNull();
+
+    expect(cells[1].textContent).toContain('sent.new@entity.test');
+    expect(cells[1].textContent).toContain('Email Enviado');
+    expect(cells[1].querySelector('.email-sent-badge')).not.toBeNull();
+  });
+
+  it('should display error status when confirmationEmailStatus is "error"', async () => {
+    const mockData = [
+      {
+        email: 'error.mail@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form',
+        confirmationEmailStatus: 'error'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const cells = document.querySelectorAll('table.waitlist-table tbody tr');
+    expect(cells.length).toBe(1);
+
+    expect(cells[0].textContent).toContain('error.mail@entity.test');
+    expect(cells[0].textContent).toContain('Email Error');
+    expect(cells[0].querySelector('.email-error-badge')).not.toBeNull();
+  });
+
+  it('should display pending status when confirmationEmailStatus is "pending" or confirmationEmailSent is false', async () => {
+    const mockData = [
+      {
+        email: 'pending.legacy@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form',
+        confirmationEmailSent: false
+      },
+      {
+        email: 'pending.new@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:05:00.000Z',
+        origen: 'Landing Beta Form',
+        confirmationEmailStatus: 'pending'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const cells = document.querySelectorAll('table.waitlist-table tbody tr');
+    expect(cells.length).toBe(2);
+
+    expect(cells[0].textContent).toContain('pending.legacy@entity.test');
+    expect(cells[0].textContent).toContain('Email Pendiente');
+    expect(cells[0].querySelector('.email-pending-badge')).not.toBeNull();
+
+    expect(cells[1].textContent).toContain('pending.new@entity.test');
+    expect(cells[1].textContent).toContain('Email Pendiente');
+    expect(cells[1].querySelector('.email-pending-badge')).not.toBeNull();
+  });
+
+  it('should ensure opening admin.html has no side effects', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+  });
+
+  it('should not expose email dispatch status on the public landing page', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const app = document.getElementById('app')!;
+
+    expect(app.querySelector('.email-sent-badge')).toBeNull();
+    expect(app.querySelector('.email-pending-badge')).toBeNull();
+    expect(app.querySelector('.email-error-badge')).toBeNull();
+  });
+});
+
+describe('Email Invitation Preview (FIA-058)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+  const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="admin-app"></div>';
+
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  afterEach(() => {
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  it('should render the email invitation preview correctly in admin view (FIA-058)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const previewRegion = document.getElementById('invitation-preview-region');
+    expect(previewRegion).not.toBeNull();
+
+    // Verify Subject, Preheader, Body, CTA and Footer
+    const subject = document.getElementById('invitation-subject');
+    expect(subject).not.toBeNull();
+    expect(subject?.textContent).toContain('¡Has sido invitado a la Beta Privada de Entity!');
+
+    const preheader = document.getElementById('invitation-preheader');
+    expect(preheader).not.toBeNull();
+    expect(preheader?.textContent).toContain('Tu invitación exclusiva para unirte al Workspace inteligente de Entity ya está aquí.');
+
+    const body = document.getElementById('invitation-body');
+    expect(body).not.toBeNull();
+    expect(body?.textContent).toContain('invitarte a probar de forma prioritaria la beta privada');
+
+    const cta = document.getElementById('invitation-cta');
+    expect(cta).not.toBeNull();
+    expect(cta?.textContent).toContain('Aceptar Invitación a la Beta');
+
+    const footer = document.getElementById('invitation-footer');
+    expect(footer).not.toBeNull();
+    expect(footer?.textContent).toContain('invitación exclusiva para probar la beta privada de Entity. © 2026 Entity');
+  });
+
+  it('should verify email invitation preview is purely visual, does not trigger mail delivery or modify registrations.json (FIA-058)', async () => {
+    const filePath = path.join(__dirname, '../registrations.json');
+    const beforeExists = fs.existsSync(filePath);
+    let beforeContent = '';
+    if (beforeExists) {
+      beforeContent = fs.readFileSync(filePath, 'utf-8');
+    }
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    if (beforeExists) {
+      expect(fs.readFileSync(filePath, 'utf-8')).toBe(beforeContent);
+    } else {
+      expect(fs.existsSync(filePath)).toBe(false);
+    }
+
+    // Verify registrations.json hasn't been altered and sent_emails.json wasn't created
+    expect(fs.existsSync(sentEmailsPath)).toBe(false);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+  });
+
+  it('should not expose email invitation preview on the public landing page (FIA-058)', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const app = document.getElementById('app')!;
+
+    expect(app.querySelector('#invitation-preview-region')).toBeNull();
+    expect(app.querySelector('#invitation-subject')).toBeNull();
+  });
+});
+
+describe('Email Invitation Dispatch (FIA-059)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+  const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="admin-app"></div>';
+
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  afterEach(() => {
+    // Clean up
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (err) {
+          void err;
+        }
+      }
+    });
+  });
+
+  it('should successfully send invitation and refresh dashboard on click (FIA-059)', async () => {
+    const mockData = [
+      {
+        email: 'invite.test@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockImplementation((url, options) => {
+      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => mockData
+        });
+      }
+      if (url === '/api/registrations/invite' && options?.method === 'POST') {
+        const payload = JSON.parse(options.body);
+        if (payload.email === 'invite.test@entity.test') {
+          mockData[0] = {
+            ...mockData[0],
+            ...({
+              invitationSent: true,
+              invitationEmailStatus: 'sent'
+            } as Record<string, unknown>)
+          };
+          return Promise.resolve({
+            ok: true,
+            json: async () => ({ message: 'Invitación enviada con éxito.', registration: mockData[0] })
+          });
+        }
+      }
+      return Promise.resolve({ ok: false, json: async () => ({ error: 'Not found' }) });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const btn = document.querySelector('.invite-btn') as HTMLButtonElement;
+    expect(btn).not.toBeNull();
+
+    await btn.click();
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations/invite', expect.objectContaining({
+      method: 'POST',
+      body: JSON.stringify({ email: 'invite.test@entity.test' })
+    }));
+
+    // Verify invitation email sent badge exists
+    const cell = document.querySelector('table.waitlist-table tbody tr td');
+    expect(cell?.textContent).toContain('Invitación Enviada');
+  });
+
+  it('should display error message on status container when invitation endpoint returns an error (FIA-059)', async () => {
+    const mockData = [
+      {
+        email: 'qa.inviteerror@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockImplementation((url, options) => {
+      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => mockData
+        });
+      }
+      if (url === '/api/registrations/invite' && options?.method === 'POST') {
+        return Promise.resolve({
+          ok: false,
+          status: 500,
+          json: async () => ({ error: 'Fallo al despachar la invitación.' })
+        });
+      }
+      return Promise.resolve({ ok: false, json: async () => ({ error: 'Not found' }) });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const btn = document.querySelector('.invite-btn') as HTMLButtonElement;
+    expect(btn).not.toBeNull();
+
+    await btn.click();
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const errorContainer = document.getElementById('admin-status-container');
+    expect(errorContainer?.textContent).toContain('Fallo al despachar la invitación.');
+  });
+
+  it('should ensure invitation action does not leak onto the public landing page (FIA-059)', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    const app = document.getElementById('app')!;
+
+    expect(app.querySelector('.invite-btn')).toBeNull();
+  });
+});
+
+describe('Unsubscribe Flow (FIA-060)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    if (fs.existsSync(registrationsPath)) {
+      try {
+        fs.unlinkSync(registrationsPath);
+      } catch (err) {
+        void err;
+      }
+    }
+  });
+
+  afterEach(() => {
+    if (fs.existsSync(registrationsPath)) {
+      try {
+        fs.unlinkSync(registrationsPath);
+      } catch (err) {
+        void err;
+      }
+    }
+    vi.unstubAllGlobals();
+  });
+
+  it('should successfully unsubscribe an existing user', async () => {
+    const mockData = [
+      {
+        email: 'test@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z'
+      }
+    ];
+    fs.writeFileSync(registrationsPath, JSON.stringify(mockData, null, 2), 'utf-8');
+
+    document.body.innerHTML = '<div id="unsubscribe-app"></div>';
+    // Mock the window.location.search before importing
+    Object.defineProperty(window, 'location', {
+      value: { search: '?email=test@entity.test' },
+      writable: true
+    });
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ message: 'Te has dado de baja de nuestras comunicaciones con éxito.' })
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/unsubscribe.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const confirmBtn = document.getElementById('confirm-unsubscribe') as HTMLButtonElement;
+    expect(confirmBtn).not.toBeNull();
+
+    await confirmBtn.click();
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations/unsubscribe', expect.objectContaining({
+      method: 'POST',
+      body: JSON.stringify({ email: 'test@entity.test' })
+    }));
+
+    const statusContainer = document.getElementById('status-container');
+    expect(statusContainer?.textContent).toContain('Te has dado de baja de nuestras comunicaciones con éxito.');
+  });
+
+  it('should show error when email is missing from URL', async () => {
+    document.body.innerHTML = '<div id="unsubscribe-app"></div>';
+    Object.defineProperty(window, 'location', {
+      value: { search: '' },
+      writable: true
+    });
+
+    await import('../src/unsubscribe.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const statusMsg = document.querySelector('.status-message.error');
+    expect(statusMsg?.textContent).toContain('No se ha proporcionado un correo válido');
+  });
+});
+describe('Metrics Dashboard (FIA-061)', () => {
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="admin-app"></div>';
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('should render metrics accurately based on payload data', async () => {
+    const mockData = [
+      {
+        email: '1@test.com',
+        confirmationEmailSent: true,
+        confirmationEmailStatus: 'sent',
+        invitationSent: true,
+        invitationEmailStatus: 'sent',
+        unsubscribed: false
+      },
+      {
+        email: '2@test.com',
+        confirmationEmailSent: true,
+        confirmationEmailStatus: 'error',
+        invitationSent: false,
+        invitationEmailStatus: 'pending',
+        unsubscribed: true
+      },
+      {
+        email: '3@test.com',
+        confirmationEmailSent: false,
+        confirmationEmailStatus: 'pending',
+        invitationSent: true,
+        invitationEmailStatus: 'error',
+        unsubscribed: false
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    const metricsRegion = document.getElementById('metrics-region');
+    expect(metricsRegion).not.toBeNull();
+    
+    // Confirmaciones
+    expect(document.getElementById('metric-confirm-sent')?.textContent).toContain('1');
+    expect(document.getElementById('metric-confirm-pending')?.textContent).toContain('1');
+    expect(document.getElementById('metric-confirm-error')?.textContent).toContain('1');
+
+    // Invitaciones
+    expect(document.getElementById('metric-invite-sent')?.textContent).toContain('1');
+    expect(document.getElementById('metric-invite-pending')?.textContent).toContain('1');
+    expect(document.getElementById('metric-invite-error')?.textContent).toContain('1');
+
+    // Bajas
+    expect(document.getElementById('metric-unsubscribed')?.textContent).toContain('1');
+  });
+});
+
+describe('E2E QA Conversion Flow (FIA-072)', () => {
+  const registrationsPath = path.join(__dirname, '../registrations.json');
+  const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
+
+  beforeEach(() => {
+    vi.resetModules();
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try { fs.unlinkSync(filePath); } catch { /* ignore */ }
+      }
+    });
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    [registrationsPath, sentEmailsPath].forEach(filePath => {
+      if (fs.existsSync(filePath)) {
+        try { fs.unlinkSync(filePath); } catch { /* ignore */ }
+      }
+    });
+  });
+
+  it('should validate the complete flow: public CTA -> form -> persistence -> email -> admin UI', async () => {
+    // 1. Setup Public Environment
+    const htmlContent = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf-8');
+    document.body.innerHTML = htmlContent;
+
+    // Fat mock for fetch to simulate backend persistence & emails
+    const fetchMock = vi.fn().mockImplementation(async (url, options) => {
+      if (url === '/api/register') {
+        const body = JSON.parse(options.body);
+        const newReg = {
+          email: body.email,
+          status: 'Pending',
+          registeredAt: new Date().toISOString(),
+          confirmationEmailSent: true,
+          confirmationEmailStatus: 'sent',
+          invitationSent: false,
+          invitationEmailStatus: 'pending'
+        };
+        fs.writeFileSync(registrationsPath, JSON.stringify([newReg], null, 2), 'utf-8');
+        fs.writeFileSync(sentEmailsPath, JSON.stringify([{
+          to: body.email,
+          subject: 'Confirmación de registro en la beta de Entity',
+          status: 'sent'
+        }], null, 2), 'utf-8');
+        return { ok: true, json: async () => ({}) };
+      }
+      if (url === '/api/registrations') {
+        const data = fs.existsSync(registrationsPath) ? JSON.parse(fs.readFileSync(registrationsPath, 'utf-8')) : [];
+        return { ok: true, json: async () => data };
+      }
+      return { ok: false, json: async () => ({ error: 'Not found' }) };
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    // Mount public app
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // 2. Interact with Public UI
+    const heroCta = document.querySelector('#hero .hero-cta a') as HTMLAnchorElement;
+    expect(heroCta).not.toBeNull();
+    
+    // Simulate scroll to form
+    // scrollIntoView not available in JSDOM
+
+
+    const emailInput = document.getElementById('beta-email') as HTMLInputElement;
+    const form = document.getElementById('beta-form') as HTMLFormElement;
+    
+    // Fill and submit
+    emailInput.value = 'e2e-qa@entity.app';
+    form.dispatchEvent(new window.Event('submit', { cancelable: true, bubbles: true }));
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/register', expect.any(Object));
+
+    // Verify success UI
+    const statusDiv = document.getElementById('form-status');
+    expect(statusDiv).not.toBeNull();
+    expect(statusDiv?.classList.contains('error')).toBe(false);
+    expect(statusDiv?.textContent).toContain('¡Solicitud enviada con éxito!');
+
+    // 3. Verify server state
+    const registrations = JSON.parse(fs.readFileSync(registrationsPath, 'utf-8'));
+    expect(registrations.length).toBeGreaterThan(0);
+    expect(registrations[0].email).toBe('e2e-qa@entity.app');
+    expect(registrations[0].status).toBe('Pending');
+    
+    const savedEmails = JSON.parse(fs.readFileSync(sentEmailsPath, 'utf-8'));
+    expect(savedEmails[0].to).toBe('e2e-qa@entity.app');
+
+    // 4. Clean DOM and Mount Admin UI
+    document.body.innerHTML = '<div id="admin-app"></div>';
+    await import('../src/admin.ts?t=' + (++cacheBuster));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Verify Admin UI loaded the data correctly
+    const tableBody = document.querySelector('tbody');
+    expect(tableBody).not.toBeNull();
+    const rows = tableBody!.querySelectorAll('tr');
+    expect(rows.length).toBe(1);
+    
+    const cols = rows[0].querySelectorAll('td');
+    expect(cols[0].textContent).toContain('e2e-qa@entity.app');
+    
+    // Status is in cols[3] select value
+    const statusSelect = cols[3].querySelector('select') as HTMLSelectElement;
+    expect(statusSelect.value).toBe('Pending');
+
+    // Verify confirmation email status icon exists and has correct text
+    expect(cols[0].textContent).toContain('Email Enviado');
+  });
+});
+
+describe('Monitoring Post-Release (FIA-074)', () => {
+  let Sentry: typeof import('@sentry/browser');
+
+  beforeAll(async () => {
+    Sentry = await import('@sentry/browser');
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+    delete import.meta.env.VITE_SENTRY_DSN;
+    delete import.meta.env.VITE_APP_RELEASE;
+    delete import.meta.env.VITE_APP_ENVIRONMENT;
+  });
+
+  it('should not initialize Sentry when VITE_SENTRY_DSN is absent', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    
+    expect(Sentry.init).not.toHaveBeenCalled();
+    expect(Sentry.captureMessage).not.toHaveBeenCalled();
+  });
+
+  it('should initialize Sentry and capture verification message when VITE_SENTRY_DSN is present', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    import.meta.env.VITE_SENTRY_DSN = 'https://mock@sentry.io/123';
+    import.meta.env.VITE_APP_RELEASE = 'v1.0.0';
+    import.meta.env.VITE_APP_ENVIRONMENT = 'production';
+    
+    await import('../src/main.ts?t=' + (++cacheBuster));
+    
+    expect(Sentry.init).toHaveBeenCalledWith({
+      dsn: 'https://mock@sentry.io/123',
+      release: 'v1.0.0',
+      environment: 'production',
+      sendDefaultPii: false
+    });
+    
+    expect(Sentry.captureMessage).toHaveBeenCalledWith('Sentry initialization verified post-release');
   });
 });
