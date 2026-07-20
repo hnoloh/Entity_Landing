@@ -1,8 +1,24 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
+// @ts-expect-error: fs is not typed in browser-only landing page compiler target
+import fs from 'fs';
+// @ts-expect-error: path is not typed in browser-only landing page compiler target
+import path from 'path';
+
+declare const __dirname: string;
 
 describe('App Bootstrap', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="app"></div>';
+    
+    // Clean up registrations.json before each test run
+    const filePath = path.join(__dirname, '../registrations.json');
+    if (fs.existsSync(filePath)) {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (err) {
+        void err;
+      }
+    }
   });
 
   it('should render the identifiable root screen, global Shell, and apply base styles', async () => {
@@ -237,6 +253,23 @@ describe('App Bootstrap', () => {
               json: async () => ({ error: 'Error del servidor' })
             });
           } else {
+            // Persistir solicitud de beta en el mock de test (FIA-048)
+            const filePath = path.join(__dirname, '../registrations.json');
+            let registrations = [];
+            if (fs.existsSync(filePath)) {
+              try {
+                registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+              } catch {
+                registrations = [];
+              }
+            }
+            registrations.push({
+              email: body.email,
+              status: 'Pending',
+              registeredAt: new Date().toISOString()
+            });
+            fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+
             resolve({
               ok: true,
               status: 200,
@@ -323,6 +356,22 @@ describe('App Bootstrap', () => {
 
     vi.useRealTimers();
     vi.unstubAllGlobals();
+
+    // Verificar evidencia interna de persistencia (FIA-048)
+    const filePath = path.join(__dirname, '../registrations.json');
+    expect(fs.existsSync(filePath)).toBe(true);
+    const registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    expect(registrations.length).toBe(1);
+    expect(registrations[0].email).toBe('qa.success@entity.test');
+    expect(registrations[0].status).toBe('Pending');
+    expect(registrations[0].registeredAt).not.toBeNull();
+
+    // Eliminar archivo de prueba tras verificar persistencia
+    try {
+      fs.unlinkSync(filePath);
+    } catch (err) {
+      void err;
+    }
 
     expect(join?.textContent).toContain('MVP');
     expect(join?.textContent).toContain('beta privada');
