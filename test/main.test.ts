@@ -525,3 +525,87 @@ describe('App Bootstrap', () => {
     expect(document.activeElement).toBe(drawerLinks?.[0]);
   });
 });
+
+describe('Admin Waitlist Dashboard', () => {
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="admin-app"></div>';
+    
+    // Clean up registrations.json
+    const filePath = path.join(__dirname, '../registrations.json');
+    if (fs.existsSync(filePath)) {
+      try {
+        fs.unlinkSync(filePath);
+      } catch (err) {
+        void err;
+      }
+    }
+  });
+
+  it('should display empty waitlist state (FIA-052)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(document.body.innerHTML).toContain('No hay registros en la lista de espera actualmente.');
+    vi.unstubAllGlobals();
+  });
+
+  it('should display loaded waitlist registrations with correct columns (FIA-052)', async () => {
+    const mockData = [
+      {
+        email: 'admin.test@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+
+    const table = document.querySelector('table.waitlist-table');
+    expect(table).not.toBeNull();
+
+    const headers = table?.querySelectorAll('th');
+    expect(headers?.length).toBe(4);
+    expect(headers?.[0].textContent).toBe('Correo Electrónico');
+    expect(headers?.[1].textContent).toBe('Fecha de Registro');
+    expect(headers?.[2].textContent).toBe('Origen');
+    expect(headers?.[3].textContent).toBe('Estado');
+
+    const cells = table?.querySelectorAll('tbody td');
+    expect(cells?.[0].textContent).toBe('admin.test@entity.test');
+    expect(cells?.[2].textContent).toBe('Landing Beta Form');
+    expect(cells?.[3].textContent).toBe('Pending');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should display error loading waitlist message (FIA-052)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      json: async () => ({ error: 'Error al conectar con la base de datos local.' })
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    expect(document.body.innerHTML).toContain('Error al cargar la waitlist:');
+    expect(document.body.innerHTML).toContain('Error al conectar con la base de datos local.');
+    vi.unstubAllGlobals();
+  });
+});
