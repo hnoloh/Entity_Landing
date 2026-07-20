@@ -524,6 +524,38 @@ describe('App Bootstrap', () => {
     (drawerLinks?.[0] as HTMLElement).focus();
     expect(document.activeElement).toBe(drawerLinks?.[0]);
   });
+
+  it('should not expose waitlist data, admin table or links to admin page on public URL root (FIA-054)', async () => {
+    await import('../src/main.ts?t=' + Date.now());
+    const app = document.querySelector<HTMLDivElement>('#app')!;
+
+    // Verify no waitlist table is rendered
+    expect(app.querySelector('.waitlist-table')).toBeNull();
+    expect(app.querySelector('.status-select')).toBeNull();
+    expect(app.innerHTML).not.toContain('admin.html');
+
+    // Verify no admin links are visible
+    const links = app.querySelectorAll('a');
+    links.forEach(link => {
+      expect(link.getAttribute('href') || '').not.toContain('admin.html');
+    });
+  });
+
+  it('should not consume internal/administrative endpoints on public page load (FIA-054)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/main.ts?t=' + Date.now());
+    
+    // Public landing should not call admin endpoints
+    expect(fetchMock).not.toHaveBeenCalledWith('/api/registrations');
+    expect(fetchMock).not.toHaveBeenCalledWith('/api/registrations/status');
+
+    vi.unstubAllGlobals();
+  });
 });
 
 describe('Admin Waitlist Dashboard', () => {
