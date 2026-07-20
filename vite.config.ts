@@ -40,6 +40,16 @@ export default defineConfig({
                     registrations = [];
                   }
                 }
+
+                // Detección de email duplicado (FIA-049)
+                const exists = registrations.some((r: { email: string }) => r.email === email);
+                if (exists) {
+                  res.statusCode = 409;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'Este correo electrónico ya está registrado.' }));
+                  return;
+                }
+
                 registrations.push({
                   email,
                   status: 'Pending',

@@ -302,7 +302,9 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         betaForm.removeAttribute('aria-busy');
         
         if (!response.ok) {
-          throw new Error();
+          return response.json().then(errData => {
+            throw new Error(errData.error || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
+          });
         }
         return response.json();
       })
@@ -318,7 +320,7 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
           formStatusSpan.textContent = data.message || '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
         }
       })
-      .catch(() => {
+      .catch((err) => {
         betaForm.classList.remove('is-submitting');
         betaEmailInput.disabled = false;
         
@@ -329,7 +331,7 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         
         if (formStatusSpan) {
           formStatusSpan.classList.add('error');
-          formStatusSpan.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
+          formStatusSpan.textContent = err.message || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
         }
       });
     }
