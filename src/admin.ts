@@ -37,6 +37,32 @@ if (adminApp) {
           </div>
         </div>
       </section>
+      <section class="region" id="email-preview-region" style="margin-top: 3rem;">
+        <div class="join-container">
+          <h2>Vista Previa del Email de Confirmación</h2>
+          <p class="join-subtitle">Previsualización del correo electrónico que recibirán los usuarios aceptados.</p>
+          
+          <div class="join-box admin-box email-preview-box">
+            <div class="email-preview-header" style="display: flex; flex-direction: column; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1rem;">
+              <div class="email-field"><strong>Asunto:</strong> <span id="preview-subject" style="color: var(--accent-cyan, #00e5ff);">¡Te damos la bienvenida a la Beta Privada de Entity!</span></div>
+              <div class="email-field"><strong>Preheader:</strong> <span id="preview-preheader" style="color: var(--text-secondary);">Tu acceso exclusivo al Workspace inteligente de Entity está listo.</span></div>
+            </div>
+            <div class="email-preview-body-container" style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); color: var(--text-primary);">
+              <div class="email-preview-body" id="preview-body" style="line-height: 1.6;">
+                <p>Hola,</p>
+                <p>Nos alegra informarte que tu solicitud para acceder a la beta privada de <strong>Entity</strong> ha sido aceptada.</p>
+                <p>Entity es tu nuevo Workspace de escritorio inteligente donde tus agentes colaboran bajo tu control absoluto.</p>
+              </div>
+              <div class="email-preview-cta" style="margin: 1.5rem 0; text-align: center;">
+                <a href="#download" class="status-badge approved" style="text-decoration: none; padding: 0.6rem 1.2rem; font-size: 0.9rem; border-radius: 4px; text-transform: none; display: inline-block;" id="preview-cta">Descargar Entity para Escritorio</a>
+              </div>
+              <div class="email-preview-footer" id="preview-footer" style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1.5rem;">
+                Este correo fue enviado de manera automática como confirmación de tu registro en la waitlist privada de Entity. © 2026 Entity. Todos los derechos reservados.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <footer class="footer">
       <div class="footer-bottom">
