@@ -1,6 +1,6 @@
 @import "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap";
 :root {
-  --bg-color: #0d1b26;
+  --bg-color: #0d1e2c;
   --text-primary: #f0f0f0;
   --text-secondary: #a0a0a5;
   --accent-color: #00e5ff;
@@ -18,8 +18,6 @@ html {
 body {
   background-color: var(--bg-color);
   color: var(--text-primary);
-  background-image: radial-gradient(circle at top, #152938 0%, #0000 50%);
-  background-repeat: no-repeat;
   min-height: 100vh;
   font-family: Inter, sans-serif;
   line-height: 1.6;
@@ -176,7 +174,7 @@ main {
   gap: 4rem;
   width: 100%;
   min-height: auto;
-  padding-top: 1.5rem;
+  padding-top: 3rem;
   padding-bottom: 6rem;
   display: flex;
 }
@@ -201,7 +199,7 @@ main {
 .hero-body-row {
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   gap: 4rem;
   width: 100%;
   display: flex;
@@ -210,16 +208,16 @@ main {
   box-sizing: border-box;
   flex-direction: column;
   flex: 1.2;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
-  height: 215px;
+  gap: 1.5rem;
   display: flex;
 }
 .hero-supporting {
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   line-height: 1.7;
 }
 .hero-cta {
@@ -249,17 +247,26 @@ main {
 }
 .hero-visual {
   width: 100%;
-  height: 215px;
-  min-height: 215px;
+  height: auto;
+  min-height: 100%;
   color: var(--text-secondary);
-  background: #00e5ff08;
-  border: 1px dashed #00e5ff33;
+  background: transparent;
+  border: none;
   border-radius: 12px;
   flex: 1.2;
   justify-content: center;
   align-items: center;
-  margin-top: 0;
+  margin: 0;
   display: flex;
+  overflow: hidden;
+}
+
+.hero-visual-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top;
+  border-radius: 12px;
 }
 .hero-trust-badges-inline {
   box-sizing: border-box;
@@ -1429,4 +1436,14 @@ main {
 }
 .lightbox-modal.active .lightbox-img {
   transform: scale(1);
+}
+
+.hero-left-col .hero-headline {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.hero-left-col .hero-headline {
+  margin-top: 0;
+  margin-bottom: 0;
 }
