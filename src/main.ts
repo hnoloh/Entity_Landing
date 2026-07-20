@@ -302,9 +302,13 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         betaForm.removeAttribute('aria-busy');
         
         if (!response.ok) {
-          return response.json().then(errData => {
-            throw new Error(errData.error || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
-          });
+          return response.json()
+            .catch(() => {
+              return { error: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' };
+            })
+            .then(errData => {
+              throw new Error(errData.error || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
+            });
         }
         return response.json();
       })
@@ -331,7 +335,11 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         
         if (formStatusSpan) {
           formStatusSpan.classList.add('error');
-          formStatusSpan.textContent = err.message || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
+          // Mostrar mensaje de error amigable si es fallo de red (Failed to fetch)
+          const msg = (err instanceof Error && err.message && err.message !== 'Failed to fetch')
+            ? err.message
+            : 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
+          formStatusSpan.textContent = msg;
         }
       });
     }
