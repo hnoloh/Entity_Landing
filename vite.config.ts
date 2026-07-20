@@ -75,7 +75,7 @@ export default defineConfig({
                 res.end(JSON.stringify({ error: 'Invalid JSON' }));
               }
             });
-          } else if (req.url === '/api/registrations' && req.method === 'GET') {
+                    } else if (req.url === '/api/registrations' && req.method === 'GET') {
             // Obtener listado de la waitlist (FIA-052)
             try {
               const filePath = path.join(__dirname, 'registrations.json');
@@ -91,6 +91,64 @@ export default defineConfig({
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify({ error: 'Error al leer los registros de la waitlist.' }));
             }
+          } else if (req.url === '/api/registrations/status' && req.method === 'POST') {
+            let body = '';
+            req.on('data', (chunk) => {
+              body += chunk;
+            });
+            req.on('end', () => {
+              try {
+                const data = JSON.parse(body);
+                const { email, status } = data;
+                if (!email || !status) {
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'El correo y el estado son obligatorios.' }));
+                  return;
+                }
+                const allowedStatuses = ['Pending', 'Approved', 'Rejected'];
+                if (!allowedStatuses.includes(status)) {
+                  res.statusCode = 400;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'Estado inválido.' }));
+                  return;
+                }
+
+                const filePath = path.join(__dirname, 'registrations.json');
+                if (!fs.existsSync(filePath)) {
+                  res.statusCode = 404;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'Registro inexistente.' }));
+                  return;
+                }
+
+                let registrations = [];
+                try {
+                  registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                } catch {
+                  registrations = [];
+                }
+
+                const index = registrations.findIndex((r: { email: string }) => r.email === email);
+                if (index === -1) {
+                  res.statusCode = 404;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ error: 'Registro inexistente.' }));
+                  return;
+                }
+
+                registrations[index].status = status;
+                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ message: 'Estado actualizado con éxito.', registration: registrations[index] }));
+              } catch {
+                res.statusCode = 400;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ error: 'Invalid JSON' }));
+              }
+            });
           } else {
             next();
           }

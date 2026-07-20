@@ -1386,3 +1386,38 @@ main {
   border: 1px solid rgba(255, 183, 77, 0.2);
 }
 
+.status-badge.approved {
+  color: #4db6ac;
+  background: rgba(77, 182, 172, 0.1);
+  border: 1px solid rgba(77, 182, 172, 0.2);
+}
+
+.status-badge.rejected {
+  color: #e57373;
+  background: rgba(229, 115, 115, 0.1);
+  border: 1px solid rgba(229, 115, 115, 0.2);
+}
+
+.status-select {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.status-select:focus {
+  border-color: var(--accent-cyan, #00e5ff);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.2);
+}
+
+.status-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+

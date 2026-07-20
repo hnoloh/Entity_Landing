@@ -30,6 +30,7 @@ if (adminApp) {
           <p class="join-subtitle">Registros persistidos en el sistema local.</p>
           
           <div class="join-box admin-box">
+            <div id="admin-status-container"></div>
             <div id="waitlist-content">
               <p class="status-message">Cargando solicitudes de la beta...</p>
             </div>
@@ -45,6 +46,7 @@ if (adminApp) {
   `;
 
   const contentDiv = document.getElementById('waitlist-content');
+  const statusContainer = document.getElementById('admin-status-container');
 
   const renderError = (message: string) => {
     if (contentDiv) {
@@ -66,6 +68,22 @@ if (adminApp) {
     }
   };
 
+  const showUpdateError = (message: string) => {
+    if (statusContainer) {
+      statusContainer.innerHTML = `
+        <div class="status-message error" role="alert" style="display: block; margin-bottom: 1rem;">
+          <strong>Error al actualizar el estado:</strong> ${message}
+        </div>
+      `;
+    }
+  };
+
+  const clearUpdateError = () => {
+    if (statusContainer) {
+      statusContainer.innerHTML = '';
+    }
+  };
+
   const renderTable = (registrations: Registration[]) => {
     if (contentDiv) {
       const rows = registrations
@@ -75,7 +93,13 @@ if (adminApp) {
           <td><code class="email-code">${escapeHtml(r.email)}</code></td>
           <td>${formatDate(r.registeredAt)}</td>
           <td><span class="source-tag">${escapeHtml(r.origen || 'Landing Beta Form')}</span></td>
-          <td><span class="status-badge ${r.status.toLowerCase()}">${escapeHtml(r.status)}</span></td>
+          <td>
+            <select class="status-select status-badge ${r.status.toLowerCase()}" data-email="${escapeHtml(r.email)}">
+              <option value="Pending" ${r.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Approved" ${r.status === 'Approved' ? 'selected' : ''}>Approved</option>
+              <option value="Rejected" ${r.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+          </td>
         </tr>
       `
         )
@@ -98,6 +122,42 @@ if (adminApp) {
           </table>
         </div>
       `;
+
+      // Attach change listeners to select elements
+      const selects = contentDiv.querySelectorAll<HTMLSelectElement>('.status-select');
+      selects.forEach((select) => {
+        select.addEventListener('change', async () => {
+          const email = select.getAttribute('data-email');
+          const newStatus = select.value;
+          if (!email) return;
+
+          select.disabled = true;
+          clearUpdateError();
+
+          try {
+            const response = await fetch('/api/registrations/status', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email, status: newStatus })
+            });
+
+            const data = await response.json().catch(() => ({ error: 'Error inesperado del servidor.' }));
+
+            if (!response.ok) {
+              throw new Error(data.error || 'Error en respuesta HTTP.');
+            }
+
+            // Reload data to reflect state
+            fetchAndRender();
+          } catch (err) {
+            const message = err instanceof Error ? err.message : 'Error de conexión con el servidor.';
+            showUpdateError(message);
+            fetchAndRender();
+          }
+        });
+      });
     }
   };
 
@@ -127,28 +187,33 @@ if (adminApp) {
     }
   };
 
-  // Fetch registrations
-  fetch('/api/registrations')
-    .then((response) => {
-      if (!response.ok) {
-        return response.json()
-          .catch(() => ({ error: 'Fallo inesperado del servidor.' }))
-          .then((err) => {
-            throw new Error(err.error || 'Error en respuesta HTTP.');
-          });
-      }
-      return response.json();
-    })
-    .then((data: Registration[]) => {
-      if (!Array.isArray(data)) {
-        renderError('El formato de datos devuelto es incorrecto.');
-      } else if (data.length === 0) {
-        renderEmpty();
-      } else {
-        renderTable(data);
-      }
-    })
-    .catch((err) => {
-      renderError(err.message || 'Error de conexión con el servidor.');
-    });
+  // Encapuslate fetch logic so it can be called repeatedly
+  const fetchAndRender = () => {
+    fetch('/api/registrations')
+      .then((response) => {
+        if (!response.ok) {
+          return response.json()
+            .catch(() => ({ error: 'Fallo inesperado del servidor.' }))
+            .then((err) => {
+              throw new Error(err.error || 'Error en respuesta HTTP.');
+            });
+        }
+        return response.json();
+      })
+      .then((data: Registration[]) => {
+        if (!Array.isArray(data)) {
+          renderError('El formato de datos devuelto es incorrecto.');
+        } else if (data.length === 0) {
+          renderEmpty();
+        } else {
+          renderTable(data);
+        }
+      })
+      .catch((err) => {
+        renderError(err.message || 'Error de conexión con el servidor.');
+      });
+  };
+
+  // Initial fetch
+  fetchAndRender();
 }
