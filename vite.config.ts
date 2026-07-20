@@ -1,4 +1,6 @@
 import { defineConfig } from 'vite';
+import fs from 'fs';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -27,6 +29,24 @@ export default defineConfig({
                   res.end(JSON.stringify({ error: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' }));
                   return;
                 }
+
+                // Persistir solicitud de beta (FIA-048)
+                const filePath = path.join(__dirname, 'registrations.json');
+                let registrations = [];
+                if (fs.existsSync(filePath)) {
+                  try {
+                    registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+                  } catch {
+                    registrations = [];
+                  }
+                }
+                registrations.push({
+                  email,
+                  status: 'Pending',
+                  registeredAt: new Date().toISOString()
+                });
+                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
                 res.end(JSON.stringify({ message: '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.' }));
