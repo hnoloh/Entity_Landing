@@ -290,38 +290,48 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
         formStatusSpan.style.display = 'block';
       }
 
-      // Confirmación o error simulado tras completar el estado de envío (FIA-045 & FIA-046)
-      setTimeout(() => {
+      // Enviar petición HTTP real (FIA-047)
+      fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: value })
+      })
+      .then(response => {
         betaForm.removeAttribute('aria-busy');
         
-        if (value === 'qa.error@entity.test') {
-          // Rama de error simulado determinista (FIA-046)
-          betaForm.classList.remove('is-submitting');
-          betaEmailInput.disabled = false;
-          
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Solicitar acceso a la Beta';
-          }
-          
-          if (formStatusSpan) {
-            formStatusSpan.classList.add('error');
-            formStatusSpan.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
-          }
-        } else {
-          // Rama de éxito / confirmación simulada (FIA-045)
-          betaForm.classList.remove('is-submitting');
-          betaForm.classList.add('is-submitted');
-          
-          if (submitBtn) {
-            submitBtn.textContent = 'Solicitud Enviada';
-          }
-          
-          if (formStatusSpan) {
-            formStatusSpan.textContent = '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
-          }
+        if (!response.ok) {
+          throw new Error();
         }
-      }, 1000);
+        return response.json();
+      })
+      .then(data => {
+        betaForm.classList.remove('is-submitting');
+        betaForm.classList.add('is-submitted');
+        
+        if (submitBtn) {
+          submitBtn.textContent = 'Solicitud Enviada';
+        }
+        
+        if (formStatusSpan) {
+          formStatusSpan.textContent = data.message || '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
+        }
+      })
+      .catch(() => {
+        betaForm.classList.remove('is-submitting');
+        betaEmailInput.disabled = false;
+        
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Solicitar acceso a la Beta';
+        }
+        
+        if (formStatusSpan) {
+          formStatusSpan.classList.add('error');
+          formStatusSpan.textContent = 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
+        }
+      });
     }
   });
 
