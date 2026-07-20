@@ -813,4 +813,81 @@ describe('Admin Waitlist Dashboard', () => {
 
     vi.unstubAllGlobals();
   });
+
+  it('should render the email confirmation preview correctly in admin view (FIA-055)', async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now()); // force reload
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const previewRegion = document.getElementById('email-preview-region');
+    expect(previewRegion).not.toBeNull();
+
+    // Verify presence of Subject, Preheader, Body, CTA and Footer
+    const subject = document.getElementById('preview-subject');
+    expect(subject).not.toBeNull();
+    expect(subject?.textContent).toContain('¡Te damos la bienvenida a la Beta Privada de Entity!');
+
+    const preheader = document.getElementById('preview-preheader');
+    expect(preheader).not.toBeNull();
+    expect(preheader?.textContent).toContain('Tu acceso exclusivo al Workspace inteligente de Entity está listo.');
+
+    const body = document.getElementById('preview-body');
+    expect(body).not.toBeNull();
+    expect(body?.textContent).toContain('Workspace de escritorio inteligente');
+
+    const cta = document.getElementById('preview-cta');
+    expect(cta).not.toBeNull();
+    expect(cta?.textContent).toContain('Descargar Entity para Escritorio');
+
+    const footer = document.getElementById('preview-footer');
+    expect(footer).not.toBeNull();
+    expect(footer?.textContent).toContain('waitlist privada de Entity. © 2026 Entity');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should verify email preview is purely visual, does not trigger mail delivery or modify registrations.json (FIA-055)', async () => {
+    const filePath = path.join(__dirname, '../registrations.json');
+    const beforeExists = fs.existsSync(filePath);
+    let beforeContent = '';
+    if (beforeExists) {
+      beforeContent = fs.readFileSync(filePath, 'utf-8');
+    }
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => []
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    // Verify registrations.json hasn't been altered or created
+    if (beforeExists) {
+      expect(fs.readFileSync(filePath, 'utf-8')).toBe(beforeContent);
+    } else {
+      expect(fs.existsSync(filePath)).toBe(false);
+    }
+
+    // Verify no email sender fetch was triggered (only /api/registrations)
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should not expose email preview on the public landing page (FIA-055)', async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import('../src/main.ts?t=' + Date.now());
+    const app = document.querySelector<HTMLDivElement>('#app')!;
+    
+    expect(app.querySelector('#email-preview-region')).toBeNull();
+    expect(app.querySelector('#preview-subject')).toBeNull();
+  });
 });
