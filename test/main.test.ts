@@ -589,7 +589,7 @@ describe('Admin Waitlist Dashboard', () => {
     const cells = table?.querySelectorAll('tbody td');
     expect(cells?.[0].textContent).toBe('admin.test@entity.test');
     expect(cells?.[2].textContent).toBe('Landing Beta Form');
-    expect(cells?.[3].textContent).toBe('Pending');
+    expect(cells?.[3].querySelector('select')?.value).toBe('Pending');
 
     vi.unstubAllGlobals();
   });
@@ -606,6 +606,179 @@ describe('Admin Waitlist Dashboard', () => {
 
     expect(document.body.innerHTML).toContain('Error al cargar la waitlist:');
     expect(document.body.innerHTML).toContain('Error al conectar con la base de datos local.');
+    vi.unstubAllGlobals();
+  });
+
+  it('should successfully update registration status to Approved (FIA-053)', async () => {
+    const mockData = [
+      {
+        email: 'update.test@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockImplementation((url, options) => {
+      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+        return Promise.resolve({
+          ok: true,
+          json: async () => mockData
+        });
+      }
+      if (url === '/api/registrations/status' && options && options.method === 'POST') {
+        const body = JSON.parse(options.body);
+        if (body.email === 'update.test@entity.test') {
+          mockData[0].status = body.status;
+          return Promise.resolve({
+            ok: true,
+            json: async () => ({ message: 'Estado actualizado con éxito.', registration: mockData[0] })
+          });
+        }
+      }
+      return Promise.reject(new Error('Unknown request'));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const select = document.querySelector<HTMLSelectElement>('.status-select');
+    expect(select).not.toBeNull();
+    expect(select?.value).toBe('Pending');
+
+    // Trigger change
+    select!.value = 'Approved';
+    select!.dispatchEvent(new window.Event('change', { bubbles: true }));
+
+    // Wait for the async flow to complete (fetch update then fetch reload)
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations/status', expect.objectContaining({
+      method: 'POST',
+      body: JSON.stringify({ email: 'update.test@entity.test', status: 'Approved' })
+    }));
+
+    const updatedSelect = document.querySelector<HTMLSelectElement>('.status-select');
+    expect(updatedSelect?.value).toBe('Approved');
+    expect(updatedSelect?.classList.contains('approved')).toBe(true);
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should show error and revert on invalid status change (FIA-053)', async () => {
+    const mockData = [
+      {
+        email: 'invalid.status@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockImplementation((url) => {
+      if (url === '/api/registrations') {
+        return Promise.resolve({
+          ok: true,
+          json: async () => mockData
+        });
+      }
+      if (url === '/api/registrations/status') {
+        return Promise.resolve({
+          ok: false,
+          status: 400,
+          json: async () => ({ error: 'Estado inválido.' })
+        });
+      }
+      return Promise.reject(new Error('Unknown request'));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const select = document.querySelector<HTMLSelectElement>('.status-select');
+    select!.value = 'Approved';
+    select!.dispatchEvent(new window.Event('change', { bubbles: true }));
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    const errorContainer = document.getElementById('admin-status-container');
+    expect(errorContainer?.textContent).toContain('Error al actualizar el estado: Estado inválido.');
+    
+    // Select should reload back to Pending
+    const reloadedSelect = document.querySelector<HTMLSelectElement>('.status-select');
+    expect(reloadedSelect?.value).toBe('Pending');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should show error when updating non-existent registration (FIA-053)', async () => {
+    const mockData = [
+      {
+        email: 'nonexistent@entity.test',
+        status: 'Pending',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockImplementation((url) => {
+      if (url === '/api/registrations') {
+        return Promise.resolve({
+          ok: true,
+          json: async () => mockData
+        });
+      }
+      if (url === '/api/registrations/status') {
+        return Promise.resolve({
+          ok: false,
+          status: 404,
+          json: async () => ({ error: 'Registro inexistente.' })
+        });
+      }
+      return Promise.reject(new Error('Unknown request'));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const select = document.querySelector<HTMLSelectElement>('.status-select');
+    select!.value = 'Rejected';
+    select!.dispatchEvent(new window.Event('change', { bubbles: true }));
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    const errorContainer = document.getElementById('admin-status-container');
+    expect(errorContainer?.textContent).toContain('Error al actualizar el estado: Registro inexistente.');
+
+    vi.unstubAllGlobals();
+  });
+
+  it('should persist registration status across dashboard reload (FIA-053)', async () => {
+    const mockData = [
+      {
+        email: 'persist.test@entity.test',
+        status: 'Rejected',
+        registeredAt: '2026-07-20T08:00:00.000Z',
+        origen: 'Landing Beta Form'
+      }
+    ];
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockData
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await import('../src/admin.ts?t=' + Date.now());
+    await new Promise((resolve) => setTimeout(resolve, 20));
+
+    const select = document.querySelector<HTMLSelectElement>('.status-select');
+    expect(select?.value).toBe('Rejected');
+    expect(select?.classList.contains('rejected')).toBe(true);
+
     vi.unstubAllGlobals();
   });
 });
