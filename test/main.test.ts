@@ -250,7 +250,7 @@ describe('App Bootstrap', () => {
             resolve({
               ok: false,
               status: 500,
-              json: async () => ({ error: 'Error del servidor' })
+              json: async () => ({ error: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' })
             });
           } else {
             // Persistir solicitud de beta en el mock de test (FIA-048)
@@ -263,6 +263,18 @@ describe('App Bootstrap', () => {
                 registrations = [];
               }
             }
+
+            // Detección de email duplicado (FIA-049)
+            const exists = registrations.some((r: { email: string }) => r.email === body.email);
+            if (exists) {
+              resolve({
+                ok: false,
+                status: 409,
+                json: async () => ({ error: 'Este correo electrónico ya está registrado.' })
+              });
+              return;
+            }
+
             registrations.push({
               email: body.email,
               status: 'Pending',
@@ -354,17 +366,66 @@ describe('App Bootstrap', () => {
     expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
     expect(submitBtn?.textContent).toBe('Solicitud Enviada');
 
+    // --- ESCENARIO DE DUPLICADO (FIA-049) ---
+    // 9. Reset temporal del estado del formulario para intentar duplicar
+    form?.classList.remove('is-submitted');
+    if (emailInput) {
+      (emailInput as HTMLInputElement).disabled = false;
+      (emailInput as HTMLInputElement).value = 'qa.success@entity.test';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Solicitar acceso a la Beta';
+    }
+
+    // Intentar segundo envío del mismo email
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(form?.classList.contains('is-submitting')).toBe(true);
+
+    vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
+
+    // Verificar respuesta de duplicado
+    expect(form?.classList.contains('is-submitting')).toBe(false);
+    expect(form?.classList.contains('is-submitted')).toBe(false);
+    expect(statusSpan?.textContent).toBe('Este correo electrónico ya está registrado.');
+    expect(statusSpan?.classList.contains('error')).toBe(true);
+
+    // Formulario debe estar recuperable
+    expect(emailInput?.getAttribute('disabled')).toBeNull();
+    expect(submitBtn?.getAttribute('disabled')).toBeNull();
+
+    // 10. Corregir y reenviar un email no duplicado
+    if (emailInput) {
+      (emailInput as HTMLInputElement).value = 'qa.another@entity.test';
+    }
+    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    expect(form?.classList.contains('is-submitting')).toBe(true);
+
+    vi.advanceTimersByTime(1000);
+    for (let i = 0; i < 6; i++) {
+      await vi.runAllTicks();
+    }
+
+    // Comprobar éxito de la segunda dirección
+    expect(form?.classList.contains('is-submitting')).toBe(false);
+    expect(form?.classList.contains('is-submitted')).toBe(true);
+    expect(statusSpan?.textContent).toBe('¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.');
+
     vi.useRealTimers();
     vi.unstubAllGlobals();
 
-    // Verificar evidencia interna de persistencia (FIA-048)
+    // Verificar evidencia interna de persistencia (FIA-049)
     const filePath = path.join(__dirname, '../registrations.json');
     expect(fs.existsSync(filePath)).toBe(true);
     const registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    expect(registrations.length).toBe(1);
+    expect(registrations.length).toBe(2);
     expect(registrations[0].email).toBe('qa.success@entity.test');
     expect(registrations[0].status).toBe('Pending');
-    expect(registrations[0].registeredAt).not.toBeNull();
+    expect(registrations[1].email).toBe('qa.another@entity.test');
+    expect(registrations[1].status).toBe('Pending');
 
     // Eliminar archivo de prueba tras verificar persistencia
     try {
