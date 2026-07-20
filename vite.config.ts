@@ -3,6 +3,14 @@ import fs from 'fs';
 import path from 'path';
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        admin: path.resolve(__dirname, 'admin.html')
+      }
+    }
+  },
   plugins: [
     {
       name: 'api-register-middleware',
@@ -53,7 +61,8 @@ export default defineConfig({
                 registrations.push({
                   email,
                   status: 'Pending',
-                  registeredAt: new Date().toISOString()
+                  registeredAt: new Date().toISOString(),
+                  origen: 'Landing Beta Form' // (FIA-052)
                 });
                 fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
 
@@ -66,6 +75,22 @@ export default defineConfig({
                 res.end(JSON.stringify({ error: 'Invalid JSON' }));
               }
             });
+          } else if (req.url === '/api/registrations' && req.method === 'GET') {
+            // Obtener listado de la waitlist (FIA-052)
+            try {
+              const filePath = path.join(__dirname, 'registrations.json');
+              let registrations = [];
+              if (fs.existsSync(filePath)) {
+                registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+              }
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify(registrations));
+            } catch {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ error: 'Error al leer los registros de la waitlist.' }));
+            }
           } else {
             next();
           }
