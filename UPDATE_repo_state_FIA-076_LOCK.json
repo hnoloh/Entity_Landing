@@ -1,0 +1,18 @@
+{
+  "fia": "FIA-076",
+  "status": "Implemented",
+  "modified_files": [
+    "src/main.ts",
+    "src/admin.ts",
+    "src/unsubscribe.ts",
+    "src/api/config.ts",
+    "test/config.test.ts",
+    "test/main.test.ts"
+  ],
+  "quality_gates": [
+    "typecheck",
+    "lint",
+    "vitest",
+    "build"
+  ]
+}
