@@ -1,7 +1,11 @@
 import { defineConfig } from 'vite';
-import fs from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
+import { SQLiteRegistrationRepository, SQLiteEmailRepository } from './src/api/persistence';
+
+const dbPath = path.join(__dirname, 'entity.db');
+const regRepo = new SQLiteRegistrationRepository(dbPath);
+const emailRepo = new SQLiteEmailRepository(dbPath);
 
 async function dispatchEmail(emailData: { to: string; subject: string; preheader: string; body: string; cta: string; footer: string; sentAt: string }) {
   const { to, subject } = emailData;
@@ -26,17 +30,7 @@ async function dispatchEmail(emailData: { to: string; subject: string; preheader
       html: htmlContent
     });
   } else {
-    const sentEmailsPath = path.join(__dirname, 'sent_emails.json');
-    let sentEmails = [];
-    if (fs.existsSync(sentEmailsPath)) {
-      try {
-        sentEmails = JSON.parse(fs.readFileSync(sentEmailsPath, 'utf-8'));
-      } catch {
-        sentEmails = [];
-      }
-    }
-    sentEmails.push(emailData);
-    fs.writeFileSync(sentEmailsPath, JSON.stringify(sentEmails, null, 2), 'utf-8');
+    emailRepo.save(emailData);
   }
 }
 
@@ -87,19 +81,8 @@ export default defineConfig({
                   return;
                 }
 
-                // Persistir solicitud de beta (FIA-048)
-                const filePath = path.join(__dirname, 'registrations.json');
-                let registrations = [];
-                if (fs.existsSync(filePath)) {
-                  try {
-                    registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                  } catch {
-                    registrations = [];
-                  }
-                }
-
                 // Detección de email duplicado (FIA-049)
-                const exists = registrations.some((r: { email: string }) => r.email === email);
+                const exists = regRepo.findByEmail(email);
                 if (exists) {
                   res.statusCode = 409;
                   res.setHeader('Content-Type', 'application/json');
@@ -135,17 +118,16 @@ export default defineConfig({
                   }
                 }
 
-                registrations.push({
+                regRepo.create({
                   email,
                   status: 'Pending',
                   registeredAt,
-                  origen: 'Landing Beta Form', // (FIA-052)
+                  origen: 'Landing Beta Form',
                   confirmationEmailSent: emailSent,
                   confirmationEmailSentAt: emailSent ? registeredAt : undefined,
                   confirmationEmailStatus: emailStatus,
                   confirmationEmailError: emailError
                 });
-                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
@@ -156,14 +138,10 @@ export default defineConfig({
                 res.end(JSON.stringify({ error: 'Invalid JSON' }));
               }
             });
-                    } else if (req.url === '/api/registrations' && req.method === 'GET') {
-            // Obtener listado de la waitlist (FIA-052)
+          } else if (req.url === '/api/registrations' && req.method === 'GET') {
+            // Obtener listado de la waitlist
             try {
-              const filePath = path.join(__dirname, 'registrations.json');
-              let registrations = [];
-              if (fs.existsSync(filePath)) {
-                registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-              }
+              const registrations = regRepo.findAll();
               res.statusCode = 200;
               res.setHeader('Content-Type', 'application/json');
               res.end(JSON.stringify(registrations));
@@ -205,35 +183,20 @@ export default defineConfig({
                   return;
                 }
 
-                const filePath = path.join(__dirname, 'registrations.json');
-                if (!fs.existsSync(filePath)) {
+                const registration = regRepo.findByEmail(email);
+                if (!registration) {
                   res.statusCode = 404;
                   res.setHeader('Content-Type', 'application/json');
                   res.end(JSON.stringify({ error: 'Registro inexistente.' }));
                   return;
                 }
 
-                let registrations = [];
-                try {
-                  registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                } catch {
-                  registrations = [];
-                }
-
-                const index = registrations.findIndex((r: { email: string }) => r.email === email);
-                if (index === -1) {
-                  res.statusCode = 404;
-                  res.setHeader('Content-Type', 'application/json');
-                  res.end(JSON.stringify({ error: 'Registro inexistente.' }));
-                  return;
-                }
-
-                registrations[index].status = status;
-                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+                registration.status = status;
+                regRepo.update(registration);
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ message: 'Estado actualizado con éxito.', registration: registrations[index] }));
+                res.end(JSON.stringify({ message: 'Estado actualizado con éxito.', registration }));
               } catch {
                 res.statusCode = 400;
                 res.setHeader('Content-Type', 'application/json');
@@ -266,30 +229,15 @@ export default defineConfig({
                   return;
                 }
 
-                const filePath = path.join(__dirname, 'registrations.json');
-                if (!fs.existsSync(filePath)) {
+                const registration = regRepo.findByEmail(email);
+                if (!registration) {
                   res.statusCode = 404;
                   res.setHeader('Content-Type', 'application/json');
                   res.end(JSON.stringify({ error: 'Registro inexistente.' }));
                   return;
                 }
 
-                let registrations = [];
-                try {
-                  registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                } catch {
-                  registrations = [];
-                }
-
-                const index = registrations.findIndex((r: { email: string }) => r.email === email);
-                if (index === -1) {
-                  res.statusCode = 404;
-                  res.setHeader('Content-Type', 'application/json');
-                  res.end(JSON.stringify({ error: 'Registro inexistente.' }));
-                  return;
-                }
-
-                if (registrations[index].unsubscribed) {
+                if (registration.unsubscribed) {
                   res.statusCode = 403;
                   res.setHeader('Content-Type', 'application/json');
                   res.end(JSON.stringify({ error: 'El usuario se ha dado de baja y no puede recibir más comunicaciones.' }));
@@ -324,12 +272,12 @@ export default defineConfig({
                   }
                 }
 
-                registrations[index].invitationSent = inviteSent;
-                registrations[index].invitationSentAt = inviteSent ? registeredAt : undefined;
-                registrations[index].invitationEmailStatus = inviteStatus;
-                registrations[index].invitationEmailError = inviteError;
+                registration.invitationSent = inviteSent;
+                registration.invitationSentAt = inviteSent ? registeredAt : undefined;
+                registration.invitationEmailStatus = inviteStatus;
+                registration.invitationEmailError = inviteError;
 
-                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+                regRepo.update(registration);
 
                 if (!inviteSent) {
                   res.statusCode = 500;
@@ -340,7 +288,7 @@ export default defineConfig({
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.end(JSON.stringify({ message: 'Invitación enviada con éxito.', registration: registrations[index] }));
+                res.end(JSON.stringify({ message: 'Invitación enviada con éxito.', registration }));
               } catch {
                 res.statusCode = 400;
                 res.setHeader('Content-Type', 'application/json');
@@ -373,39 +321,25 @@ export default defineConfig({
                   return;
                 }
 
-                const filePath = path.join(__dirname, 'registrations.json');
-                if (!fs.existsSync(filePath)) {
+                const registration = regRepo.findByEmail(email);
+                if (!registration) {
                   res.statusCode = 404;
                   res.setHeader('Content-Type', 'application/json');
                   res.end(JSON.stringify({ error: 'Registro inexistente.' }));
                   return;
                 }
 
-                let registrations = [];
-                try {
-                  registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-                } catch {
-                  registrations = [];
-                }
-
-                const index = registrations.findIndex((r: { email: string }) => r.email === email);
-                if (index === -1) {
-                  res.statusCode = 404;
-                  res.setHeader('Content-Type', 'application/json');
-                  res.end(JSON.stringify({ error: 'Registro inexistente.' }));
-                  return;
-                }
-
-                if (registrations[index].unsubscribed) {
+                if (registration.unsubscribed) {
                   res.statusCode = 200;
                   res.setHeader('Content-Type', 'application/json');
                   res.end(JSON.stringify({ message: 'El usuario ya estaba dado de baja.' }));
                   return;
                 }
 
-                registrations[index].unsubscribed = true;
-                registrations[index].unsubscribedAt = new Date().toISOString();
-                fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
+                registration.unsubscribed = true;
+                registration.unsubscribedAt = new Date().toISOString();
+                
+                regRepo.update(registration);
 
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
