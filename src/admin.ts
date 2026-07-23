@@ -1,4 +1,6 @@
 import './style.css';
+import { getApiUrl } from './api/config';
+
 
 interface Registration {
   email: string;
@@ -285,7 +287,7 @@ if (adminApp) {
           clearUpdateError();
 
           try {
-            const response = await fetch('/api/registrations/status', {
+            const response = await fetch(getApiUrl('/api/registrations/status'), {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -320,7 +322,7 @@ if (adminApp) {
           clearUpdateError();
 
           try {
-            const response = await fetch('/api/registrations/invite', {
+            const response = await fetch(getApiUrl('/api/registrations/invite'), {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
@@ -373,7 +375,7 @@ if (adminApp) {
 
   // Encapuslate fetch logic so it can be called repeatedly
   const fetchAndRender = () => {
-    fetch('/api/registrations')
+    fetch(getApiUrl('/api/registrations'))
       .then((response) => {
         if (!response.ok) {
           return response.json()

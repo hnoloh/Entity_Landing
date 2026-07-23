@@ -1,5 +1,6 @@
 import './style.css';
 import * as Sentry from '@sentry/browser';
+import { getApiUrl } from './api/config';
 
 if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
@@ -43,6 +44,9 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <div class="hero-left-col">
             <h1 id="hero-headline" class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
             <p class="hero-supporting">Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
+            <div class="hero-cta">
+              <a href="#join" class="hero-btn">Unirme a la Beta</a>
+            </div>
           </div>
           <div class="hero-visual">
             <img src="/hero-test-1.png" alt="Test Hero Image" class="hero-visual-img" />
@@ -313,7 +317,7 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
       }
 
       // Enviar petición HTTP real (FIA-047)
-      fetch('/api/register', {
+      fetch(getApiUrl('/api/register'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

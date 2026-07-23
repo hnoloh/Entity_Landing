@@ -1,4 +1,6 @@
 import './style.css';
+import { getApiUrl } from './api/config';
+
 
 const unsubscribeApp = document.querySelector<HTMLDivElement>('#unsubscribe-app');
 
@@ -46,7 +48,7 @@ if (unsubscribeApp) {
       statusContainer.innerHTML = '';
 
       try {
-        const response = await fetch('/api/registrations/unsubscribe', {
+        const response = await fetch(getApiUrl('/api/registrations/unsubscribe'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
