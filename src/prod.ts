@@ -29,6 +29,6 @@ app.use((req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`[Production Server] Entity Landing corriendo en el puerto ${PORT}`);
+app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`[Production Server] Entity Landing corriendo en el puerto ${PORT} (0.0.0.0)`);
 });
