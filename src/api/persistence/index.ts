@@ -79,6 +79,16 @@ export class SQLiteRegistrationRepository {
     return this.mapRowToRegistration(row);
   }
 
+  checkConnection(): boolean {
+    try {
+      const stmt = this.db.prepare('SELECT 1');
+      stmt.get();
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   findAll(): Registration[] {
     const stmt = this.db.prepare('SELECT * FROM registrations');
     const rows = stmt.all() as any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
