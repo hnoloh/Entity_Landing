@@ -13,6 +13,8 @@ declare const __dirname: string;
 let cacheBuster = 0;
 describe('App Bootstrap', () => {
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     document.body.innerHTML = '<div id="app"></div>';
     
     // Clean up registrations.json and sent_emails.json before each test run
@@ -745,6 +747,8 @@ describe('App Bootstrap', () => {
 
 describe('Admin Waitlist Dashboard', () => {
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
     
@@ -845,7 +849,7 @@ describe('Admin Waitlist Dashboard', () => {
     ];
 
     const fetchMock = vi.fn().mockImplementation((url, options) => {
-      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+      if (url === '/api/registrations' && (!options || !options.method || options.method === 'GET')) {
         return Promise.resolve({
           ok: true,
           json: async () => mockData
@@ -1070,7 +1074,7 @@ describe('Admin Waitlist Dashboard', () => {
 
     // Verify no email sender fetch was triggered (only /api/registrations)
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations', expect.any(Object));
 
     vi.unstubAllGlobals();
   });
@@ -1090,6 +1094,8 @@ describe('Email Confirmation Dispatch (FIA-056)', () => {
   const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="app"></div>';
 
@@ -1317,6 +1323,8 @@ describe('Email Confirmation Status Display (FIA-057)', () => {
   const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
 
@@ -1463,7 +1471,7 @@ describe('Email Confirmation Status Display (FIA-057)', () => {
 
     expect(fs.existsSync(sentEmailsPath)).toBe(false);
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations', expect.any(Object));
   });
 
   it('should not expose email dispatch status on the public landing page', async () => {
@@ -1482,6 +1490,8 @@ describe('Email Invitation Preview (FIA-058)', () => {
   const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
 
@@ -1571,7 +1581,7 @@ describe('Email Invitation Preview (FIA-058)', () => {
     // Verify registrations.json hasn't been altered and sent_emails.json wasn't created
     expect(fs.existsSync(sentEmailsPath)).toBe(false);
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock).toHaveBeenCalledWith('/api/registrations');
+    expect(fetchMock).toHaveBeenCalledWith('/api/registrations', expect.any(Object));
   });
 
   it('should not expose email invitation preview on the public landing page (FIA-058)', async () => {
@@ -1589,6 +1599,8 @@ describe('Email Invitation Dispatch (FIA-059)', () => {
   const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
 
@@ -1628,7 +1640,7 @@ describe('Email Invitation Dispatch (FIA-059)', () => {
     ];
 
     const fetchMock = vi.fn().mockImplementation((url, options) => {
-      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+      if (url === '/api/registrations' && (!options || !options.method || options.method === 'GET')) {
         return Promise.resolve({
           ok: true,
           json: async () => mockData
@@ -1684,7 +1696,7 @@ describe('Email Invitation Dispatch (FIA-059)', () => {
     ];
 
     const fetchMock = vi.fn().mockImplementation((url, options) => {
-      if (url === '/api/registrations' && (!options || options.method === 'GET')) {
+      if (url === '/api/registrations' && (!options || !options.method || options.method === 'GET')) {
         return Promise.resolve({
           ok: true,
           json: async () => mockData
@@ -1727,6 +1739,8 @@ describe('Unsubscribe Flow (FIA-060)', () => {
   const registrationsPath = path.join(__dirname, '../registrations.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     if (fs.existsSync(registrationsPath)) {
       try {
@@ -1805,6 +1819,8 @@ describe('Unsubscribe Flow (FIA-060)', () => {
 });
 describe('Metrics Dashboard (FIA-061)', () => {
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
   });
@@ -1873,6 +1889,8 @@ describe('E2E QA Conversion Flow (FIA-072)', () => {
   const sentEmailsPath = path.join(__dirname, '../sent_emails.json');
 
   beforeEach(() => {
+    window.prompt = vi.fn().mockReturnValue('admin-secret-2026');
+    sessionStorage.setItem('entityAdminToken', 'admin-secret-2026');
     vi.resetModules();
     [registrationsPath, sentEmailsPath].forEach(filePath => {
       if (fs.existsSync(filePath)) {

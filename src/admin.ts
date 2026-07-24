@@ -1,6 +1,19 @@
 import './style.css';
 import { getApiUrl } from './api/config';
 
+let adminToken = sessionStorage.getItem('entityAdminToken');
+if (!adminToken) {
+  adminToken = prompt('Por favor, introduce el token de administración:');
+  if (adminToken) {
+    sessionStorage.setItem('entityAdminToken', adminToken);
+  }
+}
+
+const getAuthHeaders = () => ({
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${adminToken || ''}`
+});
+
 
 interface Registration {
   email: string;
@@ -125,7 +138,7 @@ if (adminApp) {
     if (contentDiv) {
       contentDiv.innerHTML = `
         <div class="status-message error" role="alert" style="display: block;">
-          <strong>Error al cargar la waitlist:</strong> ${message}
+          <strong>Error al cargar la waitlist:</strong> ${escapeHtml(message)}
         </div>
       `;
     }
@@ -202,7 +215,7 @@ if (adminApp) {
     if (statusContainer) {
       statusContainer.innerHTML = `
         <div class="status-message error" role="alert" style="display: block; margin-bottom: 1rem;">
-          <strong>Error al actualizar el estado:</strong> ${message}
+          <strong>Error al actualizar el estado:</strong> ${escapeHtml(message)}
         </div>
       `;
     }
@@ -242,7 +255,7 @@ if (adminApp) {
           <td>${formatDate(r.registeredAt)}</td>
           <td><span class="source-tag">${escapeHtml(r.origen || 'Landing Beta Form')}</span></td>
           <td>
-            <select class="status-select status-badge ${r.status.toLowerCase()}" data-email="${escapeHtml(r.email)}">
+            <select class="status-select status-badge ${escapeHtml(r.status.toLowerCase())}" data-email="${escapeHtml(r.email)}">
               <option value="Pending" ${r.status === 'Pending' ? 'selected' : ''}>Pending</option>
               <option value="Approved" ${r.status === 'Approved' ? 'selected' : ''}>Approved</option>
               <option value="Rejected" ${r.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
@@ -289,9 +302,7 @@ if (adminApp) {
           try {
             const response = await fetch(getApiUrl('/api/registrations/status'), {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
+              headers: getAuthHeaders(),
               body: JSON.stringify({ email, status: newStatus })
             });
 
@@ -324,9 +335,7 @@ if (adminApp) {
           try {
             const response = await fetch(getApiUrl('/api/registrations/invite'), {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
+              headers: getAuthHeaders(),
               body: JSON.stringify({ email })
             });
 
@@ -369,13 +378,13 @@ if (adminApp) {
         second: '2-digit'
       });
     } catch {
-      return isoStr;
+      return escapeHtml(isoStr);
     }
   };
 
   // Encapuslate fetch logic so it can be called repeatedly
   const fetchAndRender = () => {
-    fetch(getApiUrl('/api/registrations'))
+    fetch(getApiUrl('/api/registrations'), { headers: getAuthHeaders() })
       .then((response) => {
         if (!response.ok) {
           return response.json()
