@@ -22,18 +22,30 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <span class="slogan">Y si el código...<br />Ya no fuera el centro?</span>
     </div>
     <nav class="visual-nav">
-      <a href="#hero" class="nav-item">Inicio</a>
       <a href="#producto" class="nav-item">Producto</a>
       <a href="#join" class="nav-item">Beta</a>
-      <a href="#github" class="nav-item">GitHub</a>
+      <div class="nav-item dropdown-container" tabindex="0">
+        <span class="dropdown-trigger">Docs</span>
+        <div class="dropdown-menu">
+          <div class="dropdown-menu-inner">
+            <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="dropdown-item">Product Brief</a>
+            <a href="/docs/METODO%20Entity.pdf" target="_blank" class="dropdown-item">Entity Method</a>
+          </div>
+        </div>
+      </div>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
-        <a href="#hero" class="mobile-nav-item">Inicio</a>
         <a href="#producto" class="mobile-nav-item">Producto</a>
         <a href="#join" class="mobile-nav-item">Beta</a>
-        <a href="#github" class="mobile-nav-item">GitHub</a>
+        <div class="mobile-nav-item mobile-dropdown-container">
+          <span class="mobile-dropdown-trigger">Docs</span>
+          <div class="mobile-dropdown-menu">
+            <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="mobile-dropdown-item">Product Brief</a>
+            <a href="/docs/METODO%20Entity.pdf" target="_blank" class="mobile-dropdown-item">Entity Method</a>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -123,12 +135,17 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="join-container">
         <h2 id="join-title">Únete a la Beta</h2>
         <p class="join-subtitle">
-          Entity se encuentra actualmente en fase de <strong>MVP y desarrollo activo</strong>. Estamos preparando nuestra primera <strong>beta privada</strong> con <strong>acceso anticipado</strong> limitado para dar forma al futuro del trabajo con inteligencia artificial.
+          Asegura tu plaza en la <strong>beta privada</strong> y forma parte del desarrollo de Entity. <br><span style="opacity: 0.9; font-size: 0.95em; display: inline-block; margin-top: 8px;">ℹ️ <strong>Nota:</strong> Durante la Beta la app es 100% gratuita (BYOK / Ollama Local). Entity pasará a ser un software de suscripción tras el lanzamiento v1.0.</span>
         </p>
         <div class="join-box">
-          <p class="join-description">
-            Si deseas experimentar cómo los agentes especializados colaboran de manera conjunta y coordinada bajo tu control directo en un entorno de escritorio, solicita tu plaza en nuestra lista de espera.
-          </p>
+          <div class="join-benefits">
+            <h4>🎁 Beneficios exclusivos para Beta Testers</h4>
+            <ul>
+              <li><strong>Acceso Inmediato:</strong> Prueba Entis y Grupos secuenciales en tu escritorio.</li>
+              <li><strong>Licencia Pro de Por Vida:</strong> Gratis para quienes nos ayuden con su feedback.</li>
+              <li><strong>Contacto Directo:</strong> Canal exclusivo para hablar con el creador y sugerir mejoras.</li>
+            </ul>
+          </div>
           <form id="beta-form" class="beta-form" aria-label="Formulario de registro para la beta" onsubmit="event.preventDefault();" novalidate>
             <div class="form-group">
               <label for="beta-email" class="form-label">Correo Electrónico</label>
@@ -153,32 +170,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
   </main>
   <footer class="footer reveal-element">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <h3>Entity</h3>
-        <p>Y si el código ya no fuera el centro?</p>
-      </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Producto</h4>
-          <a href="#" class="footer-link">Características</a>
-          <a href="#" class="footer-link">Roadmap</a>
-          <a href="#" class="footer-link">Precios</a>
-        </div>
-        <div class="footer-col">
-          <h4>Comunidad</h4>
-          <a href="#" class="footer-link">Discord</a>
-          <a href="#" class="footer-link">GitHub</a>
-          <a href="#" class="footer-link">Twitter</a>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <a href="#" class="footer-link">Privacidad</a>
-          <a href="#" class="footer-link">Términos</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom" style="border-top: none; margin-top: 0;">
       <p>&copy; 2026 Entity. Todos los derechos reservados.</p>
     </div>
   </footer>
@@ -479,7 +471,12 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
     if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
 
     lightboxModal.addEventListener('click', (e) => {
-      if (e.target === lightboxModal || e.target === lightboxImg) closeLightbox();
+      if (e.target === lightboxModal) closeLightbox();
+    });
+
+    lightboxImg.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      closeLightbox();
     });
 
     document.addEventListener('keydown', (e) => {

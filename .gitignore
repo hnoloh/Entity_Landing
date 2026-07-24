@@ -26,4 +26,7 @@ dist-ssr
 # Temporary files
 scratch/
 test_output.txt
-\n*.db
+*.db
+entity.db
+.env
+.env.*

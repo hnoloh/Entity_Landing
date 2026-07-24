@@ -1,4 +1,6 @@
 import http from 'http';
+import dotenv from 'dotenv';
+dotenv.config();
 import url from 'url';
 import nodemailer from 'nodemailer';
 import { SQLiteRegistrationRepository, SQLiteEmailRepository } from './api/persistence';

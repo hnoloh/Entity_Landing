@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^10.67.0",
+    "dotenv": "^17.4.2",
     "nodemailer": "^9.0.3"
   }
 }
