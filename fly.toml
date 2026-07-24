@@ -1,0 +1,21 @@
+app = "entity-landing"
+primary_region = "mad"
+
+[build]
+
+[env]
+  PORT = "3000"
+  VITE_API_BASE_URL = ""
+  DB_PATH = "/app/data/entity.db"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+[mounts]
+  source = "entity_data"
+  destination = "/app/data"
