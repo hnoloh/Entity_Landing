@@ -1223,6 +1223,8 @@ main {
   margin-top: 1.5rem;
   padding: 0.4rem;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .pf-tab {
   color: var(--text-secondary);

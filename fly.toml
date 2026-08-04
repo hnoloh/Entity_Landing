@@ -1,5 +1,5 @@
-app = "entity-landing"
-primary_region = "mad"
+app = "entity-app"
+primary_region = "cdg"
 
 [build]
 

@@ -110,10 +110,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         
         <!-- Tarjeta Workspace -->
         <div id="intro-entity" class="narrativa-card">
-          <h3>Todo ocurre en un único lugar.</h3>
-          <p class="intro-text-mini">
-            Configuración, conversaciones, Entis, grupos secuenciales e historial dentro de un mismo Workspace.
-          </p>
+          <h3>Un Ecosistema Avanzado.</h3>
+          <ul class="problema-bullets-mini">
+            <li><strong>IA Híbrida:</strong> Local nativa (Ollama) y Cloud Multi-Proveedor.</li>
+            <li><strong>Grupos Avanzados:</strong> Secuenciales, Loops iterativos y Paralelos.</li>
+            <li><strong>Tool Belt:</strong> Terminal, archivos y generación de PDF/HTML.</li>
+            <li><strong>UX Premium:</strong> Autoguardado silencioso e interfaz nativa.</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -122,8 +125,12 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
         <button class="pf-tab active" role="tab" aria-selected="true" data-target="workspace">Workspace</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="entis">Entis</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="sequential">Grupos Secuenciales</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="editorgrupos">Editor de Grupos</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="gruposavanzados">Grupos Avanzados</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="chat">Chat Desacoplado</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="proveedores">Múltiples Proveedores</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="consola">Herramienta Consola</button>
       </div>
       <div class="producto-visual">
         <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
@@ -218,13 +225,29 @@ const viewAssets: Record<string, { src: string; alt: string }> = {
     src: '/FIA-32_Implementar vista entis.png',
     alt: 'Vista Entis de Entity'
   },
-  sequential: {
-    src: '/FIA-33_Implementar vista secuencial grupos.png',
-    alt: 'Vista de Sequential Groups de Entity'
+  editorgrupos: {
+    src: '/Editor de grupo.png',
+    alt: 'Editor de Grupos de Entity'
+  },
+  gruposavanzados: {
+    src: '/Grupos avanzados.png',
+    alt: 'Grupos Avanzados de Entity'
   },
   chat: {
     src: '/Floating Chat.png',
     alt: 'Vista de Chat Desacoplado de Entity'
+  },
+  herramientas: {
+    src: '/Herramientas.png',
+    alt: 'Herramientas de Entity'
+  },
+  proveedores: {
+    src: '/Multiples proveedores.png',
+    alt: 'Múltiples Proveedores de Entity'
+  },
+  consola: {
+    src: '/Consola.png',
+    alt: 'Consola de Entity'
   }
 };
 

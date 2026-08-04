@@ -1,20 +1,14 @@
 # Entity Landing
 
-Landing page para **Entity Workspace**, un espacio de trabajo de escritorio donde agentes de inteligencia artificial especializados colaboran de forma organizada y estructurada bajo el control del usuario.
+Web Oficial para **Entity Workspace**, la aplicación desktop híbrida definitiva donde tus agentes de inteligencia artificial (Entis) colaboran mediante herramientas y arquitecturas avanzadas bajo tu control. Esta web representa el frontend de la Release Candidate del TFM.
 
-## 🚀 Características Implementadas
+## 🚀 Características Avanzadas (Web y App)
 
-- **Navegación Fluida (HUD Shell):** Layout responsivo en formato HUD premium, con logotipo, eslogan y enlaces de anclaje internos para Inicio, Producto y Beta.
-- **Menú Móvil Funcional:** Botón de menú responsive con soporte de navegación mediante teclado (`:focus-visible`), drawer de navegación lateral y cierre automático al hacer clic en enlaces o fuera del panel.
-- **Estructura Narrativa Unificada:** Sección de valor y visión unificada mediante un grid responsivo de 3 columnas:
-  - **El Problema:** El caos actual de trabajar con IA (múltiples modelos y desorden).
-  - **La Visión:** La necesidad de estructurar la interacción en un espacio de trabajo real.
-  - **El Workspace:** Resumen de que todo ocurre en un único lugar (configuración, conversaciones, entis y grupos secuenciales).
-- **Selector de Demostración Interactivo:** Permite alternar instantáneamente entre tres capturas reales del producto dentro del *Product Frame* sin retardos visuales gracias al preloading en caché:
-  - **Workspace**
-  - **Entis**
-  - **Grupos Secuenciales**
-- **Optimización de Recursos:** Carga asíncrona de imágenes (`decoding="async"`) y prioridad alta de renderizado (`fetchpriority="high"`).
+- **Navegación Fluida (HUD Shell):** Layout responsivo en formato HUD premium, con preloading de imágenes y navegación optimizada.
+- **Backend Real (Node.js & SQLite):** El backend de esta landing opera con un sistema Node real, utilizando SQLite para persistencia concurrente segura y un middleware blindado contra ataques (límite de payload de 10KB).
+- **Seguridad Garantizada:** Panel de administración protegido por Token estricto y sanitización XSS incorporada (`escapeHtml`) en el renderizado de datos.
+- **Estructura Narrativa Unificada:** Exposición del ecosistema avanzado de Entity (Grupos Loop, Topologías No Secuenciales, Modelos Híbridos Locales/Cloud y el nuevo Tool Belt).
+- **Selector de Demostración Interactivo:** Renderizado ultra-rápido de las vistas del Workspace, Entis, Grupos y Chat Desacoplado.
 
 ## 🛠️ Tecnologías y Configuración
 
