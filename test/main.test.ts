@@ -249,11 +249,27 @@ describe('App Bootstrap', () => {
     expect(freeCTA?.textContent).toBe('Descargar Entity Free');
     expect(freeCTA?.getAttribute('href')).toBe('#descargar');
     
-    // Assert Entity Pro structural presence (neutral)
+    // Assert Entity Pro structural presence and capabilities
     expect(precios?.textContent).toContain('Entity Pro');
-    expect(precios?.textContent).toContain('Próximamente');
-    expect(precios?.textContent).not.toContain('mes');
-    expect(precios?.textContent).not.toContain('anual');
+    expect(precios?.textContent).not.toContain('Próximamente');
+    expect(precios?.textContent).toContain('8.99 €');
+    expect(precios?.textContent).toContain('/ mes');
+    expect(precios?.textContent).toContain('89 €');
+    expect(precios?.textContent).toContain('/ año');
+    
+    // Pro capabilities derived exclusively from RV-N01 and RV-N05
+    expect(precios?.textContent).toContain('Todo lo incluido en Free');
+    expect(precios?.textContent).toContain('Grupos Loop');
+    expect(precios?.textContent).toContain('Grupos No Secuenciales');
+    expect(precios?.textContent).toContain('Terminal / Filesystem avanzado');
+    expect(precios?.textContent).toContain('Máximo 2 dispositivos');
+    expect(precios?.textContent).toContain('hasta 30 días');
+    
+    // CTA Obtener Entity Pro
+    const proCTA = precios?.querySelectorAll('a.join-cta')[1];
+    expect(proCTA).not.toBeNull();
+    expect(proCTA?.textContent).toBe('Obtener Entity Pro');
+    expect(proCTA?.getAttribute('href')).toBe('#checkout-pro');
 
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');

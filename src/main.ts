@@ -171,13 +171,27 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
 
         <!-- Tarjeta Pro -->
-        <div class="narrativa-card" style="flex: 1; min-width: 300px; opacity: 0.8; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Entity Pro</h3>
-          <div style="font-size: 1.2rem; font-weight: 500; margin-bottom: 1rem; color: var(--text-secondary); min-height: 48px; display: flex; align-items: center;">Próximamente</div>
-          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; flex: 1;">
+        <div class="narrativa-card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Pro</h3>
+          
+          <!-- Mensual / Anual -->
+          <div style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
+            <div><strong>8.99 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ mes</span></div>
+            <div><strong>89 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ año</span></div>
+          </div>
+          
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
             Capacidades avanzadas para workflows complejos y automatización de alto nivel.
           </p>
-          <div style="padding: 0.6rem 1.2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-align: center; color: var(--text-secondary); cursor: not-allowed; background: rgba(255,255,255,0.03);">No disponible aún</div>
+          <ul class="problema-bullets-mini" style="margin-bottom: 2rem; flex: 1;">
+            <li><strong>Todo lo incluido en Free</strong></li>
+            <li><strong>Grupos Loop</strong></li>
+            <li><strong>Grupos No Secuenciales</strong></li>
+            <li><strong>Terminal / Filesystem avanzado</strong></li>
+            <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
+            <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
+          </ul>
+          <a href="#checkout-pro" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Obtener Entity Pro</a>
         </div>
 
       </div>
