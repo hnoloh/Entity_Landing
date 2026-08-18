@@ -1579,3 +1579,26 @@ main {
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.comparativa-table {
+  border-collapse: collapse;
+  text-align: left;
+  width: 100%;
+  font-size: 0.95rem;
+}
+.comparativa-table th,
+.comparativa-table td {
+  border-bottom: 1px solid #ffffff0d;
+  padding: 1rem 1.25rem;
+}
+.comparativa-table th {
+  color: var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #ffffff05;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.comparativa-table tr:hover td {
+  background: #00e5ff05;
+}

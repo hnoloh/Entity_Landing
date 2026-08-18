@@ -195,6 +195,86 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
 
       </div>
+      
+      <div style="margin-top: 4rem; width: 100%; max-width: 900px; margin-left: auto; margin-right: auto; overflow-x: auto;">
+        <h3 style="text-align: center; margin-bottom: 2rem; color: var(--text-primary);">Comparativa detallada</h3>
+        <table class="comparativa-table" style="width: 100%; border-collapse: collapse;" id="comparativa-matrix">
+          <thead>
+            <tr>
+              <th style="text-align: left; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">Capacidad</th>
+              <th style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);">Entity Free</th>
+              <th style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--accent-color);">Entity Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Entis</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Ilimitados</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Ilimitados</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Grupos secuenciales</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Sí</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Grupos Loop</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary);">No</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Grupos No Secuenciales</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary);">No</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Chat individual</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Completo</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Completo</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Ollama / modelos locales</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Sí</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">BYOK cloud</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Sí</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Persistencia</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Completa</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Completa</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Generación DOCX / PDF / HTML</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Completa</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Completa</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Terminal / filesystem avanzado</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary);">No</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Integrantes por Grupo</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Sin límite comercial</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sin límite comercial</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Workflows / presets avanzados futuros</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary);">No, salvo decisión expresa posterior</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Sí cuando formen parte del producto</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);">Nuevas capacidades power-user</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary);">Sólo las declaradas Free</td>
+              <td style="text-align: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--accent-color);">Las declaradas Pro</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
     <section id="join" class="region reveal-element" aria-labelledby="join-title">
       <div class="join-container">

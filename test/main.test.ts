@@ -270,6 +270,33 @@ describe('App Bootstrap', () => {
     expect(proCTA).not.toBeNull();
     expect(proCTA?.textContent).toBe('Obtener Entity Pro');
     expect(proCTA?.getAttribute('href')).toBe('#checkout-pro');
+    
+    // FIA-W01.09 contract (Comparativa detallada RV-N01)
+    const comparativa = app.querySelector('#comparativa-matrix');
+    expect(comparativa).not.toBeNull();
+    
+    // Assert all rows from RV-N01
+    const tableText = comparativa?.textContent || '';
+    expect(tableText).toContain('Entis');
+    expect(tableText).toContain('Grupos secuenciales');
+    expect(tableText).toContain('Grupos Loop');
+    expect(tableText).toContain('Grupos No Secuenciales');
+    expect(tableText).toContain('Chat individual');
+    expect(tableText).toContain('Ollama / modelos locales');
+    expect(tableText).toContain('BYOK cloud');
+    expect(tableText).toContain('Persistencia');
+    expect(tableText).toContain('Generación DOCX / PDF / HTML');
+    expect(tableText).toContain('Terminal / filesystem avanzado');
+    expect(tableText).toContain('Integrantes por Grupo');
+    expect(tableText).toContain('Workflows / presets avanzados futuros');
+    expect(tableText).toContain('Nuevas capacidades power-user');
+    
+    // Assert exactly RV-N01 terminology (No omitting, no inventing)
+    expect(tableText).toContain('Sin límite comercial');
+    expect(tableText).toContain('No, salvo decisión expresa posterior');
+    expect(tableText).toContain('Sí cuando formen parte del producto');
+    expect(tableText).toContain('Sólo las declaradas Free');
+    expect(tableText).toContain('Las declaradas Pro');
 
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
