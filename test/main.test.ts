@@ -166,50 +166,54 @@ describe('App Bootstrap', () => {
     expect(captureImg?.getAttribute('decoding')).toBe('async');
     expect(captureImg?.getAttribute('fetchpriority')).toBe('high');
 
-    // FIA-034: Selector de demostración presente
+    // FIA-034 / FIA-W01.04: Selector de demostración presente (5 ejes exactos)
     const selector = app.querySelector('.pf-selector');
     expect(selector).not.toBeNull();
     
     const tabs = selector?.querySelectorAll('.pf-tab');
-    expect(tabs?.length).toBe(8);
+    expect(tabs?.length).toBe(5);
     
-    // Vista por defecto: Workspace activo
+    expect(tabs?.[0].textContent).toBe('Agentes');
+    expect(tabs?.[1].textContent).toBe('Herramientas');
+    expect(tabs?.[2].textContent).toBe('Conocimiento');
+    expect(tabs?.[3].textContent).toBe('Datos');
+    expect(tabs?.[4].textContent).toBe('Orquestación');
+    
+    const pfDesc = app.querySelector('#pf-description');
+    expect(pfDesc).not.toBeNull();
+    
+    // Vista por defecto: Agentes activo
     expect(tabs?.[0].classList.contains('active')).toBe(true);
     expect(tabs?.[1].classList.contains('active')).toBe(false);
-    expect(tabs?.[2].classList.contains('active')).toBe(false);
-    expect(tabs?.[3].classList.contains('active')).toBe(false);
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Vista Workspace de Entity');
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Agentes de Entity');
+    expect(pfDesc?.textContent).toContain('Entis especializados');
+    expect(pfDesc?.textContent).toContain('modelos locales/cloud');
+    expect(pfDesc?.textContent).toContain('configuración a medida');
+    expect(pfDesc?.textContent).toContain('trabajo individual');
     
-    // Clic en pestaña Entis
+    // Clic en pestaña Herramientas
     tabs?.[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[0].classList.contains('active')).toBe(false);
     expect(tabs?.[1].classList.contains('active')).toBe(true);
-    expect(tabs?.[2].classList.contains('active')).toBe(false);
-    expect(tabs?.[3].classList.contains('active')).toBe(false);
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Vista Entis de Entity');
+    expect(captureImg?.getAttribute('src')).toBe('/Herramientas.png');
+    expect(pfDesc?.textContent).toContain('Tool Belt');
+    expect(pfDesc?.textContent).toContain('actuar sobre su entorno');
     
     // FIA-067: Comprobar que se añade la clase de animación al cambiar de vista
     expect(captureImg?.classList.contains('switching')).toBe(true);
     
-    // Clic en pestaña Grupos Secuenciales
+    // Clic en pestaña Conocimiento (estructural, no funcional)
     tabs?.[2].dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(tabs?.[0].classList.contains('active')).toBe(false);
-    expect(tabs?.[1].classList.contains('active')).toBe(false);
     expect(tabs?.[2].classList.contains('active')).toBe(true);
-    expect(tabs?.[3].classList.contains('active')).toBe(false);
-    expect(captureImg?.getAttribute('src')).toBe('/Editor de grupo.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Editor de Grupos de Entity');
+    expect(pfDesc?.textContent?.trim()).toBe('');
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
 
-    // Clic en pestaña Grupos Avanzados
-    tabs?.[3].dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    expect(tabs?.[0].classList.contains('active')).toBe(false);
-    expect(tabs?.[1].classList.contains('active')).toBe(false);
-    expect(tabs?.[2].classList.contains('active')).toBe(false);
-    expect(tabs?.[3].classList.contains('active')).toBe(true);
-    expect(captureImg?.getAttribute('src')).toBe('/Grupos avanzados.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Grupos Avanzados de Entity');
+    // Clic en pestaña Orquestación (estructural, no funcional)
+    tabs?.[4].dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    expect(tabs?.[4].classList.contains('active')).toBe(true);
+    expect(pfDesc?.textContent?.trim()).toBe('');
+    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
     const trustBadgesList = hero?.querySelector('.hero-trust-badges-inline');
