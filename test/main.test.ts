@@ -90,12 +90,22 @@ describe('App Bootstrap', () => {
     expect(headline?.textContent).toBe('Organiza el trabajo con inteligencia artificial.');
     const supporting = hero?.querySelector('.hero-supporting');
     expect(supporting).not.toBeNull();
-    expect(supporting?.textContent).toBe('Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.');
+    expect(supporting?.textContent).toContain('La IA necesita un Workspace');
+    expect(supporting?.textContent.toLowerCase()).not.toContain('beta');
 
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
-    const heroCtaLink = hero?.querySelector('.hero-cta a');
-    expect(heroCtaLink).not.toBeNull();
-    expect(heroCtaLink?.getAttribute('href')).toBe('#join');
+    const ctas = hero?.querySelectorAll('.hero-cta a, .hero-cta button');
+    expect(ctas?.length).toBeGreaterThanOrEqual(2);
+    
+    expect(ctas?.[0].textContent).toBe('Descargar Entity Free');
+    expect(ctas?.[0].classList.contains('join-cta')).toBe(true);
+
+    expect(ctas?.[1].textContent).toBe('Ver Entity Pro');
+    expect(ctas?.[1].classList.contains('hero-btn')).toBe(true);
+
+    const heroContent = hero?.textContent || '';
+    expect(heroContent).toContain('Free sin registro');
+    expect(heroContent).toContain('Local + Cloud BYOK');
 
     // FIA-009 / FIA-026 contract
     const introEntity = app.querySelector('#intro-entity');
