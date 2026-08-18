@@ -342,6 +342,33 @@ describe('App Bootstrap', () => {
     expect(controlText).not.toContain('Anthropic');
     expect(controlText).not.toContain('retención de 0 días');
     
+    // FIA-W01.12 contract (Casos de uso)
+    const casosUso = app.querySelector('#casos-uso');
+    expect(casosUso).not.toBeNull();
+    const casosText = casosUso?.textContent || '';
+    
+    // Exact group names
+    expect(casosText).toContain('Desarrollo y producto');
+    expect(casosText).toContain('Investigación y conocimiento');
+    expect(casosText).toContain('Operaciones y empresa');
+    expect(casosText).toContain('Creación y workflows complejos');
+    
+    // Exact features embedded (Trazabilidad estricta)
+    expect(casosText).toContain('Grupos secuenciales');
+    expect(casosText).toContain('Terminal / filesystem avanzado');
+    expect(casosText).toContain('BYOK y modelos locales');
+    expect(casosText).toContain('Chat individual');
+    expect(casosText).toContain('Persistencia completa');
+    expect(casosText).toContain('Grupos No Secuenciales');
+    expect(casosText).toContain('Generación DOCX / PDF / HTML');
+    expect(casosText).toContain('Grupos Loop');
+    
+    // Negatives (No undocumented capabilities, no communities)
+    expect(casosText).not.toContain('Comunidades');
+    expect(casosText).not.toContain('SQLite');
+    expect(casosText).not.toContain('RAG automático');
+    expect(casosText).not.toContain('ROI');
+
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();

@@ -359,6 +359,50 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
 
+    <!-- CASOS DE USO (FIA-W01.12) -->
+    <section id="casos-uso" class="region reveal-element" aria-labelledby="casos-title">
+      <div class="narrativa-header">
+        <h2 id="casos-title">Casos de uso</h2>
+        <p>Escalabilidad adaptable a cualquier necesidad funcional.</p>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 2rem auto 0; padding: 0 1rem;">
+        
+        <!-- 1. Desarrollo y producto -->
+        <div class="narrativa-card">
+          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Desarrollo y producto</h4>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+            Emplea <strong>Grupos secuenciales</strong> para flujos de revisión de código, o asigna un Enti al <strong>Terminal / filesystem avanzado</strong> para operar sobre tu base de código y gestionar refactorizaciones locales.
+          </p>
+        </div>
+
+        <!-- 2. Investigación y conocimiento -->
+        <div class="narrativa-card">
+          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Investigación y conocimiento</h4>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+            Combina <strong>BYOK y modelos locales</strong> para debatir ideas en <strong>Chat individual</strong>, y conserva tus hallazgos organizados de forma indefinida gracias a la <strong>Persistencia completa</strong>.
+          </p>
+        </div>
+
+        <!-- 3. Operaciones y empresa -->
+        <div class="narrativa-card">
+          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Operaciones y empresa</h4>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+            Configura <strong>Grupos No Secuenciales</strong> donde diferentes perfiles procesan la información en paralelo, consolidando las salidas con la <strong>Generación DOCX / PDF / HTML</strong> nativa.
+          </p>
+        </div>
+
+        <!-- 4. Creación y workflows complejos -->
+        <div class="narrativa-card">
+          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Creación y workflows complejos</h4>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
+            Diseña topologías en <strong>Grupos Loop</strong> para procesos iterativos (como revisión de contenidos), donde los Entis corrigen y refinan sus propias salidas cíclicamente.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
     <section id="join" class="region reveal-element" aria-labelledby="join-title">
       <div class="join-container">
         <h2 id="join-title">Únete a la Beta</h2>
