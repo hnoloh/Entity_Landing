@@ -145,6 +145,43 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </div>
       </div>
     </section>
+    <section id="precios" class="region reveal-element" aria-labelledby="precios-title">
+      <div class="narrativa-header">
+        <h2 id="precios-title">Precios</h2>
+        <p>Un modelo transparente para usar Entity a tu manera.</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; max-width: 900px; width: 100%; margin-top: 2rem;">
+        
+        <!-- Tarjeta Free -->
+        <div class="narrativa-card" style="flex: 1; min-width: 300px; border-color: var(--accent-color); box-shadow: 0 0 20px #00e5ff1a; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-color);">Entity Free</h3>
+          <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);">0 €</div>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+            Sin registro y sin tarjeta. Descarga directa para empezar a organizar tu trabajo con IA.
+          </p>
+          <ul class="problema-bullets-mini" style="margin-bottom: 2rem; flex: 1;">
+            <li><strong>Entis Ilimitados</strong></li>
+            <li><strong>Grupos Secuenciales</strong></li>
+            <li><strong>Chat Individual</strong></li>
+            <li><strong>Ollama / Modelos locales & BYOK Cloud</strong></li>
+            <li><strong>Persistencia completa</strong></li>
+            <li><strong>Generación DOCX / PDF / HTML</strong></li>
+          </ul>
+          <a href="#descargar" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Descargar Entity Free</a>
+        </div>
+
+        <!-- Tarjeta Pro -->
+        <div class="narrativa-card" style="flex: 1; min-width: 300px; opacity: 0.8; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-secondary);">Entity Pro</h3>
+          <div style="font-size: 1.2rem; font-weight: 500; margin-bottom: 1rem; color: var(--text-secondary); min-height: 48px; display: flex; align-items: center;">Próximamente</div>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; flex: 1;">
+            Capacidades avanzadas para workflows complejos y automatización de alto nivel.
+          </p>
+          <div style="padding: 0.6rem 1.2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; text-align: center; color: var(--text-secondary); cursor: not-allowed; background: rgba(255,255,255,0.03);">No disponible aún</div>
+        </div>
+
+      </div>
+    </section>
     <section id="join" class="region reveal-element" aria-labelledby="join-title">
       <div class="join-container">
         <h2 id="join-title">Únete a la Beta</h2>

@@ -225,6 +225,36 @@ describe('App Bootstrap', () => {
     expect(trustBadgesList?.textContent).toContain('Agnóstico');
     expect(trustBadgesList?.textContent).toContain('Privado');
 
+    // FIA-W01.07 contract (Pricing section, Entity Free)
+    const precios = app.querySelector('#precios');
+    expect(precios).not.toBeNull();
+    
+    // Assert Entity Free details
+    expect(precios?.textContent).toContain('Entity Free');
+    expect(precios?.textContent).toContain('0 €');
+    expect(precios?.textContent).toContain('Sin registro');
+    expect(precios?.textContent).toContain('sin tarjeta');
+    
+    // Assert exactly RV-N01 capabilities
+    expect(precios?.textContent).toContain('Entis Ilimitados');
+    expect(precios?.textContent).toContain('Grupos Secuenciales');
+    expect(precios?.textContent).toContain('Chat Individual');
+    expect(precios?.textContent).toContain('Ollama / Modelos locales & BYOK Cloud');
+    expect(precios?.textContent).toContain('Persistencia completa');
+    expect(precios?.textContent).toContain('Generación DOCX / PDF / HTML');
+    
+    // Assert CTA
+    const freeCTA = precios?.querySelector('a.join-cta');
+    expect(freeCTA).not.toBeNull();
+    expect(freeCTA?.textContent).toBe('Descargar Entity Free');
+    expect(freeCTA?.getAttribute('href')).toBe('#descargar');
+    
+    // Assert Entity Pro structural presence (neutral)
+    expect(precios?.textContent).toContain('Entity Pro');
+    expect(precios?.textContent).toContain('Próximamente');
+    expect(precios?.textContent).not.toContain('mes');
+    expect(precios?.textContent).not.toContain('anual');
+
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();
