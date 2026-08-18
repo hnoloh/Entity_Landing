@@ -408,8 +408,19 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <h2 id="download-title">Descarga Entity ahora</h2>
         <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
       </div>
-      <div style="display: flex; justify-content: center; margin-top: 2rem;">
-        <a href="#descargar" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center;">Descargar Entity Free</a>
+      <div class="download-container" style="max-width: 600px; margin: 2rem auto; text-align: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-secondary);">Plataformas soportadas</h3>
+        <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="justify-content: center; margin-bottom: 2rem;">
+          <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
+          <button class="pf-tab" role="tab" aria-selected="false" data-platform="macos">macOS</button>
+          <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <a id="download-cta" href="https://github.com/hnoloh/TFM_Entity/releases" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
+          <p>Descarga directa desde las releases oficiales en GitHub.</p>
+        </div>
       </div>
     </section>
 
@@ -460,7 +471,7 @@ document.addEventListener('click', (e) => {
 });
 
 // Demo Selector logic (FIA-034)
-const pfTabs = document.querySelectorAll('.pf-tab');
+const pfTabs = document.querySelectorAll('#producto .pf-tab, #casos-uso .pf-tab');
 const pfCaptureImg = document.querySelector<HTMLImageElement>('.pf-capture');
 
 const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
@@ -527,6 +538,21 @@ pfTabs.forEach(tab => {
     }
   });
 });
+
+
+  // Download OS Tabs logic (FIA-W01.14)
+  const downloadOsTabs = Array.from(document.querySelectorAll('.download-os-tabs .pf-tab')) as HTMLButtonElement[];
+  downloadOsTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      downloadOsTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      // CTA remains the same as the releases page is unified
+    });
+  });
 
   // Intersection Observer for scroll reveal (FIA-063)
   if (typeof window !== 'undefined' && window.IntersectionObserver) {

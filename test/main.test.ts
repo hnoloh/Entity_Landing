@@ -399,7 +399,30 @@ describe('App Bootstrap', () => {
     const ctaLink = downloadFree?.querySelector('.join-cta.hero-btn');
     expect(ctaLink).not.toBeNull();
     expect(ctaLink?.textContent).toMatch(/Descargar Entity Free/i);
-    expect(ctaLink?.getAttribute('href')).toBe('#descargar');
+    // Assert: cada recurso visible usa destino real autorizado.
+    expect(ctaLink?.getAttribute('href')).toBe('https://github.com/hnoloh/TFM_Entity/releases');
+    
+    // FIA-W01.14 Assertions
+    // Assert: cada plataforma visible tiene fuente real. (Evidencia: Entity-MVP-Empaquetado/README.md)
+    const osTabs = Array.from(downloadFree?.querySelectorAll('.download-os-tabs .pf-tab') || []);
+    expect(osTabs.length).toBe(3);
+    expect(osTabs[0].textContent).toBe('Windows');
+    expect(osTabs[1].textContent).toBe('macOS');
+    expect(osTabs[2].textContent).toBe('Linux');
+    
+    // Assert: no existen plataformas adicionales.
+    expect(osTabs.length).toBe(3);
+    
+    // Assert negativo: no autodetección sin contrato.
+    // Default should be Windows as the first tab without dynamic changes in HTML
+    console.log(osTabs[0].outerHTML);
+    expect(osTabs[0].classList.contains('active')).toBe(true);
+    
+    // Assert negativo: no modelo de artefactos W01.15.
+    // The CTA just goes to /releases, not specific .exe or .dmg
+    expect(ctaLink?.getAttribute('href')).not.toMatch(/.exe|.dmg|.AppImage/i);
+    
+    // Assert negativo: no validación W01.16. (No e2e flow logic added to CTA)
     expect(ctaLink?.getAttribute('href')).not.toBe('#checkout-pro');
 
 
