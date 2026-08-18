@@ -91,7 +91,7 @@ describe('App Bootstrap', () => {
     const supporting = hero?.querySelector('.hero-supporting');
     expect(supporting).not.toBeNull();
     expect(supporting?.textContent).toContain('La IA necesita un Workspace');
-    expect(supporting?.textContent.toLowerCase()).not.toContain('beta');
+    expect(supporting?.textContent?.toLowerCase()).not.toContain('beta');
 
     expect(hero?.querySelector('.hero-visual')).not.toBeNull();
     const ctas = hero?.querySelectorAll('.hero-cta a, .hero-cta button');
@@ -107,11 +107,30 @@ describe('App Bootstrap', () => {
     expect(heroContent).toContain('Free sin registro');
     expect(heroContent).toContain('Local + Cloud BYOK');
 
-    // FIA-009 / FIA-026 contract
+    // FIA-W01.03 contract (Ecosistema)
     const introEntity = app.querySelector('#intro-entity');
     expect(introEntity).not.toBeNull();
     expect(introEntity?.textContent).toContain('Un Ecosistema Avanzado.');
-    expect(introEntity?.textContent).toContain('IA Híbrida: Local nativa');
+    
+    const items = introEntity?.querySelectorAll('li');
+    expect(items?.length).toBe(5);
+    
+    expect(introEntity?.textContent).toContain('Agentes:');
+    expect(introEntity?.textContent).toContain('Herramientas:');
+    expect(introEntity?.textContent).toContain('Conocimiento:');
+    expect(introEntity?.textContent).toContain('Datos:');
+    expect(introEntity?.textContent).toContain('Orquestación:');
+    
+    expect(introEntity?.textContent).not.toContain('IA Híbrida');
+    expect(introEntity?.textContent).not.toContain('Grupos Avanzados');
+    expect(introEntity?.textContent).not.toContain('Tool Belt');
+    expect(introEntity?.textContent).not.toContain('UX Premium');
+
+    const narrativa = app.querySelector('#narrativa');
+    expect(narrativa?.textContent?.toLowerCase()).not.toContain('beta');
+    expect(narrativa?.textContent?.toLowerCase()).not.toContain('pricing');
+    expect(narrativa?.textContent?.toLowerCase()).not.toContain('free ');
+    expect(narrativa?.textContent?.toLowerCase()).not.toContain('pro ');
 
     // FIA-024 contract
     const problema = app.querySelector('#problema');
