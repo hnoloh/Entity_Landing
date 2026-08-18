@@ -276,6 +276,54 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         </table>
       </div>
     </section>
+
+    <!-- CÓMO FUNCIONA PRO (FIA-W01.10) -->
+    <section id="como-funciona-pro" class="region reveal-element" aria-labelledby="como-funciona-pro-title">
+      <div class="narrativa-header">
+        <h2 id="como-funciona-pro-title">Cómo funciona Pro</h2>
+        <p>Un proceso local-first. Pásate a Pro sin cuentas en la nube ni migraciones.</p>
+      </div>
+      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; max-width: 1000px; width: 100%; margin-top: 2rem; margin-left: auto; margin-right: auto;">
+        
+        <!-- Step 1 -->
+        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">1</div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Download</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            Descarga Entity Free. Es la <strong>misma app</strong>, sin ejecutables ni builds separados.
+          </p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">2</div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Buy</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            Adquiere tu suscripción comercial <strong>sin crear cuenta Entity</strong>.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">3</div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">License key</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            Recibe tu clave por email de forma segura. <strong>Sin migración del workspace</strong>.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">4</div>
+          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Activate Pro</h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+            Introduce la clave en la app y desbloquea el nivel avanzado <strong>sin reinstalación</strong>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
     <section id="join" class="region reveal-element" aria-labelledby="join-title">
       <div class="join-container">
         <h2 id="join-title">Únete a la Beta</h2>

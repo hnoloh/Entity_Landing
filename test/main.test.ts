@@ -297,6 +297,26 @@ describe('App Bootstrap', () => {
     expect(tableText).toContain('Sí cuando formen parte del producto');
     expect(tableText).toContain('Sólo las declaradas Free');
     expect(tableText).toContain('Las declaradas Pro');
+    
+    // FIA-W01.10 contract (Cómo funciona Pro)
+    const comoFunciona = app.querySelector('#como-funciona-pro');
+    expect(comoFunciona).not.toBeNull();
+    const comoFuncionaText = comoFunciona?.textContent || '';
+    
+    // 4 conceptual steps
+    expect(comoFuncionaText).toContain('Download');
+    expect(comoFuncionaText).toContain('Buy');
+    expect(comoFuncionaText).toContain('License key');
+    expect(comoFuncionaText).toContain('Activate Pro');
+    
+    // Core anti-drift messaging
+    expect(comoFuncionaText).toContain('misma app');
+    expect(comoFuncionaText).toContain('sin crear cuenta Entity');
+    expect(comoFuncionaText).toContain('Sin migración');
+    expect(comoFuncionaText).toContain('sin reinstalación');
+    
+    // Validate order roughly by their visual numbering
+    expect(comoFuncionaText).toMatch(/1.*Download.*2.*Buy.*3.*License key.*4.*Activate Pro/s);
 
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
