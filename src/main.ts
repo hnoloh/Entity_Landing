@@ -57,9 +57,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div class="hero-body-row">
           <div class="hero-left-col">
             <h1 id="hero-headline" class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
-            <p class="hero-supporting">Entity es un Workspace de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control. Estamos preparando nuestra primera beta privada y buscamos a los primeros usuarios.</p>
-            <div class="hero-cta">
-              <a href="#join" class="hero-btn">Unirme a la Beta</a>
+            <p class="hero-supporting">La IA necesita un Workspace. Entity es un entorno de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control.</p>
+            <div class="hero-cta" style="gap: 1rem; flex-wrap: wrap;">
+              <a href="#descargar" class="join-cta" style="margin: 0;">Descargar Entity Free</a>
+              <a href="#precios" class="hero-btn" style="margin: 0;">Ver Entity Pro</a>
+            </div>
+            <div style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.85;">
+              <span>✓ Free sin registro</span> <span style="margin: 0 0.5rem;">•</span> <span>✓ Local + Cloud BYOK</span>
             </div>
           </div>
           <div class="hero-visual">
