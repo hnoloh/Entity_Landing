@@ -1,19 +1,18 @@
-import './style.css';
-import { getApiUrl } from './api/config';
+import "./style.css";
+import { getApiUrl } from "./api/config";
 
-let adminToken = sessionStorage.getItem('entityAdminToken');
+let adminToken = sessionStorage.getItem("entityAdminToken");
 if (!adminToken) {
-  adminToken = prompt('Por favor, introduce el token de administración:');
+  adminToken = prompt("Por favor, introduce el token de administración:");
   if (adminToken) {
-    sessionStorage.setItem('entityAdminToken', adminToken);
+    sessionStorage.setItem("entityAdminToken", adminToken);
   }
 }
 
 const getAuthHeaders = () => ({
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${adminToken || ''}`
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${adminToken || ""}`,
 });
-
 
 interface Registration {
   email: string;
@@ -22,17 +21,17 @@ interface Registration {
   origen?: string;
   confirmationEmailSent?: boolean;
   confirmationEmailSentAt?: string;
-  confirmationEmailStatus?: 'pending' | 'sent' | 'error';
+  confirmationEmailStatus?: "pending" | "sent" | "error";
   confirmationEmailError?: string;
   invitationSent?: boolean;
   invitationSentAt?: string;
-  invitationEmailStatus?: 'pending' | 'sent' | 'error';
+  invitationEmailStatus?: "pending" | "sent" | "error";
   invitationEmailError?: string;
   unsubscribed?: boolean;
   unsubscribedAt?: string;
 }
 
-const adminApp = document.querySelector<HTMLDivElement>('#admin-app');
+const adminApp = document.querySelector<HTMLDivElement>("#admin-app");
 
 if (adminApp) {
   adminApp.innerHTML = `
@@ -131,8 +130,8 @@ if (adminApp) {
     </footer>
   `;
 
-  const contentDiv = document.getElementById('waitlist-content');
-  const statusContainer = document.getElementById('admin-status-container');
+  const contentDiv = document.getElementById("waitlist-content");
+  const statusContainer = document.getElementById("admin-status-container");
 
   const renderError = (message: string) => {
     if (contentDiv) {
@@ -155,7 +154,7 @@ if (adminApp) {
   };
 
   const renderMetrics = (registrations: Registration[]) => {
-    const metricsContent = document.getElementById('metrics-content');
+    const metricsContent = document.getElementById("metrics-content");
     if (!metricsContent) return;
 
     let confirmSent = 0;
@@ -168,15 +167,18 @@ if (adminApp) {
 
     let unsubscribed = 0;
 
-    registrations.forEach(r => {
-      const cStatus = r.confirmationEmailStatus || (r.confirmationEmailSent ? 'sent' : 'pending');
-      if (cStatus === 'sent') confirmSent++;
-      else if (cStatus === 'error') confirmError++;
+    registrations.forEach((r) => {
+      const cStatus =
+        r.confirmationEmailStatus ||
+        (r.confirmationEmailSent ? "sent" : "pending");
+      if (cStatus === "sent") confirmSent++;
+      else if (cStatus === "error") confirmError++;
       else confirmPending++;
 
-      const iStatus = r.invitationEmailStatus || (r.invitationSent ? 'sent' : 'pending');
-      if (iStatus === 'sent') inviteSent++;
-      else if (iStatus === 'error') inviteError++;
+      const iStatus =
+        r.invitationEmailStatus || (r.invitationSent ? "sent" : "pending");
+      if (iStatus === "sent") inviteSent++;
+      else if (iStatus === "error") inviteError++;
       else invitePending++;
 
       if (r.unsubscribed) unsubscribed++;
@@ -223,7 +225,7 @@ if (adminApp) {
 
   const clearUpdateError = () => {
     if (statusContainer) {
-      statusContainer.innerHTML = '';
+      statusContainer.innerHTML = "";
     }
   };
 
@@ -234,41 +236,46 @@ if (adminApp) {
           (r) => `
         <tr>
           <td><code class="email-code">${escapeHtml(r.email)}</code>${(() => {
-            const status = r.confirmationEmailStatus || (r.confirmationEmailSent ? 'sent' : 'pending');
-            if (status === 'sent') {
+            const status =
+              r.confirmationEmailStatus ||
+              (r.confirmationEmailSent ? "sent" : "pending");
+            if (status === "sent") {
               return ' <span class="status-badge approved email-sent-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Email Enviado</span>';
-            } else if (status === 'error') {
+            } else if (status === "error") {
               return ' <span class="status-badge rejected email-error-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Email Error</span>';
             } else {
               return ' <span class="status-badge pending email-pending-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Email Pendiente</span>';
             }
           })()}${(() => {
-            const status = r.invitationEmailStatus || (r.invitationSent ? 'sent' : 'pending');
-            if (status === 'sent') {
+            const status =
+              r.invitationEmailStatus ||
+              (r.invitationSent ? "sent" : "pending");
+            if (status === "sent") {
               return ' <span class="status-badge approved invitation-sent-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Invitación Enviada</span>';
-            } else if (status === 'error') {
+            } else if (status === "error") {
               return ' <span class="status-badge rejected invitation-error-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Invitación Error</span>';
             } else {
               return ' <span class="status-badge pending invitation-pending-badge" style="margin-left: 0.5rem; font-size: 0.7rem; text-transform: none; padding: 0.1rem 0.3rem; vertical-align: middle;">Invitación Pendiente</span>';
             }
           })()}</td>
           <td>${formatDate(r.registeredAt)}</td>
-          <td><span class="source-tag">${escapeHtml(r.origen || 'Landing Beta Form')}</span></td>
+          <td><span class="source-tag">${escapeHtml(r.origen || "Landing Beta Form")}</span></td>
           <td>
             <select class="status-select status-badge ${escapeHtml(r.status.toLowerCase())}" data-email="${escapeHtml(r.email)}">
-              <option value="Pending" ${r.status === 'Pending' ? 'selected' : ''}>Pending</option>
-              <option value="Approved" ${r.status === 'Approved' ? 'selected' : ''}>Approved</option>
-              <option value="Rejected" ${r.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+              <option value="Pending" ${r.status === "Pending" ? "selected" : ""}>Pending</option>
+              <option value="Approved" ${r.status === "Approved" ? "selected" : ""}>Approved</option>
+              <option value="Rejected" ${r.status === "Rejected" ? "selected" : ""}>Rejected</option>
             </select>
-            ${r.unsubscribed
-              ? '<span class="status-badge rejected unsubscribed-badge" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; vertical-align: middle;">Baja</span>'
-              : `<button class="invite-btn" data-email="${escapeHtml(r.email)}" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; border-radius: 4px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); color: var(--accent-cyan); cursor: pointer; transition: all 0.3s ease;">Enviar Invitación</button>`
+            ${
+              r.unsubscribed
+                ? '<span class="status-badge rejected unsubscribed-badge" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; vertical-align: middle;">Baja</span>'
+                : `<button class="invite-btn" data-email="${escapeHtml(r.email)}" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; border-radius: 4px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); color: var(--accent-cyan); cursor: pointer; transition: all 0.3s ease;">Enviar Invitación</button>`
             }
           </td>
         </tr>
-      `
+      `,
         )
-        .join('');
+        .join("");
 
       contentDiv.innerHTML = `
         <div class="table-responsive">
@@ -289,10 +296,11 @@ if (adminApp) {
       `;
 
       // Attach change listeners to select elements
-      const selects = contentDiv.querySelectorAll<HTMLSelectElement>('.status-select');
+      const selects =
+        contentDiv.querySelectorAll<HTMLSelectElement>(".status-select");
       selects.forEach((select) => {
-        select.addEventListener('change', async () => {
-          const email = select.getAttribute('data-email');
+        select.addEventListener("change", async () => {
+          const email = select.getAttribute("data-email");
           const newStatus = select.value;
           if (!email) return;
 
@@ -300,22 +308,30 @@ if (adminApp) {
           clearUpdateError();
 
           try {
-            const response = await fetch(getApiUrl('/api/registrations/status'), {
-              method: 'POST',
-              headers: getAuthHeaders(),
-              body: JSON.stringify({ email, status: newStatus })
-            });
+            const response = await fetch(
+              getApiUrl("/api/registrations/status"),
+              {
+                method: "POST",
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ email, status: newStatus }),
+              },
+            );
 
-            const data = await response.json().catch(() => ({ error: 'Error inesperado del servidor.' }));
+            const data = await response
+              .json()
+              .catch(() => ({ error: "Error inesperado del servidor." }));
 
             if (!response.ok) {
-              throw new Error(data.error || 'Error en respuesta HTTP.');
+              throw new Error(data.error || "Error en respuesta HTTP.");
             }
 
             // Reload data to reflect state
             fetchAndRender();
           } catch (err) {
-            const message = err instanceof Error ? err.message : 'Error de conexión con el servidor.';
+            const message =
+              err instanceof Error
+                ? err.message
+                : "Error de conexión con el servidor.";
             showUpdateError(message);
             fetchAndRender();
           }
@@ -323,31 +339,40 @@ if (adminApp) {
       });
 
       // Attach click listeners to invite buttons
-      const inviteBtns = contentDiv.querySelectorAll<HTMLButtonElement>('.invite-btn');
+      const inviteBtns =
+        contentDiv.querySelectorAll<HTMLButtonElement>(".invite-btn");
       inviteBtns.forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          const email = btn.getAttribute('data-email');
+        btn.addEventListener("click", async () => {
+          const email = btn.getAttribute("data-email");
           if (!email) return;
 
           btn.disabled = true;
           clearUpdateError();
 
           try {
-            const response = await fetch(getApiUrl('/api/registrations/invite'), {
-              method: 'POST',
-              headers: getAuthHeaders(),
-              body: JSON.stringify({ email })
-            });
+            const response = await fetch(
+              getApiUrl("/api/registrations/invite"),
+              {
+                method: "POST",
+                headers: getAuthHeaders(),
+                body: JSON.stringify({ email }),
+              },
+            );
 
-            const data = await response.json().catch(() => ({ error: 'Error inesperado del servidor.' }));
+            const data = await response
+              .json()
+              .catch(() => ({ error: "Error inesperado del servidor." }));
 
             if (!response.ok) {
-              throw new Error(data.error || 'Error en respuesta HTTP.');
+              throw new Error(data.error || "Error en respuesta HTTP.");
             }
 
             fetchAndRender();
           } catch (err) {
-            const message = err instanceof Error ? err.message : 'Error de conexión con el servidor.';
+            const message =
+              err instanceof Error
+                ? err.message
+                : "Error de conexión con el servidor.";
             showUpdateError(message);
             fetchAndRender();
           }
@@ -359,23 +384,23 @@ if (adminApp) {
   // Helper functions
   const escapeHtml = (str: string): string => {
     return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   };
 
   const formatDate = (isoStr: string): string => {
     try {
       const date = new Date(isoStr);
-      return date.toLocaleString('es-ES', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+      return date.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
     } catch {
       return escapeHtml(isoStr);
@@ -384,20 +409,21 @@ if (adminApp) {
 
   // Encapuslate fetch logic so it can be called repeatedly
   const fetchAndRender = () => {
-    fetch(getApiUrl('/api/registrations'), { headers: getAuthHeaders() })
+    fetch(getApiUrl("/api/registrations"), { headers: getAuthHeaders() })
       .then((response) => {
         if (!response.ok) {
-          return response.json()
-            .catch(() => ({ error: 'Fallo inesperado del servidor.' }))
+          return response
+            .json()
+            .catch(() => ({ error: "Fallo inesperado del servidor." }))
             .then((err) => {
-              throw new Error(err.error || 'Error en respuesta HTTP.');
+              throw new Error(err.error || "Error en respuesta HTTP.");
             });
         }
         return response.json();
       })
       .then((data: Registration[]) => {
         if (!Array.isArray(data)) {
-          renderError('El formato de datos devuelto es incorrecto.');
+          renderError("El formato de datos devuelto es incorrecto.");
         } else {
           renderMetrics(data);
           if (data.length === 0) {
@@ -408,7 +434,7 @@ if (adminApp) {
         }
       })
       .catch((err) => {
-        renderError(err.message || 'Error de conexión con el servidor.');
+        renderError(err.message || "Error de conexión con el servidor.");
       });
   };
 

@@ -1,4 +1,4 @@
-import { DatabaseSync } from 'node:sqlite';
+import { DatabaseSync } from "node:sqlite";
 
 export interface Registration {
   email: string;
@@ -63,17 +63,25 @@ export class SQLiteRegistrationRepository {
       )
     `);
     stmt.run(
-      reg.email, reg.status, reg.registeredAt, reg.origen,
-      reg.confirmationEmailSent ? 1 : 0, reg.confirmationEmailSentAt || null,
-      reg.confirmationEmailStatus || null, reg.confirmationEmailError || null,
-      reg.invitationSent ? 1 : 0, reg.invitationSentAt || null,
-      reg.invitationEmailStatus || null, reg.invitationEmailError || null,
-      reg.unsubscribed ? 1 : 0, reg.unsubscribedAt || null
+      reg.email,
+      reg.status,
+      reg.registeredAt,
+      reg.origen,
+      reg.confirmationEmailSent ? 1 : 0,
+      reg.confirmationEmailSentAt || null,
+      reg.confirmationEmailStatus || null,
+      reg.confirmationEmailError || null,
+      reg.invitationSent ? 1 : 0,
+      reg.invitationSentAt || null,
+      reg.invitationEmailStatus || null,
+      reg.invitationEmailError || null,
+      reg.unsubscribed ? 1 : 0,
+      reg.unsubscribedAt || null,
     );
   }
 
   findByEmail(email: string): Registration | null {
-    const stmt = this.db.prepare('SELECT * FROM registrations WHERE email = ?');
+    const stmt = this.db.prepare("SELECT * FROM registrations WHERE email = ?");
     const row = stmt.get(email) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
     if (!row) return null;
     return this.mapRowToRegistration(row);
@@ -81,7 +89,7 @@ export class SQLiteRegistrationRepository {
 
   checkConnection(): boolean {
     try {
-      const stmt = this.db.prepare('SELECT 1');
+      const stmt = this.db.prepare("SELECT 1");
       stmt.get();
       return true;
     } catch {
@@ -90,9 +98,9 @@ export class SQLiteRegistrationRepository {
   }
 
   findAll(): Registration[] {
-    const stmt = this.db.prepare('SELECT * FROM registrations');
+    const stmt = this.db.prepare("SELECT * FROM registrations");
     const rows = stmt.all() as any[]; // eslint-disable-line @typescript-eslint/no-explicit-any
-    return rows.map(r => this.mapRowToRegistration(r));
+    return rows.map((r) => this.mapRowToRegistration(r));
   }
 
   update(reg: Registration): void {
@@ -104,17 +112,26 @@ export class SQLiteRegistrationRepository {
       WHERE email = ?
     `);
     stmt.run(
-      reg.status, reg.registeredAt, reg.origen,
-      reg.confirmationEmailSent ? 1 : 0, reg.confirmationEmailSentAt || null,
-      reg.confirmationEmailStatus || null, reg.confirmationEmailError || null,
-      reg.invitationSent ? 1 : 0, reg.invitationSentAt || null,
-      reg.invitationEmailStatus || null, reg.invitationEmailError || null,
-      reg.unsubscribed ? 1 : 0, reg.unsubscribedAt || null,
-      reg.email
+      reg.status,
+      reg.registeredAt,
+      reg.origen,
+      reg.confirmationEmailSent ? 1 : 0,
+      reg.confirmationEmailSentAt || null,
+      reg.confirmationEmailStatus || null,
+      reg.confirmationEmailError || null,
+      reg.invitationSent ? 1 : 0,
+      reg.invitationSentAt || null,
+      reg.invitationEmailStatus || null,
+      reg.invitationEmailError || null,
+      reg.unsubscribed ? 1 : 0,
+      reg.unsubscribedAt || null,
+      reg.email,
     );
   }
 
-  private mapRowToRegistration(row: any /* eslint-disable-line @typescript-eslint/no-explicit-any */): Registration {
+  private mapRowToRegistration(
+    row: any /* eslint-disable-line @typescript-eslint/no-explicit-any */,
+  ): Registration {
     return {
       email: row.email,
       status: row.status,
@@ -129,7 +146,7 @@ export class SQLiteRegistrationRepository {
       invitationEmailStatus: row.invitationEmailStatus,
       invitationEmailError: row.invitationEmailError,
       unsubscribed: row.unsubscribed === 1,
-      unsubscribedAt: row.unsubscribedAt
+      unsubscribedAt: row.unsubscribedAt,
     };
   }
 }
@@ -158,11 +175,21 @@ export class SQLiteEmailRepository {
       INSERT INTO sent_emails ("to", subject, preheader, body, cta, footer, sentAt)
       VALUES (?, ?, ?, ?, ?, ?, ?)
     `);
-    stmt.run(email.to, email.subject, email.preheader, email.body, email.cta, email.footer, email.sentAt);
+    stmt.run(
+      email.to,
+      email.subject,
+      email.preheader,
+      email.body,
+      email.cta,
+      email.footer,
+      email.sentAt,
+    );
   }
 
   findAll(): SentEmail[] {
-    const stmt = this.db.prepare('SELECT "to", subject, preheader, body, cta, footer, sentAt FROM sent_emails');
+    const stmt = this.db.prepare(
+      'SELECT "to", subject, preheader, body, cta, footer, sentAt FROM sent_emails',
+    );
     return stmt.all() as unknown as SentEmail[];
   }
 }

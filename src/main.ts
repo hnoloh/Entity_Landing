@@ -1,19 +1,17 @@
-import './style.css';
-import * as Sentry from '@sentry/browser';
-
+import "./style.css";
+import * as Sentry from "@sentry/browser";
 
 if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DSN,
-    release: import.meta.env.VITE_APP_RELEASE || 'unknown',
-    environment: import.meta.env.VITE_APP_ENVIRONMENT || 'development',
+    release: import.meta.env.VITE_APP_RELEASE || "unknown",
+    environment: import.meta.env.VITE_APP_ENVIRONMENT || "development",
     sendDefaultPii: false,
   });
   Sentry.captureMessage("Sentry initialization verified post-release");
 }
 
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
   <header>
     <div class="header-left">
       <div class="logo-container">
@@ -440,217 +438,245 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </footer>
 `;
 
-const mobileMenuBtn = document.querySelector<HTMLButtonElement>('.mobile-menu-btn');
-const headerEl = document.querySelector<HTMLElement>('header');
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
+const mobileMenuBtn =
+  document.querySelector<HTMLButtonElement>(".mobile-menu-btn");
+const headerEl = document.querySelector<HTMLElement>("header");
+const mobileNavLinks = document.querySelectorAll(".mobile-nav-item");
 
 // Toggle menu on button click
-mobileMenuBtn?.addEventListener('click', (e) => {
+mobileMenuBtn?.addEventListener("click", (e) => {
   e.stopPropagation();
-  const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
-  mobileMenuBtn.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
-  headerEl?.classList.toggle('mobile-menu-open');
+  const isExpanded = mobileMenuBtn.getAttribute("aria-expanded") === "true";
+  mobileMenuBtn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
+  headerEl?.classList.toggle("mobile-menu-open");
 });
 
 // Close menu when clicking a link
-mobileNavLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
-    headerEl?.classList.remove('mobile-menu-open');
+mobileNavLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    mobileMenuBtn?.setAttribute("aria-expanded", "false");
+    headerEl?.classList.remove("mobile-menu-open");
   });
 });
 
 // Close menu when clicking outside
-document.addEventListener('click', (e) => {
+document.addEventListener("click", (e) => {
   const target = e.target as HTMLElement;
-  if (headerEl?.classList.contains('mobile-menu-open') && !headerEl.contains(target)) {
-    mobileMenuBtn?.setAttribute('aria-expanded', 'false');
-    headerEl.classList.remove('mobile-menu-open');
+  if (
+    headerEl?.classList.contains("mobile-menu-open") &&
+    !headerEl.contains(target)
+  ) {
+    mobileMenuBtn?.setAttribute("aria-expanded", "false");
+    headerEl.classList.remove("mobile-menu-open");
   }
 });
 
 // Demo Selector logic (FIA-034)
-const pfTabs = document.querySelectorAll('#producto .pf-tab, #casos-uso .pf-tab');
-const pfCaptureImg = document.querySelector<HTMLImageElement>('.pf-capture');
+const pfTabs = document.querySelectorAll(
+  "#producto .pf-tab, #casos-uso .pf-tab",
+);
+const pfCaptureImg = document.querySelector<HTMLImageElement>(".pf-capture");
 
 const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
   agentes: {
-    src: '/v1_agentes.png',
-    alt: 'Agentes de Entity',
-    desc: 'Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.'
+    src: "/v1_agentes.png",
+    alt: "Agentes de Entity",
+    desc: "Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.",
   },
   herramientas: {
-    src: '/v1_herramientas.png',
-    alt: 'Herramientas de Entity',
-    desc: 'Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.'
+    src: "/v1_herramientas.png",
+    alt: "Herramientas de Entity",
+    desc: "Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.",
   },
   conocimiento: {
-    src: '/v1_workspace.png',
-    alt: 'Conocimiento estructural',
-    desc: ''
+    src: "/v1_workspace.png",
+    alt: "Conocimiento estructural",
+    desc: "",
   },
   datos: {
-    src: '/v1_workspace.png',
-    alt: 'Datos estructural',
-    desc: ''
+    src: "/v1_workspace.png",
+    alt: "Datos estructural",
+    desc: "",
   },
   orquestacion: {
-    src: '/v1_orquestacion.png',
-    alt: 'Orquestación de Entis',
-    desc: 'Grupos secuenciales. Estructura logística que ordena la participación de Entis especializados bajo control humano.'
-  }
+    src: "/v1_orquestacion.png",
+    alt: "Orquestación de Entis",
+    desc: "Grupos secuenciales. Estructura logística que ordena la participación de Entis especializados bajo control humano.",
+  },
 };
 
 // Preload assets for instant switching without lag (FIA-035 optimization)
-Object.values(viewAssets).forEach(asset => {
+Object.values(viewAssets).forEach((asset) => {
   const img = new Image();
   img.src = asset.src;
 });
 
-const pfDesc = document.getElementById('pf-description');
+const pfDesc = document.getElementById("pf-description");
 
-pfTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    const target = tab.getAttribute('data-target') || 'agentes';
-    
+pfTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    const target = tab.getAttribute("data-target") || "agentes";
+
     // Update active tab styling
-    pfTabs.forEach(t => {
-      t.classList.remove('active');
-      t.setAttribute('aria-selected', 'false');
+    pfTabs.forEach((t) => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
     });
-    tab.classList.add('active');
-    tab.setAttribute('aria-selected', 'true');
-    
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+
     // Update image and text
     if (pfCaptureImg && viewAssets[target]) {
       pfCaptureImg.src = viewAssets[target].src;
       pfCaptureImg.alt = viewAssets[target].alt;
-      
+
       if (pfDesc) {
         pfDesc.textContent = viewAssets[target].desc;
       }
-      
+
       // Trigger transition animation (FIA-067)
-      pfCaptureImg.classList.remove('switching');
+      pfCaptureImg.classList.remove("switching");
       void pfCaptureImg.offsetWidth; // Force reflow
-      pfCaptureImg.classList.add('switching');
+      pfCaptureImg.classList.add("switching");
     }
   });
 });
 
-
-  // Download OS Tabs logic (FIA-W01.14)
-  const downloadOsTabs = Array.from(document.querySelectorAll('.download-os-tabs .pf-tab')) as HTMLButtonElement[];
-  downloadOsTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      downloadOsTabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      
-      const cta = document.getElementById('download-cta') as HTMLAnchorElement;
-      const desc = document.getElementById('download-desc') as HTMLParagraphElement;
-      const platform = tab.getAttribute('data-platform');
-      
-      if (platform === 'windows') {
-        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe';
-        desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
-      } else if (platform === 'linux') {
-        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_amd64.AppImage';
-        desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
-      }
-
+// Download OS Tabs logic (FIA-W01.14)
+const downloadOsTabs = Array.from(
+  document.querySelectorAll(".download-os-tabs .pf-tab"),
+) as HTMLButtonElement[];
+downloadOsTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    downloadOsTabs.forEach((t) => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
     });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+
+    const cta = document.getElementById("download-cta") as HTMLAnchorElement;
+    const desc = document.getElementById(
+      "download-desc",
+    ) as HTMLParagraphElement;
+    const platform = tab.getAttribute("data-platform");
+
+    if (platform === "windows") {
+      cta.href =
+        "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe";
+      desc.innerHTML =
+        'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
+    } else if (platform === "linux") {
+      cta.href =
+        "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_amd64.AppImage";
+      desc.innerHTML =
+        'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
+    }
+  });
+});
+
+// Intersection Observer for scroll reveal (FIA-063)
+if (typeof window !== "undefined" && window.IntersectionObserver) {
+  const revealCallback = (
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver,
+  ) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("revealed");
+        // Unobserve after revealing to prevent re-animating when scrolling back up
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  const revealObserver = new IntersectionObserver(revealCallback, {
+    root: null,
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px",
   });
 
-  // Intersection Observer for scroll reveal (FIA-063)
-  if (typeof window !== 'undefined' && window.IntersectionObserver) {
-    const revealCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          // Unobserve after revealing to prevent re-animating when scrolling back up
-          observer.unobserve(entry.target);
-        }
-      });
-    };
+  document.querySelectorAll(".reveal-element").forEach((el) => {
+    revealObserver.observe(el);
+  });
+}
 
-    const revealObserver = new IntersectionObserver(revealCallback, {
-      root: null,
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
-    });
+// Lightbox functionality
+const productContainer = document.getElementById("product-frame-container");
+const lightboxModal = document.getElementById("lightbox-modal");
+const lightboxImg = document.getElementById("lightbox-img") as HTMLImageElement;
+const lightboxPrev = document.getElementById("lightbox-prev");
+const lightboxNext = document.getElementById("lightbox-next");
 
-    document.querySelectorAll('.reveal-element').forEach(el => {
-      revealObserver.observe(el);
-    });
-  }
+if (productContainer && lightboxModal && lightboxImg) {
+  const mainImg = document.getElementById(
+    "main-product-img",
+  ) as HTMLImageElement;
+  const tabs = Array.from(
+    document.querySelectorAll(".pf-tab"),
+  ) as HTMLButtonElement[];
 
-  // Lightbox functionality
-  const productContainer = document.getElementById('product-frame-container');
-  const lightboxModal = document.getElementById('lightbox-modal');
-  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
-  const lightboxPrev = document.getElementById('lightbox-prev');
-  const lightboxNext = document.getElementById('lightbox-next');
+  const openLightbox = () => {
+    if (mainImg) {
+      lightboxImg.src = mainImg.src;
+      lightboxModal.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+  };
 
-  if (productContainer && lightboxModal && lightboxImg) {
-    const mainImg = document.getElementById('main-product-img') as HTMLImageElement;
-    const tabs = Array.from(document.querySelectorAll('.pf-tab')) as HTMLButtonElement[];
-    
-    const openLightbox = () => {
-      if (mainImg) {
-        lightboxImg.src = mainImg.src;
-        lightboxModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    };
+  const closeLightbox = () => {
+    lightboxModal.classList.remove("active");
+    document.body.style.overflow = "";
+  };
 
-    const closeLightbox = () => {
-      lightboxModal.classList.remove('active');
-      document.body.style.overflow = '';
-    };
+  const navigateLightbox = (direction: 1 | -1) => {
+    const activeIndex = tabs.findIndex((tab) =>
+      tab.classList.contains("active"),
+    );
+    let newIndex = activeIndex + direction;
+    if (newIndex < 0) newIndex = tabs.length - 1;
+    if (newIndex >= tabs.length) newIndex = 0;
 
-    const navigateLightbox = (direction: 1 | -1) => {
-      const activeIndex = tabs.findIndex(tab => tab.classList.contains('active'));
-      let newIndex = activeIndex + direction;
-      if (newIndex < 0) newIndex = tabs.length - 1;
-      if (newIndex >= tabs.length) newIndex = 0;
-      
-      tabs[newIndex].click(); // Trigger the existing logic
-      
-      // Allow the dom to update the mainImg src before we copy it
-      setTimeout(() => {
-        lightboxImg.src = mainImg.src;
-      }, 50);
-    };
+    tabs[newIndex].click(); // Trigger the existing logic
 
-    productContainer.addEventListener('click', openLightbox);
-    productContainer.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openLightbox();
-      }
-    });
+    // Allow the dom to update the mainImg src before we copy it
+    setTimeout(() => {
+      lightboxImg.src = mainImg.src;
+    }, 50);
+  };
 
-    if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(-1); });
-    if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); navigateLightbox(1); });
+  productContainer.addEventListener("click", openLightbox);
+  productContainer.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openLightbox();
+    }
+  });
 
-    lightboxModal.addEventListener('click', (e) => {
-      if (e.target === lightboxModal) closeLightbox();
-    });
-
-    lightboxImg.addEventListener('dblclick', (e) => {
+  if (lightboxPrev)
+    lightboxPrev.addEventListener("click", (e) => {
       e.stopPropagation();
-      closeLightbox();
+      navigateLightbox(-1);
+    });
+  if (lightboxNext)
+    lightboxNext.addEventListener("click", (e) => {
+      e.stopPropagation();
+      navigateLightbox(1);
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (!lightboxModal.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') navigateLightbox(-1);
-      if (e.key === 'ArrowRight') navigateLightbox(1);
-    });
-  }
+  lightboxModal.addEventListener("click", (e) => {
+    if (e.target === lightboxModal) closeLightbox();
+  });
 
+  lightboxImg.addEventListener("dblclick", (e) => {
+    e.stopPropagation();
+    closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightboxModal.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") navigateLightbox(-1);
+    if (e.key === "ArrowRight") navigateLightbox(1);
+  });
+}
