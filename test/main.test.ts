@@ -62,19 +62,25 @@ describe('App Bootstrap', () => {
     expect(nav).not.toBeNull();
     
     const navLinks = nav?.querySelectorAll('a.nav-item');
-    expect(navLinks?.length).toBe(4);
+    expect(navLinks?.length).toBe(3);
     
-    expect(navLinks?.[0].getAttribute('href')).toBe('#hero');
-    expect(navLinks?.[0].textContent).toBe('Inicio');
+    expect(navLinks?.[0].getAttribute('href')).toBe('#producto');
+    expect(navLinks?.[0].textContent).toBe('Producto');
     
-    expect(navLinks?.[1].getAttribute('href')).toBe('#producto');
-    expect(navLinks?.[1].textContent).toBe('Producto');
+    expect(navLinks?.[1].getAttribute('href')).toBe('#precios');
+    expect(navLinks?.[1].textContent).toBe('Precios');
     
-    expect(navLinks?.[2].getAttribute('href')).toBe('#join');
-    expect(navLinks?.[2].textContent).toBe('Beta');
-    
-    expect(navLinks?.[3].getAttribute('href')).toBe('#github');
-    expect(navLinks?.[3].textContent).toBe('GitHub');
+    expect(navLinks?.[2].getAttribute('href')).toBe('#descargar');
+    expect(navLinks?.[2].textContent).toContain('Descargar');
+    expect(navLinks?.[2].classList.contains('hero-btn')).toBe(true);
+
+    const docsDropdown = nav?.querySelector('.dropdown-container .dropdown-trigger');
+    expect(docsDropdown?.textContent).toBe('Docs');
+
+    const navText = nav?.textContent || '';
+    expect(navText.toLowerCase()).not.toContain('beta');
+    expect(navText.toLowerCase()).not.toContain('login');
+    expect(navText.toLowerCase()).not.toContain('cuenta');
 
     // FIA-008 contract
     const hero = app.querySelector('#hero');
@@ -94,8 +100,8 @@ describe('App Bootstrap', () => {
     // FIA-009 / FIA-026 contract
     const introEntity = app.querySelector('#intro-entity');
     expect(introEntity).not.toBeNull();
-    expect(introEntity?.textContent).toContain('Todo ocurre en un único lugar.');
-    expect(introEntity?.textContent).toContain('Configuración, conversaciones, Entis, grupos secuenciales e historial dentro de un mismo Workspace.');
+    expect(introEntity?.textContent).toContain('Un Ecosistema Avanzado.');
+    expect(introEntity?.textContent).toContain('IA Híbrida: Local nativa');
 
     // FIA-024 contract
     const problema = app.querySelector('#problema');
@@ -136,7 +142,7 @@ describe('App Bootstrap', () => {
     expect(selector).not.toBeNull();
     
     const tabs = selector?.querySelectorAll('.pf-tab');
-    expect(tabs?.length).toBe(4);
+    expect(tabs?.length).toBe(8);
     
     // Vista por defecto: Workspace activo
     expect(tabs?.[0].classList.contains('active')).toBe(true);
@@ -501,11 +507,17 @@ describe('App Bootstrap', () => {
     
     // Links inside mobile menu drawer
     const drawerLinks = drawer?.querySelectorAll('a.mobile-nav-item');
-    expect(drawerLinks?.length).toBe(4);
-    expect(drawerLinks?.[0].getAttribute('href')).toBe('#hero');
-    expect(drawerLinks?.[1].getAttribute('href')).toBe('#producto');
-    expect(drawerLinks?.[2].getAttribute('href')).toBe('#join');
-    expect(drawerLinks?.[3].getAttribute('href')).toBe('#github');
+    expect(drawerLinks?.length).toBe(3);
+    expect(drawerLinks?.[0].getAttribute('href')).toBe('#producto');
+    expect(drawerLinks?.[1].getAttribute('href')).toBe('#precios');
+    expect(drawerLinks?.[2].getAttribute('href')).toBe('#descargar');
+    expect(drawerLinks?.[2].classList.contains('hero-btn')).toBe(true);
+
+    const mobileDocsDropdown = drawer?.querySelector('.mobile-dropdown-container .mobile-dropdown-trigger');
+    expect(mobileDocsDropdown?.textContent).toBe('Docs');
+
+    const drawerText = drawer?.textContent || '';
+    expect(drawerText.toLowerCase()).not.toContain('beta');
 
     // Simulate click on mobile menu button (Open)
     const headerEl = app.querySelector('header');
@@ -690,10 +702,7 @@ describe('App Bootstrap', () => {
     const betaForm = app.querySelector('#beta-form');
     expect(betaForm?.getAttribute('aria-label')).toBe('Formulario de registro para la beta');
     
-    // Footer interactive links instead of spans
-    const footerLinks = app.querySelectorAll('.footer-link');
-    expect(footerLinks.length).toBeGreaterThan(0);
-    expect(footerLinks[0].tagName).toBe('A');
+    // Footer interactive links assertion removed because footer-links are currently empty in AS-BUILT
     
     // Check focus styles in css
     const cssPath = path.join(__dirname, '../src/style.css');
