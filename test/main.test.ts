@@ -209,11 +209,14 @@ describe('App Bootstrap', () => {
     expect(pfDesc?.textContent?.trim()).toBe('');
     expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
 
-    // Clic en pestaña Orquestación (estructural, no funcional)
+    // Clic en pestaña Orquestación (Grupos respaldados)
     tabs?.[4].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[4].classList.contains('active')).toBe(true);
-    expect(pfDesc?.textContent?.trim()).toBe('');
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
+    expect(captureImg?.getAttribute('src')).toBe('/Grupos avanzados.png');
+    expect(pfDesc?.textContent).toContain('Grupos secuenciales');
+    expect(pfDesc?.textContent).toContain('ordena la participación');
+    expect(pfDesc?.textContent).toContain('bajo control humano');
+    expect(pfDesc?.textContent).not.toContain('Comunidades');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
     const trustBadgesList = hero?.querySelector('.hero-trust-badges-inline');
