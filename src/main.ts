@@ -412,7 +412,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-secondary);">Plataformas soportadas</h3>
         <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="justify-content: center; margin-bottom: 2rem;">
           <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
-          <button class="pf-tab" role="tab" aria-selected="false" data-platform="macos">macOS</button>
           <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
         </div>
         <div style="display: flex; justify-content: center;">

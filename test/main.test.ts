@@ -405,13 +405,12 @@ describe('App Bootstrap', () => {
     // FIA-W01.14 Assertions
     // Assert: cada plataforma visible tiene fuente real. (Evidencia: Entity-MVP-Empaquetado/README.md)
     const osTabs = Array.from(downloadFree?.querySelectorAll('.download-os-tabs .pf-tab') || []);
-    expect(osTabs.length).toBe(3);
+    expect(osTabs.length).toBe(2);
     expect(osTabs[0].textContent).toBe('Windows');
-    expect(osTabs[1].textContent).toBe('macOS');
-    expect(osTabs[2].textContent).toBe('Linux');
+    expect(osTabs[1].textContent).toBe('Linux');
     
     // Assert: no existen plataformas adicionales.
-    expect(osTabs.length).toBe(3);
+    expect(osTabs.length).toBe(2);
     
     // Assert negativo: no autodetección sin contrato.
     // Default should be Windows as the first tab without dynamic changes in HTML
