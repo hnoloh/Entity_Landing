@@ -415,10 +415,10 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
         </div>
         <div style="display: flex; justify-content: center;">
-          <a id="download-cta" href="https://github.com/hnoloh/TFM_Entity/releases" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
+          <a id="download-cta" href="https://github.com/hnoloh/TFM_Entity/releases/download/v1.0.0-222be6c/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
         </div>
         <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
-          <p>Descarga directa desde las releases oficiales en GitHub.</p>
+          <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span></p>
         </div>
       </div>
     </section>
@@ -549,7 +549,19 @@ pfTabs.forEach(tab => {
       });
       tab.classList.add('active');
       tab.setAttribute('aria-selected', 'true');
-      // CTA remains the same as the releases page is unified
+      
+      const cta = document.getElementById('download-cta') as HTMLAnchorElement;
+      const desc = document.getElementById('download-desc') as HTMLParagraphElement;
+      const platform = tab.getAttribute('data-platform');
+      
+      if (platform === 'windows') {
+        cta.href = 'https://github.com/hnoloh/TFM_Entity/releases/download/v1.0.0-222be6c/Entity_1.0.0_x64-setup.exe';
+        desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
+      } else if (platform === 'linux') {
+        cta.href = 'https://github.com/hnoloh/TFM_Entity/releases/download/v1.0.0-222be6c/Entity_1.0.0_amd64.AppImage';
+        desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
+      }
+
     });
   });
 

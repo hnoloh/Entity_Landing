@@ -400,7 +400,7 @@ describe('App Bootstrap', () => {
     expect(ctaLink).not.toBeNull();
     expect(ctaLink?.textContent).toMatch(/Descargar Entity Free/i);
     // Assert: cada recurso visible usa destino real autorizado.
-    expect(ctaLink?.getAttribute('href')).toBe('https://github.com/hnoloh/TFM_Entity/releases');
+    expect(ctaLink?.getAttribute('href')).toMatch(/Entity_1\.0\.0_x64-setup\.exe/);
     
     // FIA-W01.14 Assertions
     // Assert: cada plataforma visible tiene fuente real. (Evidencia: Entity-MVP-Empaquetado/README.md)
@@ -417,9 +417,8 @@ describe('App Bootstrap', () => {
     console.log(osTabs[0].outerHTML);
     expect(osTabs[0].classList.contains('active')).toBe(true);
     
-    // Assert negativo: no modelo de artefactos W01.15.
-    // The CTA just goes to /releases, not specific .exe or .dmg
-    expect(ctaLink?.getAttribute('href')).not.toMatch(/.exe|.dmg|.AppImage/i);
+    // Assert: modelo de artefactos W01.15
+    expect(ctaLink?.getAttribute('href')).toMatch(/\.exe|\.dmg|\.AppImage/i);
     
     // Assert negativo: no validación W01.16. (No e2e flow logic added to CTA)
     expect(ctaLink?.getAttribute('href')).not.toBe('#checkout-pro');
