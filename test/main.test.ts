@@ -170,17 +170,17 @@ describe('App Bootstrap', () => {
     expect(tabs?.[1].classList.contains('active')).toBe(false);
     expect(tabs?.[2].classList.contains('active')).toBe(true);
     expect(tabs?.[3].classList.contains('active')).toBe(false);
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-33_Implementar vista secuencial grupos.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Vista de Sequential Groups de Entity');
+    expect(captureImg?.getAttribute('src')).toBe('/Editor de grupo.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Editor de Grupos de Entity');
 
-    // Clic en pestaña Chat Desacoplado
+    // Clic en pestaña Grupos Avanzados
     tabs?.[3].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[0].classList.contains('active')).toBe(false);
     expect(tabs?.[1].classList.contains('active')).toBe(false);
     expect(tabs?.[2].classList.contains('active')).toBe(false);
     expect(tabs?.[3].classList.contains('active')).toBe(true);
-    expect(captureImg?.getAttribute('src')).toBe('/Floating Chat.png');
-    expect(captureImg?.getAttribute('alt')).toBe('Vista de Chat Desacoplado de Entity');
+    expect(captureImg?.getAttribute('src')).toBe('/Grupos avanzados.png');
+    expect(captureImg?.getAttribute('alt')).toBe('Grupos Avanzados de Entity');
 
     // specifications trust badges in Hero (agnostic local/cloud features)
     const trustBadgesList = hero?.querySelector('.hero-trust-badges-inline');
@@ -484,9 +484,9 @@ describe('App Bootstrap', () => {
       void err;
     }
 
-    expect(join?.textContent).toContain('MVP');
+    expect(join?.textContent).toContain('Beneficios exclusivos para Beta Testers');
     expect(join?.textContent).toContain('beta privada');
-    expect(join?.textContent).toContain('acceso anticipado');
+    expect(join?.textContent).toContain('Licencia Pro de Por Vida');
 
 
     // FIA-013 contract

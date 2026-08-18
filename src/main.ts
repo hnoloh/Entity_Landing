@@ -23,7 +23,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </div>
     <nav class="visual-nav">
       <a href="#producto" class="nav-item">Producto</a>
-      <a href="#join" class="nav-item">Beta</a>
+      <a href="#precios" class="nav-item">Precios</a>
       <div class="nav-item dropdown-container" tabindex="0">
         <span class="dropdown-trigger">Docs</span>
         <div class="dropdown-menu">
@@ -33,12 +33,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </div>
         </div>
       </div>
+      <a href="#descargar" class="nav-item hero-btn" style="margin-left: 1rem;">Descargar</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
         <a href="#producto" class="mobile-nav-item">Producto</a>
-        <a href="#join" class="mobile-nav-item">Beta</a>
+        <a href="#precios" class="mobile-nav-item">Precios</a>
         <div class="mobile-nav-item mobile-dropdown-container">
           <span class="mobile-dropdown-trigger">Docs</span>
           <div class="mobile-dropdown-menu">
@@ -46,6 +47,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <a href="/docs/METODO%20Entity.pdf" target="_blank" class="mobile-dropdown-item">Entity Method</a>
           </div>
         </div>
+        <a href="#descargar" class="mobile-nav-item hero-btn" style="margin-top: 1rem; width: 100%; justify-content: center;">Descargar</a>
       </nav>
     </div>
   </header>
