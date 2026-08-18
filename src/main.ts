@@ -245,9 +245,9 @@ const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
     desc: ''
   },
   orquestacion: {
-    src: '/FIA-31_Implementar vista workspace.png',
-    alt: 'Orquestación estructural',
-    desc: ''
+    src: '/Grupos avanzados.png',
+    alt: 'Orquestación de Entis',
+    desc: 'Grupos secuenciales. Estructura logística que ordena la participación de Entis especializados bajo control humano.'
   }
 };
 
