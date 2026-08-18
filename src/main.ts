@@ -118,10 +118,11 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
         <div id="intro-entity" class="narrativa-card">
           <h3>Un Ecosistema Avanzado.</h3>
           <ul class="problema-bullets-mini">
-            <li><strong>IA Híbrida:</strong> Local nativa (Ollama) y Cloud Multi-Proveedor.</li>
-            <li><strong>Grupos Avanzados:</strong> Secuenciales, Loops iterativos y Paralelos.</li>
-            <li><strong>Tool Belt:</strong> Terminal, archivos y generación de PDF/HTML.</li>
-            <li><strong>UX Premium:</strong> Autoguardado silencioso e interfaz nativa.</li>
+            <li><strong>Agentes:</strong> Entidades especializadas con propósito y contexto definido.</li>
+            <li><strong>Herramientas:</strong> Capacidades de interacción con el entorno.</li>
+            <li><strong>Conocimiento:</strong> Integración de documentos y fuentes de información.</li>
+            <li><strong>Datos:</strong> Almacenamiento estructurado de la información.</li>
+            <li><strong>Orquestación:</strong> Coordinación y control total del flujo de trabajo.</li>
           </ul>
         </div>
       </div>
