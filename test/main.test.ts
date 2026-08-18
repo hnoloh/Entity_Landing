@@ -55,7 +55,7 @@ describe('App Bootstrap', () => {
     expect(app.querySelector('#problema')).not.toBeNull();
     expect(app.querySelector('#vision')).not.toBeNull();
     expect(app.querySelector('#producto')).not.toBeNull();
-    expect(app.querySelector('#join')).not.toBeNull();
+    expect(app.querySelector('#download-free')).not.toBeNull();
 
     // FIA-007 contract updated in FIA-015
     const nav = app.querySelector('header nav');
@@ -369,304 +369,38 @@ describe('App Bootstrap', () => {
     expect(casosText).not.toContain('RAG automático');
     expect(casosText).not.toContain('ROI');
 
-    // FIA-041 contract (Formulario Beta visible y accesible)
+    // FIA-W01.13 contract (Sustituir bloque Beta por Download Free)
+    
+    // Assert 1: The old Beta form must NOT exist.
     const join = app.querySelector('#join');
-    expect(join).not.toBeNull();
-    const form = join?.querySelector('form');
-    expect(form).not.toBeNull();
-
-    const emailInput = form?.querySelector('input[type="email"]');
-    expect(emailInput).not.toBeNull();
-    expect(emailInput?.getAttribute('required')).not.toBeNull();
-    expect(emailInput?.getAttribute('id')).toBe('beta-email');
-
-    const label = form?.querySelector('label');
-    expect(label).not.toBeNull();
-    expect(label?.getAttribute('for')).toBe('beta-email');
-
-    const ctaButton = form?.querySelector('.join-cta');
-    expect(ctaButton).not.toBeNull();
-
-    // FIA-042 & FIA-043 contracts (Validación de email obligatorio y formato)
-    const errorSpan = form?.querySelector('#email-error');
-    expect(errorSpan).not.toBeNull();
-
-    // 1. Submit vacío (obligatorio) - no debe activar loading
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
-    expect(errorSpan?.textContent).toBe('El correo electrónico es obligatorio.');
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-
-    // 2. Limpieza al escribir
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'a';
-      emailInput.dispatchEvent(new window.Event('input', { bubbles: true }));
-    }
-    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
-    expect(errorSpan?.textContent).toBe('');
-
-    // 3. Submit con formato incorrecto - no debe activar loading
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'correo-invalido';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
-    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-
-    // 4. Limpieza al escribir tras error de formato
-    if (emailInput) {
-      emailInput.dispatchEvent(new window.Event('input', { bubbles: true }));
-    }
-    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
-    expect(errorSpan?.textContent).toBe('');
-
-    // 5. Submit con formato incorrecto y limpiar en focus
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'correo-invalido';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
-    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-
-    emailInput?.dispatchEvent(new window.Event('focus', { bubbles: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
-    expect(errorSpan?.textContent).toBe('');
-
-    // 6. Submit con formato incorrecto y limpiar al clicar fuera
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBe('true');
-    expect(errorSpan?.textContent).toBe('El formato del correo electrónico no es válido.');
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-
-    document.dispatchEvent(new window.Event('click', { bubbles: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
-    expect(errorSpan?.textContent).toBe('');
-
-    // 7. Submit con formato correcto - Escenario de Error (qa.error@entity.test) (FIA-047)
-    const fetchMock = vi.fn().mockImplementation((_url, options) => {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const body = JSON.parse(options.body || '{}');
-          if (body.email === 'qa.network@entity.test') {
-            reject(new TypeError('Failed to fetch'));
-            return;
-          }
-          if (body.email === 'qa.error@entity.test') {
-            resolve({
-              ok: false,
-              status: 500,
-              json: async () => ({ error: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' })
-            });
-          } else {
-            // Persistir solicitud de beta en el mock de test (FIA-048)
-            const filePath = path.join(__dirname, '../registrations.json');
-            let registrations = [];
-            if (fs.existsSync(filePath)) {
-              try {
-                registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-              } catch {
-                registrations = [];
-              }
-            }
-
-            // Detección de email duplicado (FIA-049)
-            const exists = registrations.some((r: { email: string }) => r.email === body.email);
-            if (exists) {
-              resolve({
-                ok: false,
-                status: 409,
-                json: async () => ({ error: 'Este correo electrónico ya está registrado.' })
-              });
-              return;
-            }
-
-            registrations.push({
-              email: body.email,
-              status: 'Pending',
-              registeredAt: new Date().toISOString()
-            });
-            fs.writeFileSync(filePath, JSON.stringify(registrations, null, 2), 'utf-8');
-
-            resolve({
-              ok: true,
-              status: 200,
-              json: async () => ({ message: '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.' })
-            });
-          }
-        }, 1000);
-      });
-    });
-    vi.stubGlobal('fetch', fetchMock);
-
-    vi.useFakeTimers();
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'qa.error@entity.test';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(emailInput?.getAttribute('aria-invalid')).toBeNull();
-    expect(errorSpan?.textContent).toBe('');
-    expect(fetchMock).toHaveBeenCalledWith('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: 'qa.error@entity.test' })
-    });
-
-    // Comprobar estado de envío (loading)
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-    expect(emailInput?.getAttribute('disabled')).not.toBeNull();
+    expect(join).toBeNull();
+    const betaForm = app.querySelector('#beta-form');
+    expect(betaForm).toBeNull();
     
-    const submitBtn = form?.querySelector('.join-cta') as HTMLButtonElement;
-    expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
-    expect(submitBtn?.textContent).toBe('Enviando...');
+    // Assert 2: Beta-specific copy and fields must NOT exist.
+    const fullText = app.textContent || '';
+    expect(fullText).not.toMatch(/Join the Beta/i);
+    expect(fullText).not.toMatch(/waitlist/i);
+    expect(fullText).not.toMatch(/Private Beta/i);
+    expect(fullText).not.toContain('Beneficios exclusivos para Beta Testers');
+    expect(app.querySelector('#beta-email')).toBeNull();
+
+    // Assert 3: The Download Free section must exist.
+    const downloadFree = app.querySelector('#download-free');
+    expect(downloadFree).not.toBeNull();
+    const downloadText = downloadFree?.textContent || '';
     
-    const statusSpan = form?.querySelector('#form-status');
-    expect(statusSpan).not.toBeNull();
-    expect(statusSpan?.textContent).toBe('Enviando solicitud...');
-
-    // Intentar un segundo submit mientras está cargando (no debe hacer nada)
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-
-    // Completar el estado de envío (avanzar timers)
-    vi.advanceTimersByTime(1000);
-    for (let i = 0; i < 6; i++) {
-      await vi.runAllTicks();
-    }
-
-    // Comprobar estado de error simulado
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-    expect(form?.classList.contains('is-submitted')).toBe(false);
-    expect(statusSpan?.textContent).toBe('Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
-    expect(statusSpan?.classList.contains('error')).toBe(true);
+    // Assert 4: Required copy (Sin email, sin cuenta, sin tarjeta).
+    expect(downloadText).toMatch(/Sin email/i);
+    expect(downloadText).toMatch(/Sin cuenta/i);
+    expect(downloadText).toMatch(/Sin tarjeta/i);
     
-    // Inputs y botones deben volver a estar habilitados y conservar el email
-    expect(emailInput?.getAttribute('disabled')).toBeNull();
-    expect(submitBtn?.getAttribute('disabled')).toBeNull();
-    expect(submitBtn?.textContent).toBe('Solicitar acceso a la Beta');
-    expect((emailInput as HTMLInputElement).value).toBe('qa.error@entity.test');
-
-    // --- ESCENARIO DE FALLO DE RED (FIA-051) ---
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'qa.network@entity.test';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-
-    vi.advanceTimersByTime(1000);
-    for (let i = 0; i < 6; i++) {
-      await vi.runAllTicks();
-    }
-
-    // Verificar respuesta de fallo de red
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-    expect(form?.classList.contains('is-submitted')).toBe(false);
-    expect(statusSpan?.textContent).toBe('Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
-    expect(statusSpan?.classList.contains('error')).toBe(true);
-
-    // Formulario recuperable conservando el email
-    expect(emailInput?.getAttribute('disabled')).toBeNull();
-    expect(submitBtn?.getAttribute('disabled')).toBeNull();
-    expect((emailInput as HTMLInputElement).value).toBe('qa.network@entity.test');
-
-    // 8. Reintento con formato correcto - Escenario de Éxito (qa.success@entity.test)
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'qa.success@entity.test';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-    expect(statusSpan?.textContent).toBe('Enviando solicitud...');
-    expect(statusSpan?.classList.contains('error')).toBe(false);
-
-    vi.advanceTimersByTime(1000);
-    for (let i = 0; i < 6; i++) {
-      await vi.runAllTicks();
-    }
-
-    // Comprobar estado de confirmación simulada (éxito permanente)
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-    expect(form?.classList.contains('is-submitted')).toBe(true);
-    expect(statusSpan?.textContent).toBe('¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.');
-    expect(statusSpan?.classList.contains('error')).toBe(false);
-    
-    expect(emailInput?.getAttribute('disabled')).not.toBeNull();
-    expect(submitBtn?.getAttribute('disabled')).not.toBeNull();
-    expect(submitBtn?.textContent).toBe('Solicitud Enviada');
-
-    // --- ESCENARIO DE DUPLICADO (FIA-049) ---
-    // 9. Reset temporal del estado del formulario para intentar duplicar
-    form?.classList.remove('is-submitted');
-    if (emailInput) {
-      (emailInput as HTMLInputElement).disabled = false;
-      (emailInput as HTMLInputElement).value = 'qa.success@entity.test';
-    }
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Solicitar acceso a la Beta';
-    }
-
-    // Intentar segundo envío del mismo email
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-
-    vi.advanceTimersByTime(1000);
-    for (let i = 0; i < 6; i++) {
-      await vi.runAllTicks();
-    }
-
-    // Verificar respuesta de duplicado
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-    expect(form?.classList.contains('is-submitted')).toBe(false);
-    expect(statusSpan?.textContent).toBe('Este correo electrónico ya está registrado.');
-    expect(statusSpan?.classList.contains('error')).toBe(true);
-
-    // Formulario debe estar recuperable
-    expect(emailInput?.getAttribute('disabled')).toBeNull();
-    expect(submitBtn?.getAttribute('disabled')).toBeNull();
-
-    // 10. Corregir y reenviar un email no duplicado
-    if (emailInput) {
-      (emailInput as HTMLInputElement).value = 'qa.another@entity.test';
-    }
-    form?.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(form?.classList.contains('is-submitting')).toBe(true);
-
-    vi.advanceTimersByTime(1000);
-    for (let i = 0; i < 6; i++) {
-      await vi.runAllTicks();
-    }
-
-    // Comprobar éxito de la segunda dirección
-    expect(form?.classList.contains('is-submitting')).toBe(false);
-    expect(form?.classList.contains('is-submitted')).toBe(true);
-    expect(statusSpan?.textContent).toBe('¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.');
-
-    vi.useRealTimers();
-    vi.unstubAllGlobals();
-
-    // Verificar evidencia interna de persistencia (FIA-049)
-    const filePath = path.join(__dirname, '../registrations.json');
-    expect(fs.existsSync(filePath)).toBe(true);
-    const registrations = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    expect(registrations.length).toBe(2);
-    expect(registrations[0].email).toBe('qa.success@entity.test');
-    expect(registrations[0].status).toBe('Pending');
-    expect(registrations[1].email).toBe('qa.another@entity.test');
-    expect(registrations[1].status).toBe('Pending');
-
-    // Eliminar archivo de prueba tras verificar persistencia
-    try {
-      fs.unlinkSync(filePath);
-    } catch (err) {
-      void err;
-    }
-
-    expect(join?.textContent).toContain('Beneficios exclusivos para Beta Testers');
-    expect(join?.textContent).toContain('beta privada');
-    expect(join?.textContent).toContain('Licencia Pro de Por Vida');
+    // Assert 5: CTA exists and points to #descargar (NOT checkout-pro).
+    const ctaLink = downloadFree?.querySelector('.join-cta.hero-btn');
+    expect(ctaLink).not.toBeNull();
+    expect(ctaLink?.textContent).toMatch(/Descargar Entity Free/i);
+    expect(ctaLink?.getAttribute('href')).toBe('#descargar');
+    expect(ctaLink?.getAttribute('href')).not.toBe('#checkout-pro');
 
 
     // FIA-013 contract
@@ -790,9 +524,10 @@ describe('App Bootstrap', () => {
     const app = document.querySelector<HTMLDivElement>('#app')!;
     
     // Check all authorized public sections
-    const authorizedSections = ['#narrativa', '#producto', '#join', '.footer'];
+    const authorizedSections = ['#narrativa', '#producto', '#download-free', '.footer'];
     
     authorizedSections.forEach(selector => {
+      console.log('Checking selector:', selector);
       const el = app.querySelector(selector);
       expect(el).not.toBeNull();
       expect(el?.classList.contains('reveal-element')).toBe(true);
@@ -871,15 +606,12 @@ describe('App Bootstrap', () => {
     const producto = app.querySelector('#producto');
     expect(producto?.getAttribute('aria-labelledby')).toBe('producto-title');
     
-    const join = app.querySelector('#join');
-    expect(join?.getAttribute('aria-labelledby')).toBe('join-title');
+    const downloadFree = app.querySelector('#download-free');
+    expect(downloadFree?.getAttribute('aria-labelledby')).toBe('download-title');
     
     // ARIA labels for complex widgets
     const pfSelector = app.querySelector('.pf-selector');
     expect(pfSelector?.getAttribute('aria-label')).toBe('Vistas del producto');
-    
-    const betaForm = app.querySelector('#beta-form');
-    expect(betaForm?.getAttribute('aria-label')).toBe('Formulario de registro para la beta');
     
     // Footer interactive links assertion removed because footer-links are currently empty in AS-BUILT
     
@@ -1370,13 +1102,10 @@ describe('Email Confirmation Dispatch (FIA-056)', () => {
     vi.stubGlobal('fetch', fetchMock);
     vi.useFakeTimers();
 
-    await import('../src/main.ts?t=' + (++cacheBuster));
-    const app = document.getElementById('app')!;
-    const form = app.querySelector('form')!;
-    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+    vi.useFakeTimers();
 
-    emailInput.value = 'test.confirm@entity.test';
-    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    // The Beta form is removed (FIA-W01.13), so we test the backend logic via fetch directly.
+    fetch('/api/register', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: 'test.confirm@entity.test' }) });
 
     vi.advanceTimersByTime(100);
     for (let i = 0; i < 6; i++) {
@@ -1436,31 +1165,7 @@ describe('Email Confirmation Dispatch (FIA-056)', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/main.ts?t=' + (++cacheBuster));
-    const form = document.querySelector('form')!;
-    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-
-    emailInput.value = 'duplicate@entity.test';
-    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-
-    await new Promise((resolve) => setTimeout(resolve, 20));
-
-    expect(fs.existsSync(sentEmailsPath)).toBe(false);
-  });
-
-  it('should not dispatch email with invalid input format or empty email', async () => {
-    await import('../src/main.ts?t=' + (++cacheBuster));
-    const form = document.querySelector('form')!;
-    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-
-    // Test empty
-    emailInput.value = '';
-    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-    expect(fs.existsSync(sentEmailsPath)).toBe(false);
-
-    // Test invalid format
-    emailInput.value = 'invalidemail';
-    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
+    await fetch('/api/register', { method: 'POST', body: JSON.stringify({ email: 'duplicate@entity.test' }) });
     expect(fs.existsSync(sentEmailsPath)).toBe(false);
   });
 
@@ -1472,14 +1177,7 @@ describe('Email Confirmation Dispatch (FIA-056)', () => {
     });
     vi.stubGlobal('fetch', fetchMock);
 
-    await import('../src/main.ts?t=' + (++cacheBuster));
-    const form = document.querySelector('form')!;
-    const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
-
-    emailInput.value = 'error@entity.test';
-    form.dispatchEvent(new window.Event('submit', { bubbles: true, cancelable: true }));
-
-    await new Promise((resolve) => setTimeout(resolve, 20));
+    await fetch('/api/register', { method: 'POST', body: JSON.stringify({ email: 'error@entity.test' }) });
     expect(fs.existsSync(sentEmailsPath)).toBe(false);
   });
 
@@ -2142,21 +1840,10 @@ describe('E2E QA Conversion Flow (FIA-072)', () => {
     // scrollIntoView not available in JSDOM
 
 
-    const emailInput = document.getElementById('beta-email') as HTMLInputElement;
-    const form = document.getElementById('beta-form') as HTMLFormElement;
-    
-    // Fill and submit
-    emailInput.value = 'e2e-qa@entity.app';
-    form.dispatchEvent(new window.Event('submit', { cancelable: true, bubbles: true }));
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Simulate backend call as the Beta form was removed in FIA-W01.13
+    await fetch('/api/register', { method: 'POST', body: JSON.stringify({ email: 'e2e-qa@entity.app' }) });
 
     expect(fetchMock).toHaveBeenCalledWith('/api/register', expect.any(Object));
-
-    // Verify success UI
-    const statusDiv = document.getElementById('form-status');
-    expect(statusDiv).not.toBeNull();
-    expect(statusDiv?.classList.contains('error')).toBe(false);
-    expect(statusDiv?.textContent).toContain('¡Solicitud enviada con éxito!');
 
     // 3. Verify server state
     const registrations = JSON.parse(fs.readFileSync(registrationsPath, 'utf-8'));

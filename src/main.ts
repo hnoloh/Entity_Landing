@@ -1,6 +1,6 @@
 import './style.css';
 import * as Sentry from '@sentry/browser';
-import { getApiUrl } from './api/config';
+
 
 if (import.meta.env.VITE_SENTRY_DSN) {
   Sentry.init({
@@ -403,31 +403,13 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
 
-    <section id="join" class="region reveal-element" aria-labelledby="join-title">
-      <div class="join-container">
-        <h2 id="join-title">Únete a la Beta</h2>
-        <p class="join-subtitle">
-          Asegura tu plaza en la <strong>beta privada</strong> y forma parte del desarrollo de Entity. <br><span style="opacity: 0.9; font-size: 0.95em; display: inline-block; margin-top: 8px;">ℹ️ <strong>Nota:</strong> Durante la Beta la app es 100% gratuita (BYOK / Ollama Local). Entity pasará a ser un software de suscripción tras el lanzamiento v1.0.</span>
-        </p>
-        <div class="join-box">
-          <div class="join-benefits">
-            <h4>🎁 Beneficios exclusivos para Beta Testers</h4>
-            <ul>
-              <li><strong>Acceso Inmediato:</strong> Prueba Entis y Grupos secuenciales en tu escritorio.</li>
-              <li><strong>Licencia Pro de Por Vida:</strong> Gratis para quienes nos ayuden con su feedback.</li>
-              <li><strong>Contacto Directo:</strong> Canal exclusivo para hablar con el creador y sugerir mejoras.</li>
-            </ul>
-          </div>
-          <form id="beta-form" class="beta-form" aria-label="Formulario de registro para la beta" onsubmit="event.preventDefault();" novalidate>
-            <div class="form-group">
-              <label for="beta-email" class="form-label">Correo Electrónico</label>
-              <input type="email" id="beta-email" class="form-input" required placeholder="tu@email.com" aria-describedby="email-error" />
-              <span id="email-error" class="error-message" role="alert" aria-live="polite"></span>
-            </div>
-            <button type="submit" class="join-cta btn">Solicitar acceso a la Beta</button>
-            <span id="form-status" class="status-message" role="status" aria-live="polite"></span>
-          </form>
-        </div>
+    <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
+      <div class="narrativa-header">
+        <h2 id="download-title">Descarga Entity ahora</h2>
+        <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 2rem;">
+        <a href="#descargar" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center;">Descargar Entity Free</a>
       </div>
     </section>
 
@@ -546,145 +528,6 @@ pfTabs.forEach(tab => {
   });
 });
 
-// Beta Form validation logic (FIA-042)
-const betaForm = document.getElementById('beta-form');
-const betaEmailInput = document.getElementById('beta-email') as HTMLInputElement | null;
-const emailErrorSpan = document.getElementById('email-error');
-const formStatusSpan = document.getElementById('form-status');
-
-if (betaForm && betaEmailInput && emailErrorSpan) {
-  betaForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    // Prevent double submit
-    if (betaForm.classList.contains('is-submitting')) {
-      return;
-    }
-    
-    const value = betaEmailInput.value.trim();
-    if (!value) {
-      betaEmailInput.classList.add('invalid');
-      betaEmailInput.setAttribute('aria-invalid', 'true');
-      emailErrorSpan.textContent = 'El correo electrónico es obligatorio.';
-      emailErrorSpan.style.display = 'block';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      betaEmailInput.classList.add('invalid');
-      betaEmailInput.setAttribute('aria-invalid', 'true');
-      emailErrorSpan.textContent = 'El formato del correo electrónico no es válido.';
-      emailErrorSpan.style.display = 'block';
-    } else {
-      betaEmailInput.classList.remove('invalid');
-      betaEmailInput.removeAttribute('aria-invalid');
-      emailErrorSpan.textContent = '';
-      emailErrorSpan.style.display = 'none';
-      
-      // Activar estado de envío local y accesible (FIA-044)
-      betaForm.classList.add('is-submitting');
-      betaForm.setAttribute('aria-busy', 'true');
-      betaEmailInput.disabled = true;
-      
-      const submitBtn = betaForm.querySelector('.join-cta') as HTMLButtonElement | null;
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Enviando...';
-      }
-      
-      if (formStatusSpan) {
-        formStatusSpan.classList.remove('error');
-        formStatusSpan.textContent = 'Enviando solicitud...';
-        formStatusSpan.style.display = 'block';
-      }
-
-      // Enviar petición HTTP real (FIA-047)
-      fetch(getApiUrl('/api/register'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: value })
-      })
-      .then(response => {
-        betaForm.removeAttribute('aria-busy');
-        
-        if (!response.ok) {
-          return response.json()
-            .catch(() => {
-              return { error: 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.' };
-            })
-            .then(errData => {
-              throw new Error(errData.error || 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.');
-            });
-        }
-        return response.json();
-      })
-      .then(data => {
-        betaForm.classList.remove('is-submitting');
-        betaForm.classList.add('is-submitted');
-        
-        if (submitBtn) {
-          submitBtn.textContent = 'Solicitud Enviada';
-        }
-        
-        if (formStatusSpan) {
-          formStatusSpan.textContent = data.message || '¡Solicitud enviada con éxito! Te hemos añadido a la lista de espera.';
-        }
-      })
-      .catch((err) => {
-        betaForm.classList.remove('is-submitting');
-        betaEmailInput.disabled = false;
-        
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Solicitar acceso a la Beta';
-        }
-        
-        if (formStatusSpan) {
-          formStatusSpan.classList.add('error');
-          // Mostrar mensaje de error amigable si es fallo de red (Failed to fetch)
-          const msg = (err instanceof Error && err.message && err.message !== 'Failed to fetch')
-            ? err.message
-            : 'Hubo un error al procesar tu solicitud. Por favor, inténtalo de nuevo.';
-          formStatusSpan.textContent = msg;
-        }
-      });
-    }
-  });
-
-  const clearError = () => {
-    // No limpiar si ya se está enviando o ya se envió
-    if (betaForm.classList.contains('is-submitting') || betaForm.classList.contains('is-submitted')) {
-      return;
-    }
-    betaEmailInput.classList.remove('invalid');
-    betaEmailInput.removeAttribute('aria-invalid');
-    emailErrorSpan.textContent = '';
-    emailErrorSpan.style.display = 'none';
-    
-    if (formStatusSpan) {
-      formStatusSpan.textContent = '';
-      formStatusSpan.style.display = 'none';
-      formStatusSpan.classList.remove('error');
-    }
-  };
-
-  // Clear error on input
-  betaEmailInput.addEventListener('input', clearError);
-
-  // Clear error on focus (when user clicks back on the writing field)
-  betaEmailInput.addEventListener('focus', clearError);
-
-  // Clear error on click/mousedown (for click triggers even if already focused)
-  betaEmailInput.addEventListener('click', clearError);
-  betaEmailInput.addEventListener('mousedown', clearError);
-
-  // Clear error when clicking anywhere else on the document
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (betaForm && !betaForm.contains(target)) {
-      clearError();
-    }
-  });
-
   // Intersection Observer for scroll reveal (FIA-063)
   if (typeof window !== 'undefined' && window.IntersectionObserver) {
     const revealCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
@@ -773,4 +616,4 @@ if (betaForm && betaEmailInput && emailErrorSpan) {
       if (e.key === 'ArrowRight') navigateLightbox(1);
     });
   }
-}
+
