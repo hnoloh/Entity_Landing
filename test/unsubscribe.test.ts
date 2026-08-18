@@ -66,7 +66,19 @@ describe("Unsubscribe Flow in Backend Runtime", () => {
     });
 
     await requestHandler(req, res);
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    await new Promise<void>((resolve) => {
+      const origEnd = res.end;
+      res.end = function (...args: any[]): any {
+        origEnd.call(res, args[0]);
+        resolve();
+        return res as any;
+      };
+      // fallback in case it ends synchronously or errors
+      setTimeout(() => {
+        console.log("Timeout hit! responseData:", responseData);
+        resolve();
+      }, 1500);
+    });
     return { statusCode, headers: headersSet, body: responseData };
   };
 

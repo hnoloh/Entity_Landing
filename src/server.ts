@@ -67,6 +67,7 @@ export const requestHandler = async (
   }
 
   const reqUrl = req.url ? url.parse(req.url).pathname : "";
+  console.log("Incoming reqUrl:", reqUrl, req.method);
 
   const adminToken = process.env.VITE_ADMIN_SECRET || "admin-secret-2026";
   const isAdminEndpoint =

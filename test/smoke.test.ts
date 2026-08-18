@@ -141,24 +141,21 @@ describe("Build + Deploy Smoke Test", () => {
     await new Promise((r) => setTimeout(r, 100)); // Esperar DOM renderizado
 
     // 3. Smoke Test Registro Beta
-    const betaEmailInput = document.getElementById(
-      "beta-email",
-    ) as HTMLInputElement;
-    const betaForm = document.getElementById("beta-form") as HTMLFormElement;
-    expect(betaEmailInput).not.toBeNull();
-    expect(betaForm).not.toBeNull();
+    const downloadFree = document.getElementById("download-free");
+    const downloadCta = document.getElementById("download-cta");
+    expect(downloadFree).not.toBeNull();
+    expect(downloadCta).not.toBeNull();
 
     const testEmail = "smoke.test@entity.test";
-    betaEmailInput.value = testEmail;
-    betaForm.dispatchEvent(
-      new window.Event("submit", { bubbles: true, cancelable: true }),
+    const regRes = await globalThis.fetch(
+      `http://127.0.0.1:${BACKEND_PORT}/api/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: testEmail }),
+      },
     );
-
-    await new Promise((r) => setTimeout(r, 800)); // Esperar respuesta HTTP
-
-    const statusSpan = document.getElementById("form-status");
-    expect(statusSpan?.textContent).toContain("¡Solicitud enviada con éxito!");
-    expect(betaForm.classList.contains("is-submitted")).toBe(true);
+    expect(regRes.status).toBe(200);
 
     // 4. Validar backend: admin autorizado (Verificar SQLite)
     const adminRes = await originalFetch(

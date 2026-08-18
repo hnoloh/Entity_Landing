@@ -84,26 +84,19 @@ describe("QA E2E Productivo", () => {
     await import(path.join(assetsDir, mainJs));
     await new Promise((r) => setTimeout(r, 100)); // allow DOM to settle
 
-    const betaEmailInput = document.getElementById(
-      "beta-email",
-    ) as HTMLInputElement;
-    const betaForm = document.getElementById("beta-form") as HTMLFormElement;
-    expect(betaEmailInput).not.toBeNull();
-    expect(betaForm).not.toBeNull();
+    const downloadFree = document.getElementById("download-free");
+    const downloadCta = document.getElementById("download-cta");
+    expect(downloadFree).not.toBeNull();
+    expect(downloadCta).not.toBeNull();
 
-    // 3. Registro de Beta
+    // 3. Registro de Beta (Backend)
     const testEmail = "e2e.test@entity.test";
-    betaEmailInput.value = testEmail;
-    betaForm.dispatchEvent(
-      new window.Event("submit", { bubbles: true, cancelable: true }),
-    );
-
-    // Esperar respuesta real del backend
-    await new Promise((r) => setTimeout(r, 800));
-
-    const statusSpan = document.getElementById("form-status");
-    expect(statusSpan?.textContent).toContain("¡Solicitud enviada con éxito!");
-    expect(betaForm.classList.contains("is-submitted")).toBe(true);
+    const regRes = await globalThis.fetch(`/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: testEmail }),
+    });
+    expect(regRes.status).toBe(200);
 
     // 4. Validar estado de Authorization Bearer (Admin sin token => 401)
     const adminResNoToken = await globalThis.fetch(`/api/registrations`);

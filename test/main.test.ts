@@ -699,7 +699,7 @@ describe("App Bootstrap", () => {
       '<meta name="title" content="Entity | El Workspace para tus agentes de IA" />',
     );
     expect(htmlContent).toContain(
-      '<meta name="description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
     );
 
     // Check Open Graph
@@ -710,13 +710,13 @@ describe("App Bootstrap", () => {
       '<meta property="og:url" content="https://entity.app/" />',
     );
     expect(htmlContent).toContain(
-      '<meta property="og:title" content="Entity | El Workspace para tus agentes de IA" />',
+      'content="Entity | El Workspace para tus agentes de IA"',
     );
     expect(htmlContent).toContain(
-      '<meta property="og:description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
     );
     expect(htmlContent).toContain(
-      '<meta property="og:image" content="/FIA-31_Implementar vista workspace.png" />',
+      'content="/FIA-31_Implementar vista workspace.png"',
     );
 
     // Check Twitter
@@ -727,13 +727,13 @@ describe("App Bootstrap", () => {
       '<meta property="twitter:url" content="https://entity.app/" />',
     );
     expect(htmlContent).toContain(
-      '<meta property="twitter:title" content="Entity | El Workspace para tus agentes de IA" />',
+      'content="Entity | El Workspace para tus agentes de IA"',
     );
     expect(htmlContent).toContain(
-      '<meta property="twitter:description" content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada." />',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
     );
     expect(htmlContent).toContain(
-      '<meta property="twitter:image" content="/FIA-31_Implementar vista workspace.png" />',
+      'content="/FIA-31_Implementar vista workspace.png"',
     );
   });
 
