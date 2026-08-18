@@ -130,18 +130,18 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     <section id="producto" class="region reveal-element" aria-labelledby="producto-title">
       <h2 id="producto-title">Producto</h2>
       <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
-        <button class="pf-tab active" role="tab" aria-selected="true" data-target="workspace">Workspace</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="entis">Entis</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="editorgrupos">Editor de Grupos</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="gruposavanzados">Grupos Avanzados</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="chat">Chat Desacoplado</button>
+        <button class="pf-tab active" role="tab" aria-selected="true" data-target="agentes">Agentes</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="proveedores">Múltiples Proveedores</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="consola">Herramienta Consola</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="conocimiento">Conocimiento</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="datos">Datos</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="orquestacion">Orquestación</button>
       </div>
+      <p id="pf-description" style="color: var(--text-secondary); max-width: 600px; margin: 1.5rem auto 0; text-align: center; min-height: 3rem; font-size: 0.95rem;">
+        Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.
+      </p>
       <div class="producto-visual">
         <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
-          <img src="/FIA-31_Implementar vista workspace.png" alt="Vista Workspace de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
+          <img src="/FIA-32_Implementar vista entis.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
         </div>
       </div>
     </section>
@@ -223,38 +223,31 @@ document.addEventListener('click', (e) => {
 const pfTabs = document.querySelectorAll('.pf-tab');
 const pfCaptureImg = document.querySelector<HTMLImageElement>('.pf-capture');
 
-const viewAssets: Record<string, { src: string; alt: string }> = {
-  workspace: {
-    src: '/FIA-31_Implementar vista workspace.png',
-    alt: 'Vista Workspace de Entity'
-  },
-  entis: {
+const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
+  agentes: {
     src: '/FIA-32_Implementar vista entis.png',
-    alt: 'Vista Entis de Entity'
-  },
-  editorgrupos: {
-    src: '/Editor de grupo.png',
-    alt: 'Editor de Grupos de Entity'
-  },
-  gruposavanzados: {
-    src: '/Grupos avanzados.png',
-    alt: 'Grupos Avanzados de Entity'
-  },
-  chat: {
-    src: '/Floating Chat.png',
-    alt: 'Vista de Chat Desacoplado de Entity'
+    alt: 'Agentes de Entity',
+    desc: 'Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.'
   },
   herramientas: {
     src: '/Herramientas.png',
-    alt: 'Herramientas de Entity'
+    alt: 'Herramientas de Entity',
+    desc: 'Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.'
   },
-  proveedores: {
-    src: '/Multiples proveedores.png',
-    alt: 'Múltiples Proveedores de Entity'
+  conocimiento: {
+    src: '/FIA-31_Implementar vista workspace.png',
+    alt: 'Conocimiento estructural',
+    desc: ''
   },
-  consola: {
-    src: '/Consola.png',
-    alt: 'Consola de Entity'
+  datos: {
+    src: '/FIA-31_Implementar vista workspace.png',
+    alt: 'Datos estructural',
+    desc: ''
+  },
+  orquestacion: {
+    src: '/FIA-31_Implementar vista workspace.png',
+    alt: 'Orquestación estructural',
+    desc: ''
   }
 };
 
@@ -264,9 +257,11 @@ Object.values(viewAssets).forEach(asset => {
   img.src = asset.src;
 });
 
+const pfDesc = document.getElementById('pf-description');
+
 pfTabs.forEach(tab => {
   tab.addEventListener('click', () => {
-    const target = tab.getAttribute('data-target') || 'workspace';
+    const target = tab.getAttribute('data-target') || 'agentes';
     
     // Update active tab styling
     pfTabs.forEach(t => {
@@ -276,10 +271,14 @@ pfTabs.forEach(tab => {
     tab.classList.add('active');
     tab.setAttribute('aria-selected', 'true');
     
-    // Update image
+    // Update image and text
     if (pfCaptureImg && viewAssets[target]) {
       pfCaptureImg.src = viewAssets[target].src;
       pfCaptureImg.alt = viewAssets[target].alt;
+      
+      if (pfDesc) {
+        pfDesc.textContent = viewAssets[target].desc;
+      }
       
       // Trigger transition animation (FIA-067)
       pfCaptureImg.classList.remove('switching');
