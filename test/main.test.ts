@@ -318,6 +318,30 @@ describe('App Bootstrap', () => {
     // Validate order roughly by their visual numbering
     expect(comoFuncionaText).toMatch(/1.*Download.*2.*Buy.*3.*License key.*4.*Activate Pro/s);
 
+    // FIA-W01.11 contract (Control / Local-first)
+    const controlSection = app.querySelector('#control-local-first');
+    expect(controlSection).not.toBeNull();
+    const controlText = controlSection?.textContent || '';
+    
+    // Core anti-drift messaging
+    expect(controlText).toContain('sin cuenta Entity');
+    expect(controlText).toContain('modelos locales');
+    expect(controlText).toContain('BYOK');
+    expect(controlText).toContain('Camino Local');
+    expect(controlText).toContain('Camino Cloud');
+    
+    // Conditional logic phrasing
+    expect(controlText).toContain('El tratamiento depende del camino que elijas');
+    expect(controlText).toContain('procesamiento ocurre en tu máquina');
+    expect(controlText).toContain('procesamiento involucra al proveedor seleccionado');
+
+    // Negatives (No privacy absolute claims, no specific vendors)
+    expect(controlText).not.toMatch(/100% privado/i);
+    expect(controlText).not.toMatch(/siempre local/i);
+    expect(controlText).not.toContain('OpenAI');
+    expect(controlText).not.toContain('Anthropic');
+    expect(controlText).not.toContain('retención de 0 días');
+    
     // FIA-041 contract (Formulario Beta visible y accesible)
     const join = app.querySelector('#join');
     expect(join).not.toBeNull();

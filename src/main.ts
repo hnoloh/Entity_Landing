@@ -324,6 +324,41 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </div>
     </section>
 
+    <!-- CONTROL / LOCAL-FIRST (FIA-W01.11) -->
+    <section id="control-local-first" class="region reveal-element" aria-labelledby="control-title">
+      <div class="narrativa-header">
+        <h2 id="control-title">Control total sobre tus datos</h2>
+        <p>El tratamiento depende del camino que elijas. Entity funciona <strong>sin cuenta Entity</strong>.</p>
+      </div>
+      <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; max-width: 1000px; width: 100%; margin-top: 2rem; margin-left: auto; margin-right: auto;">
+        
+        <!-- Local Path -->
+        <div class="narrativa-card" style="flex: 1; min-width: 300px;">
+          <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Camino Local</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+            Soporte nativo para <strong>modelos locales</strong>. Si optas por emplear motores ejecutados en tu propio hardware, el procesamiento ocurre en tu máquina.
+          </p>
+          <ul class="problema-bullets-mini">
+            <li>Ejecución contenida en tu dispositivo</li>
+            <li>Tú decides qué entra y qué sale</li>
+          </ul>
+        </div>
+
+        <!-- Cloud BYOK Path -->
+        <div class="narrativa-card" style="flex: 1; min-width: 300px;">
+          <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Camino Cloud (BYOK)</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+            Soporte para integraciones en la nube mediante <strong>BYOK (Bring Your Own Key)</strong>. Al utilizar APIs externas, el procesamiento involucra al proveedor seleccionado.
+          </p>
+          <ul class="problema-bullets-mini">
+            <li>Gestión y rotación de tus propias claves</li>
+            <li>Sujeto exclusivamente a las políticas de tu proveedor</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
     <section id="join" class="region reveal-element" aria-labelledby="join-title">
       <div class="join-container">
         <h2 id="join-title">Únete a la Beta</h2>
