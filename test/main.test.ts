@@ -70,7 +70,7 @@ describe('App Bootstrap', () => {
     expect(navLinks?.[1].getAttribute('href')).toBe('#precios');
     expect(navLinks?.[1].textContent).toBe('Precios');
     
-    expect(navLinks?.[2].getAttribute('href')).toBe('#descargar');
+    expect(navLinks?.[2].getAttribute('href')).toBe('#download-free');
     expect(navLinks?.[2].textContent).toContain('Descargar');
     expect(navLinks?.[2].classList.contains('hero-btn')).toBe(true);
 
@@ -247,7 +247,7 @@ describe('App Bootstrap', () => {
     const freeCTA = precios?.querySelector('a.join-cta');
     expect(freeCTA).not.toBeNull();
     expect(freeCTA?.textContent).toBe('Descargar Entity Free');
-    expect(freeCTA?.getAttribute('href')).toBe('#descargar');
+    expect(freeCTA?.getAttribute('href')).toBe('#download-free');
     
     // Assert Entity Pro structural presence and capabilities
     expect(precios?.textContent).toContain('Entity Pro');
@@ -444,7 +444,7 @@ describe('App Bootstrap', () => {
     expect(drawerLinks?.length).toBe(3);
     expect(drawerLinks?.[0].getAttribute('href')).toBe('#producto');
     expect(drawerLinks?.[1].getAttribute('href')).toBe('#precios');
-    expect(drawerLinks?.[2].getAttribute('href')).toBe('#descargar');
+    expect(drawerLinks?.[2].getAttribute('href')).toBe('#download-free');
     expect(drawerLinks?.[2].classList.contains('hero-btn')).toBe(true);
 
     const mobileDocsDropdown = drawer?.querySelector('.mobile-dropdown-container .mobile-dropdown-trigger');

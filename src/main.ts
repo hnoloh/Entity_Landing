@@ -33,7 +33,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           </div>
         </div>
       </div>
-      <a href="#descargar" class="nav-item hero-btn" style="margin-left: 1rem;">Descargar</a>
+      <a href="#download-free" class="nav-item hero-btn" style="margin-left: 1rem;">Descargar</a>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
@@ -47,7 +47,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <a href="/docs/METODO%20Entity.pdf" target="_blank" class="mobile-dropdown-item">Entity Method</a>
           </div>
         </div>
-        <a href="#descargar" class="mobile-nav-item hero-btn" style="margin-top: 1rem; width: 100%; justify-content: center;">Descargar</a>
+        <a href="#download-free" class="mobile-nav-item hero-btn" style="margin-top: 1rem; width: 100%; justify-content: center;">Descargar</a>
       </nav>
     </div>
   </header>
@@ -59,7 +59,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <h1 id="hero-headline" class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
             <p class="hero-supporting">La IA necesita un Workspace. Entity es un entorno de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control.</p>
             <div class="hero-cta" style="gap: 1rem; flex-wrap: wrap;">
-              <a href="#descargar" class="join-cta" style="margin: 0;">Descargar Entity Free</a>
+              <a href="#download-free" class="join-cta" style="margin: 0;">Descargar Entity Free</a>
               <a href="#precios" class="hero-btn" style="margin: 0;">Ver Entity Pro</a>
             </div>
             <div style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.85;">
@@ -167,7 +167,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
             <li><strong>Persistencia completa</strong></li>
             <li><strong>Generación DOCX / PDF / HTML</strong></li>
           </ul>
-          <a href="#descargar" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Descargar Entity Free</a>
+          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Descargar Entity Free</a>
         </div>
 
         <!-- Tarjeta Pro -->
@@ -415,7 +415,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
           <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
         </div>
         <div style="display: flex; justify-content: center;">
-          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0-222be6c/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
+          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
         </div>
         <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
           <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span></p>
@@ -555,10 +555,10 @@ pfTabs.forEach(tab => {
       const platform = tab.getAttribute('data-platform');
       
       if (platform === 'windows') {
-        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0-222be6c/Entity_1.0.0_x64-setup.exe';
+        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe';
         desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
       } else if (platform === 'linux') {
-        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0-222be6c/Entity_1.0.0_amd64.AppImage';
+        cta.href = 'https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_amd64.AppImage';
         desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
       }
 
