@@ -185,7 +185,7 @@ describe('App Bootstrap', () => {
     // Vista por defecto: Agentes activo
     expect(tabs?.[0].classList.contains('active')).toBe(true);
     expect(tabs?.[1].classList.contains('active')).toBe(false);
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-32_Implementar vista entis.png');
+    expect(captureImg?.getAttribute('src')).toBe('/v1_agentes.png');
     expect(captureImg?.getAttribute('alt')).toBe('Agentes de Entity');
     expect(pfDesc?.textContent).toContain('Entis especializados');
     expect(pfDesc?.textContent).toContain('modelos locales/cloud');
@@ -196,7 +196,7 @@ describe('App Bootstrap', () => {
     tabs?.[1].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[0].classList.contains('active')).toBe(false);
     expect(tabs?.[1].classList.contains('active')).toBe(true);
-    expect(captureImg?.getAttribute('src')).toBe('/Herramientas.png');
+    expect(captureImg?.getAttribute('src')).toBe('/v1_herramientas.png');
     expect(pfDesc?.textContent).toContain('Tool Belt');
     expect(pfDesc?.textContent).toContain('actuar sobre su entorno');
     
@@ -207,12 +207,12 @@ describe('App Bootstrap', () => {
     tabs?.[2].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[2].classList.contains('active')).toBe(true);
     expect(pfDesc?.textContent?.trim()).toBe('');
-    expect(captureImg?.getAttribute('src')).toBe('/FIA-31_Implementar vista workspace.png');
+    expect(captureImg?.getAttribute('src')).toBe('/v1_workspace.png');
 
     // Clic en pestaña Orquestación (Grupos respaldados)
     tabs?.[4].dispatchEvent(new MouseEvent('click', { bubbles: true }));
     expect(tabs?.[4].classList.contains('active')).toBe(true);
-    expect(captureImg?.getAttribute('src')).toBe('/Grupos avanzados.png');
+    expect(captureImg?.getAttribute('src')).toBe('/v1_orquestacion.png');
     expect(pfDesc?.textContent).toContain('Grupos secuenciales');
     expect(pfDesc?.textContent).toContain('ordena la participación');
     expect(pfDesc?.textContent).toContain('bajo control humano');

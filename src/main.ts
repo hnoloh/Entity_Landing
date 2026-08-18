@@ -141,7 +141,7 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
       </p>
       <div class="producto-visual">
         <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
-          <img src="/FIA-32_Implementar vista entis.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
+          <img src="/v1_agentes.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
         </div>
       </div>
     </section>
@@ -225,27 +225,27 @@ const pfCaptureImg = document.querySelector<HTMLImageElement>('.pf-capture');
 
 const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
   agentes: {
-    src: '/FIA-32_Implementar vista entis.png',
+    src: '/v1_agentes.png',
     alt: 'Agentes de Entity',
     desc: 'Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.'
   },
   herramientas: {
-    src: '/Herramientas.png',
+    src: '/v1_herramientas.png',
     alt: 'Herramientas de Entity',
     desc: 'Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.'
   },
   conocimiento: {
-    src: '/FIA-31_Implementar vista workspace.png',
+    src: '/v1_workspace.png',
     alt: 'Conocimiento estructural',
     desc: ''
   },
   datos: {
-    src: '/FIA-31_Implementar vista workspace.png',
+    src: '/v1_workspace.png',
     alt: 'Datos estructural',
     desc: ''
   },
   orquestacion: {
-    src: '/Grupos avanzados.png',
+    src: '/v1_orquestacion.png',
     alt: 'Orquestación de Entis',
     desc: 'Grupos secuenciales. Estructura logística que ordena la participación de Entis especializados bajo control humano.'
   }
