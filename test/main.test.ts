@@ -784,6 +784,9 @@ describe("App Bootstrap", () => {
     const proCTA = precios?.querySelector("#checkout-pro") as HTMLAnchorElement;
     expect(proCTA).not.toBeNull();
     expect(proCTA.textContent).toBe("Obtener Entity Pro");
+    expect(proCTA.getAttribute("target")).toBe("_blank");
+    expect(proCTA.getAttribute("rel")).toContain("noopener");
+    expect(proCTA.getAttribute("rel")).toContain("noreferrer");
     
     // Initially Monthly is active
     expect(monthlyBtn.classList.contains("active")).toBe(true);
