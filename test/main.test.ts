@@ -289,7 +289,7 @@ describe("App Bootstrap", () => {
     const proCTA = precios?.querySelectorAll("a.join-cta")[1];
     expect(proCTA).not.toBeNull();
     expect(proCTA?.textContent).toBe("Obtener Entity Pro");
-    expect(proCTA?.getAttribute("href")).toBe("#checkout-pro");
+    // URL will be verified in the new W01.17 test block
 
     // FIA-W01.09 contract (Comparativa detallada RV-N01)
     const comparativa = app.querySelector("#comparativa-matrix");
@@ -751,6 +751,66 @@ describe("App Bootstrap", () => {
     const tsContent = fs.readFileSync(tsPath, "utf-8");
     expect(tsContent).toContain("new Image()");
     expect(tsContent).toContain(".src = asset.src");
+  });
+
+  it("should implement monthly/annual toggle and external checkouts (FIA-W01.17)", async () => {
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    
+    const precios = app.querySelector("#precios");
+    expect(precios).not.toBeNull();
+    
+    // Toggle options
+    const billingToggle = precios?.querySelector(".billing-toggle");
+    expect(billingToggle).not.toBeNull();
+    const monthlyBtn = billingToggle?.querySelector("[data-billing='monthly']") as HTMLButtonElement;
+    const annualBtn = billingToggle?.querySelector("[data-billing='annual']") as HTMLButtonElement;
+    
+    expect(monthlyBtn).not.toBeNull();
+    expect(annualBtn).not.toBeNull();
+    
+    // Check initial prices presence
+    const priceMonthly = precios?.querySelector("#price-monthly") as HTMLElement;
+    const priceAnnual = precios?.querySelector("#price-annual") as HTMLElement;
+    expect(priceMonthly).not.toBeNull();
+    expect(priceAnnual).not.toBeNull();
+    
+    expect(priceMonthly.textContent).toContain("8.99 €");
+    expect(priceMonthly.textContent).toContain("/ mes");
+    expect(priceAnnual.textContent).toContain("89 €");
+    expect(priceAnnual.textContent).toContain("/ año");
+
+    // CTA
+    const proCTA = precios?.querySelector("#checkout-pro") as HTMLAnchorElement;
+    expect(proCTA).not.toBeNull();
+    expect(proCTA.textContent).toBe("Obtener Entity Pro");
+    
+    // Initially Monthly is active
+    expect(monthlyBtn.classList.contains("active")).toBe(true);
+    expect(priceMonthly.style.display).not.toBe("none");
+    expect(priceAnnual.style.display).toBe("none");
+    expect(proCTA.getAttribute("href")).toBe("https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570");
+    
+    // Click Annual
+    annualBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(annualBtn.classList.contains("active")).toBe(true);
+    expect(monthlyBtn.classList.contains("active")).toBe(false);
+    expect(priceMonthly.style.display).toBe("none");
+    expect(priceAnnual.style.display).toBe("flex");
+    expect(proCTA.getAttribute("href")).toBe("https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031215%2C2031256");
+
+    // Click Monthly again
+    monthlyBtn.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(monthlyBtn.classList.contains("active")).toBe(true);
+    expect(annualBtn.classList.contains("active")).toBe(false);
+    expect(priceMonthly.style.display).toBe("flex");
+    expect(priceAnnual.style.display).toBe("none");
+    expect(proCTA.getAttribute("href")).toBe("https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570");
+    
+    // Assert PAN/CVV are zero
+    const preciosContent = precios!.innerHTML;
+    expect(preciosContent).not.toMatch(/\b(pan|cvv|credit card)\b/i);
+    expect(app.querySelector("form")).toBeNull();
   });
 });
 

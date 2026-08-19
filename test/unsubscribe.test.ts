@@ -68,9 +68,11 @@ describe("Unsubscribe Flow in Backend Runtime", () => {
     await requestHandler(req, res);
     await new Promise<void>((resolve) => {
       const origEnd = res.end;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       res.end = function (...args: any[]): any {
         origEnd.call(res, args[0]);
         resolve();
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return res as any;
       };
       // fallback in case it ends synchronously or errors

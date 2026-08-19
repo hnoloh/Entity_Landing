@@ -172,9 +172,16 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <div class="narrativa-card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column;">
           <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Pro</h3>
           
-          <!-- Mensual / Anual -->
-          <div style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
+          <!-- Mensual / Anual Toggle -->
+          <div class="pf-tabs billing-toggle" role="tablist" aria-label="Selección de cadencia" style="justify-content: center; margin-bottom: 1rem; width: fit-content; align-self: flex-start;">
+            <button class="pf-tab active" role="tab" aria-selected="true" data-billing="monthly">Mensual</button>
+            <button class="pf-tab" role="tab" aria-selected="false" data-billing="annual">Anual</button>
+          </div>
+          
+          <div id="price-monthly" style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
             <div><strong>8.99 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ mes</span></div>
+          </div>
+          <div id="price-annual" style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: none; flex-direction: column; gap: 0.2rem;">
             <div><strong>89 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ año</span></div>
           </div>
           
@@ -189,7 +196,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
             <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
           </ul>
-          <a href="#checkout-pro" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Obtener Entity Pro</a>
+          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none;">Obtener Entity Pro</a>
         </div>
 
       </div>
@@ -538,6 +545,36 @@ pfTabs.forEach((tab) => {
       pfCaptureImg.classList.remove("switching");
       void pfCaptureImg.offsetWidth; // Force reflow
       pfCaptureImg.classList.add("switching");
+    }
+  });
+});
+
+// Billing Toggle logic (FIA-W01.17)
+const billingTabs = Array.from(
+  document.querySelectorAll(".billing-toggle .pf-tab"),
+) as HTMLButtonElement[];
+billingTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    billingTabs.forEach((t) => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+    });
+    tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
+
+    const billing = tab.getAttribute("data-billing");
+    const priceMonthly = document.getElementById("price-monthly");
+    const priceAnnual = document.getElementById("price-annual");
+    const checkoutPro = document.getElementById("checkout-pro") as HTMLAnchorElement;
+
+    if (billing === "monthly") {
+      if (priceMonthly) priceMonthly.style.display = "flex";
+      if (priceAnnual) priceAnnual.style.display = "none";
+      if (checkoutPro) checkoutPro.href = "https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570";
+    } else if (billing === "annual") {
+      if (priceMonthly) priceMonthly.style.display = "none";
+      if (priceAnnual) priceAnnual.style.display = "flex";
+      if (checkoutPro) checkoutPro.href = "https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031215%2C2031256";
     }
   });
 });
