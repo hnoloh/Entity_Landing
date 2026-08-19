@@ -439,7 +439,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     </div>
   </main>
   <footer class="footer reveal-element">
-    <div class="footer-bottom" style="border-top: none; margin-top: 0;">
+    <div class="footer-bottom" style="border-top: none; margin-top: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+      <a href="https://entity.lemonsqueezy.com/billing" class="footer-link" target="_blank" rel="noopener noreferrer">Gestionar suscripción</a>
       <p>&copy; 2026 Entity. Todos los derechos reservados.</p>
     </div>
   </footer>

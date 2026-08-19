@@ -864,6 +864,30 @@ describe("App Bootstrap", () => {
     expect(proCTA).not.toBeNull();
     expect(proCTA.getAttribute("target")).toBe("_blank");
   });
+
+  it("should delegate Manage subscription entirely to Lemon Squeezy Customer Portal (FIA-W01.21)", async () => {
+    // This test formally checks PVF-W01.44
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    
+    // 1. Verify existence of the external static link in the footer
+    const manageLink = Array.from(app.querySelectorAll("a")).find(a => 
+      a.textContent?.includes("Gestionar suscripción")
+    );
+    expect(manageLink).toBeDefined();
+    
+    // 2. Verify it points strictly to the unsigned official Customer Portal
+    expect(manageLink?.getAttribute("href")).toBe("https://entity.lemonsqueezy.com/billing");
+    expect(manageLink?.getAttribute("target")).toBe("_blank");
+
+    // 3. Negative Assertions: ensure no local dashboard, API, token or login
+    const htmlContent = app.innerHTML;
+    expect(app.querySelector("#customer-portal")).toBeNull();
+    expect(app.querySelector("#dashboard")).toBeNull();
+    expect(htmlContent).not.toMatch(/api\/billing|api\/portal/i);
+    expect(htmlContent).not.toMatch(/customer_id|subscription_id/i);
+    expect(htmlContent).not.toMatch(/magic-link-token/i);
+  });
 });
 
 describe("Admin Waitlist Dashboard", () => {
