@@ -126,9 +126,9 @@ describe("Admin Authorization", () => {
           "new-auth-test-" + Date.now() + "-" + Math.random() + "@test.com",
       },
     );
-    if (res.statusCode !== 200) {
+    if (res.statusCode !== 410) {
       console.log("UNEXPECTED STATUS:", res.statusCode, "BODY:", res.body);
     }
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(410);
   });
 });

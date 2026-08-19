@@ -1,6 +1,14 @@
 import { describe, it, expect } from "vitest";
 import { requestHandler } from "../src/server";
 import http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
+import { SQLiteRegistrationRepository } from "../src/api/persistence";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const dbPath = process.env.DB_PATH || path.join(__dirname, "..", "entity.db");
+const regRepo = new SQLiteRegistrationRepository(dbPath);
 
 describe("Unsubscribe Flow in Backend Runtime", () => {
   const simulateRequest = async (
@@ -86,8 +94,14 @@ describe("Unsubscribe Flow in Backend Runtime", () => {
 
   it("baja correcta persistida en SQLite", async () => {
     const email = `unsub-${Date.now()}@test.com`;
-    // 1. Create a registration
-    await simulateRequest("/api/register", "POST", {}, { email });
+    // 1. Create a registration using repo since API is deactivated
+    regRepo.create({
+      email,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+      confirmationEmailSent: false,
+    });
 
     // 2. Unsubscribe
     const res = await simulateRequest(
@@ -131,7 +145,13 @@ describe("Unsubscribe Flow in Backend Runtime", () => {
   it("baja repetida cuando el contrato lo contemple", async () => {
     const email = `unsub-twice-${Date.now()}@test.com`;
     // 1. Create a registration
-    await simulateRequest("/api/register", "POST", {}, { email });
+    regRepo.create({
+      email,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+      confirmationEmailSent: false,
+    });
 
     // 2. First unsubscribe
     await simulateRequest(

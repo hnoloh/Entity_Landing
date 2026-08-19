@@ -155,7 +155,7 @@ describe("Build + Deploy Smoke Test", () => {
         body: JSON.stringify({ email: testEmail }),
       },
     );
-    expect(regRes.status).toBe(200);
+    expect(regRes.status).toBe(410);
 
     // 4. Validar backend: admin autorizado (Verificar SQLite)
     const adminRes = await originalFetch(
@@ -167,12 +167,8 @@ describe("Build + Deploy Smoke Test", () => {
     expect(adminRes.status).toBe(200);
     const registrations = (await adminRes.json()) as WaitlistRegistration[];
 
-    expect(registrations.length).toBeGreaterThan(0);
-    const inserted = registrations.find((r) => r.email === testEmail);
-    expect(inserted).toBeDefined();
-    expect(inserted?.status).toBe("Pending");
-    expect(inserted?.confirmationEmailSent).toBe(true);
-    expect(inserted?.unsubscribed).toBeFalsy();
+    // No new registrations should be possible
+    expect(registrations.find((r) => r.email === testEmail)).toBeUndefined();
 
     // 5. Validar admin no autorizado
     const adminResNoToken = await originalFetch(
@@ -181,6 +177,18 @@ describe("Build + Deploy Smoke Test", () => {
     expect(adminResNoToken.status).toBe(401);
 
     // 6. Smoke Test Baja
+    // Seed historic record to test unsubscribe
+    const { SQLiteRegistrationRepository } = await import("../src/api/persistence");
+    const dbPath = path.join(__dirname, "..", "entity.db");
+    const regRepo = new SQLiteRegistrationRepository(dbPath);
+    regRepo.create({
+      email: testEmail,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+      confirmationEmailSent: true,
+    });
+
     const unsubRes = await originalFetch(
       `http://127.0.0.1:${BACKEND_PORT}/api/registrations/unsubscribe`,
       {

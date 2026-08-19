@@ -89,14 +89,26 @@ describe("QA E2E Productivo", () => {
     expect(downloadFree).not.toBeNull();
     expect(downloadCta).not.toBeNull();
 
-    // 3. Registro de Beta (Backend)
+    // 3. Registro de Beta (Backend) deactivated
     const testEmail = "e2e.test@entity.test";
     const regRes = await globalThis.fetch(`/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: testEmail }),
     });
-    expect(regRes.status).toBe(200);
+    expect(regRes.status).toBe(410);
+
+    // Seeding data directly via SQLite repo to continue testing admin/metrics
+    const { SQLiteRegistrationRepository } = await import("../src/api/persistence");
+    const dbPath = path.join(__dirname, "..", "entity.db");
+    const regRepo = new SQLiteRegistrationRepository(dbPath);
+    regRepo.create({
+      email: testEmail,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+      confirmationEmailSent: true,
+    });
 
     // 4. Validar estado de Authorization Bearer (Admin sin token => 401)
     const adminResNoToken = await globalThis.fetch(`/api/registrations`);

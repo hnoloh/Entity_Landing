@@ -96,32 +96,6 @@ if (adminApp) {
           </div>
         </div>
       </section>
-      <section class="region" id="invitation-preview-region" style="margin-top: 3rem;">
-        <div class="join-container">
-          <h2>Vista Previa del Email de Invitación</h2>
-          <p class="join-subtitle">Previsualización del correo electrónico para invitar a los usuarios registrados a probar la beta.</p>
-          
-          <div class="join-box admin-box email-preview-box">
-            <div class="email-preview-header" style="display: flex; flex-direction: column; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1rem;">
-              <div class="email-field"><strong>Asunto:</strong> <span id="invitation-subject" style="color: var(--accent-cyan, #00e5ff);">¡Has sido invitado a la Beta Privada de Entity!</span></div>
-              <div class="email-field"><strong>Preheader:</strong> <span id="invitation-preheader" style="color: var(--text-secondary);">Tu invitación exclusiva para unirte al Workspace inteligente de Entity ya está aquí.</span></div>
-            </div>
-            <div class="email-preview-body-container" style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); color: var(--text-primary);">
-              <div class="email-preview-body" id="invitation-body" style="line-height: 1.6;">
-                <p>Hola,</p>
-                <p>Te escribimos porque te registraste en nuestra lista de espera. Nos complace invitarte a probar de forma prioritaria la beta privada de <strong>Entity</strong>.</p>
-                <p>Usa tu enlace de acceso exclusivo para descargar la aplicación y comenzar a colaborar con tus agentes.</p>
-              </div>
-              <div class="email-preview-cta" style="margin: 1.5rem 0; text-align: center;">
-                <a href="#invite" class="status-badge approved" style="text-decoration: none; padding: 0.6rem 1.2rem; font-size: 0.9rem; border-radius: 4px; text-transform: none; display: inline-block;" id="invitation-cta">Aceptar Invitación a la Beta</a>
-              </div>
-              <div class="email-preview-footer" id="invitation-footer" style="font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1.5rem;">
-                Este correo fue enviado de manera automática como invitación exclusiva para probar la beta privada de Entity. © 2026 Entity. Todos los derechos reservados.<br><br>Para darte de baja de nuestras comunicaciones, visita: /unsubscribe.html?email=[email]
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
     <footer class="footer">
       <div class="footer-bottom">
@@ -161,10 +135,6 @@ if (adminApp) {
     let confirmError = 0;
     let confirmPending = 0;
 
-    let inviteSent = 0;
-    let inviteError = 0;
-    let invitePending = 0;
-
     let unsubscribed = 0;
 
     registrations.forEach((r) => {
@@ -174,12 +144,6 @@ if (adminApp) {
       if (cStatus === "sent") confirmSent++;
       else if (cStatus === "error") confirmError++;
       else confirmPending++;
-
-      const iStatus =
-        r.invitationEmailStatus || (r.invitationSent ? "sent" : "pending");
-      if (iStatus === "sent") inviteSent++;
-      else if (iStatus === "error") inviteError++;
-      else invitePending++;
 
       if (r.unsubscribed) unsubscribed++;
     });
@@ -194,13 +158,6 @@ if (adminApp) {
             <span style="color: #f44336;" id="metric-confirm-error">${confirmError} error</span>
           </div>
         </div>
-        <div class="metric-card" style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-          <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Invitaciones</h3>
-          <p style="font-size: 2rem; font-weight: 700; color: var(--text-primary); margin: 0;" id="metric-invite-sent">${inviteSent} <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">Enviadas</span></p>
-          <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; font-size: 0.85rem;">
-            <span style="color: var(--accent-orange);" id="metric-invite-pending">${invitePending} pdte.</span>
-            <span style="color: #f44336;" id="metric-invite-error">${inviteError} error</span>
-          </div>
         </div>
         <div class="metric-card" style="background: rgba(0, 0, 0, 0.2); padding: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
           <h3 style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;">Bajas</h3>
@@ -269,7 +226,7 @@ if (adminApp) {
             ${
               r.unsubscribed
                 ? '<span class="status-badge rejected unsubscribed-badge" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; vertical-align: middle;">Baja</span>'
-                : `<button class="invite-btn" data-email="${escapeHtml(r.email)}" style="margin-left: 0.5rem; font-size: 0.8rem; padding: 0.2rem 0.4rem; border-radius: 4px; background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.2); color: var(--accent-cyan); cursor: pointer; transition: all 0.3s ease;">Enviar Invitación</button>`
+                : ""
             }
           </td>
         </tr>
@@ -338,46 +295,7 @@ if (adminApp) {
         });
       });
 
-      // Attach click listeners to invite buttons
-      const inviteBtns =
-        contentDiv.querySelectorAll<HTMLButtonElement>(".invite-btn");
-      inviteBtns.forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const email = btn.getAttribute("data-email");
-          if (!email) return;
-
-          btn.disabled = true;
-          clearUpdateError();
-
-          try {
-            const response = await fetch(
-              getApiUrl("/api/registrations/invite"),
-              {
-                method: "POST",
-                headers: getAuthHeaders(),
-                body: JSON.stringify({ email }),
-              },
-            );
-
-            const data = await response
-              .json()
-              .catch(() => ({ error: "Error inesperado del servidor." }));
-
-            if (!response.ok) {
-              throw new Error(data.error || "Error en respuesta HTTP.");
-            }
-
-            fetchAndRender();
-          } catch (err) {
-            const message =
-              err instanceof Error
-                ? err.message
-                : "Error de conexión con el servidor.";
-            showUpdateError(message);
-            fetchAndRender();
-          }
-        });
-      });
+      // Removed invite logic
     }
   };
 

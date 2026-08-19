@@ -1,6 +1,14 @@
 import { describe, it, expect } from "vitest";
 import { requestHandler } from "../src/server";
 import http from "http";
+import path from "path";
+import { fileURLToPath } from "url";
+import { SQLiteRegistrationRepository } from "../src/api/persistence";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const dbPath = process.env.DB_PATH || path.join(__dirname, "..", "entity.db");
+const regRepo = new SQLiteRegistrationRepository(dbPath);
 
 describe("Metrics in Backend Runtime", () => {
   const simulateRequest = async (
@@ -98,9 +106,19 @@ describe("Metrics in Backend Runtime", () => {
     const email1 = `metric1-${timestamp}@test.com`;
     const email2 = `metric2-${timestamp}@test.com`;
 
-    // 1. Insert records to SQLite via public endpoint
-    await simulateRequest("/api/register", "POST", {}, { email: email1 });
-    await simulateRequest("/api/register", "POST", {}, { email: email2 });
+    // 1. Insert records to SQLite via repository
+    regRepo.create({
+      email: email1,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+    });
+    regRepo.create({
+      email: email2,
+      status: "Pending",
+      registeredAt: new Date().toISOString(),
+      origen: "Landing Beta Form",
+    });
 
     // 2. Fetch metrics
     const token = process.env.VITE_ADMIN_SECRET || "admin-secret-2026";
