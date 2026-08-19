@@ -888,6 +888,32 @@ describe("App Bootstrap", () => {
     expect(htmlContent).not.toMatch(/customer_id|subscription_id/i);
     expect(htmlContent).not.toMatch(/magic-link-token/i);
   });
+
+  it("should strictly respect the web to desktop boundary for entitlement (RV-N05) (FIA-W01.22)", async () => {
+    // This test formally checks PVF-W01.45
+    // The web must distribute the license but NEVER validate it, implement grace periods,
+    // or execute device limits.
+    
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    const htmlContent = app.innerHTML;
+
+    // 1. Assert NO validation logic exists on the landing page
+    expect(htmlContent).not.toMatch(/validate-license|check-entitlement|validate_key/i);
+
+    // 2. Assert NO offline/grace period timers or device counting logic exists
+    expect(htmlContent).not.toMatch(/offline-timer|grace-period|device-count/i);
+
+    // 3. Assert NO local persistence is used for entitlement
+    expect(htmlContent).not.toMatch(/localStorage\.setItem\(['"](license|entitlement|pro_status)/i);
+    expect(htmlContent).not.toMatch(/sessionStorage\.setItem\(['"](license|entitlement|pro_status)/i);
+    
+    // 4. Assert NO endpoints for remote revalidation/revocation are called
+    expect(htmlContent).not.toMatch(/api\/revalidate|api\/revoke|api\/downgrade/i);
+
+    // 5. Verify commercial copy is present as pure text (not logic)
+    expect(htmlContent).toMatch(/Máximo 2 dispositivos simultáneos/i);
+  });
 });
 
 describe("Admin Waitlist Dashboard", () => {
