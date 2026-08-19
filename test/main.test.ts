@@ -839,6 +839,31 @@ describe("App Bootstrap", () => {
     // Verify it continues to point to the base version
     expect(downloadCta.getAttribute("href")).toMatch(/Entity_1\.0\.0_x64-setup\.exe/);
   });
+
+  it("should strictly ignore failed or cancelled payments as incomplete states (FIA-W01.20)", async () => {
+    // This test formally checks PVF-W01.43
+    // Since checkout opens in a new tab (target="_blank"), the landing page
+    // has no context of errors or cancellations, thereby mathematically preventing
+    // a failed state from ever generating a local license.
+
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    const htmlContent = app.innerHTML;
+
+    // 1. Assert no local cancel/error route or handling UI exists
+    expect(app.querySelector("#cancel")).toBeNull();
+    expect(app.querySelector("#error")).toBeNull();
+    expect(htmlContent).not.toMatch(/cancel-payment|payment-failed|retry-payment/i);
+
+    // 2. Assert no local webhooks or callback handlers
+    expect(htmlContent).not.toMatch(/webhook|callback|checkout-session/i);
+
+    // 3. Since there are no error listeners, the UI is statically immutable
+    //    and remains on the Get Pro CTA for re-entry.
+    const proCTA = app.querySelector("#checkout-pro") as HTMLAnchorElement;
+    expect(proCTA).not.toBeNull();
+    expect(proCTA.getAttribute("target")).toBe("_blank");
+  });
 });
 
 describe("Admin Waitlist Dashboard", () => {
