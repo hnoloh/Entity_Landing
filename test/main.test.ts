@@ -815,6 +815,30 @@ describe("App Bootstrap", () => {
     expect(preciosContent).not.toMatch(/\b(pan|cvv|credit card)\b/i);
     expect(app.querySelector("form")).toBeNull();
   });
+
+  it("should delegate post-purchase, license generation, and entitlement externally (FIA-W01.19)", async () => {
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    // This test formally checks the PVF-W01.40 to PVF-W01.42 boundaries
+    
+    // 1. No local post-purchase/success page generated dynamically
+    expect(app.querySelector("#success")).toBeNull();
+    expect(app.querySelector("#order-receipt")).toBeNull();
+
+    // 2. No local license generation or entitlement validation logic
+    const htmlContent = app.innerHTML;
+    expect(htmlContent).not.toMatch(/generate-license|license-key|entitlement-valid/i);
+    
+    // 3. No Pro specific artifact/download (Misma app)
+    expect(htmlContent).not.toMatch(/Entity_Pro.*\.exe|Entity_Pro.*\.AppImage/i);
+    expect(htmlContent).not.toMatch(/EntityPro/i);
+    
+    // 4. Download Free remains the sole entry point for getting the software
+    const downloadCta = app.querySelector("#download-cta") as HTMLAnchorElement;
+    expect(downloadCta).not.toBeNull();
+    // Verify it continues to point to the base version
+    expect(downloadCta.getAttribute("href")).toMatch(/Entity_1\.0\.0_x64-setup\.exe/);
+  });
 });
 
 describe("Admin Waitlist Dashboard", () => {
