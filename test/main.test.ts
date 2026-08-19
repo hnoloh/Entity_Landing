@@ -699,7 +699,7 @@ describe("App Bootstrap", () => {
       '<meta name="title" content="Entity | El Workspace para tus agentes de IA" />',
     );
     expect(htmlContent).toContain(
-      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada."',
     );
 
     // Check Open Graph
@@ -713,7 +713,7 @@ describe("App Bootstrap", () => {
       'content="Entity | El Workspace para tus agentes de IA"',
     );
     expect(htmlContent).toContain(
-      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada."',
     );
     expect(htmlContent).toContain(
       'content="/FIA-31_Implementar vista workspace.png"',
@@ -730,7 +730,7 @@ describe("App Bootstrap", () => {
       'content="Entity | El Workspace para tus agentes de IA"',
     );
     expect(htmlContent).toContain(
-      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada. Únete a la beta privada."',
+      'content="Entity es un Workspace de escritorio donde los agentes especializados (Entis) colaboran de forma coordinada."',
     );
     expect(htmlContent).toContain(
       'content="/FIA-31_Implementar vista workspace.png"',
@@ -913,6 +913,30 @@ describe("App Bootstrap", () => {
 
     // 5. Verify commercial copy is present as pure text (not logic)
     expect(htmlContent).toMatch(/Máximo 2 dispositivos simultáneos/i);
+  });
+
+  it("should ensure complete removal of Beta UI and forms from the commercial landing page (FIA-W01.23)", async () => {
+    // This test formally checks PVF-W01.46 & PVF-W01.47
+    
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    const htmlContent = app.innerHTML;
+
+    // 1. Assert NO "Join Beta" or "Waitlist" CTAs exist anywhere
+    expect(htmlContent).not.toMatch(/Únete a la Beta/i);
+    expect(htmlContent).not.toMatch(/Asegura tu plaza/i);
+    expect(htmlContent).not.toMatch(/Private Beta/i);
+    expect(htmlContent).not.toMatch(/Waitlist/i);
+
+    // 2. Assert NO Beta forms, inputs, or wiring exist in the DOM
+    expect(app.querySelector("form")).toBeNull();
+    expect(htmlContent).not.toMatch(/beta-form|beta-email|beta-submit/i);
+
+    // 3. Assert NO Beta state indicators (loading, success, error) exist
+    expect(htmlContent).not.toMatch(/loading-beta|success-beta|error-beta/i);
+
+    // 4. Assert NO new backend calls to waitlist endpoints exist from the UI
+    expect(htmlContent).not.toMatch(/api\/waitlist|api\/beta/i);
   });
 });
 
