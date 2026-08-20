@@ -195,6 +195,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
           </ul>
           <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none;">Obtener Entity Pro</a>
+          <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.85rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
         </div>
 
       </div>
@@ -487,8 +488,9 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
           <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
         </div>
-        <div style="display: flex; justify-content: center;">
+        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
           <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
+          <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.9rem; text-align: center;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
         </div>
         <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
           <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span></p>
@@ -747,9 +749,9 @@ if (productContainer && lightboxModal && lightboxImg) {
     document.querySelectorAll(".pf-tab"),
   ) as HTMLButtonElement[];
 
-  const openLightbox = () => {
+  const openLightbox = (e?: MouseEvent) => {
     if (mainImg) {
-      lightboxImg.src = mainImg.src;
+      lightboxImg.src = (e?.target as HTMLImageElement)?.src || mainImg.src;
       lightboxModal.classList.add("active");
       document.body.style.overflow = "hidden";
     }
@@ -809,5 +811,49 @@ if (productContainer && lightboxModal && lightboxImg) {
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") navigateLightbox(-1);
     if (e.key === "ArrowRight") navigateLightbox(1);
+  });
+}
+
+// Pre-check para disponibilidad de enlaces de distribución (FIA-W01.29)
+const downloadCta = document.getElementById("download-cta") as HTMLAnchorElement;
+const downloadError = document.getElementById("download-error");
+if (downloadCta) {
+  downloadCta.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (downloadError) downloadError.style.display = "none";
+    
+    // Check contra la API pública de GitHub para el release oficial
+    try {
+      const response = await fetch("https://api.github.com/repos/hnoloh/Entity-Downloads/releases/tags/v1.0.0");
+      if (!response.ok) {
+        throw new Error("Release not found");
+      }
+      
+      const newWin = window.open(downloadCta.href, "_blank");
+      if (!newWin) {
+        window.location.href = downloadCta.href;
+      }
+    } catch {
+      if (downloadError) downloadError.style.display = "block";
+    }
+  });
+}
+
+const checkoutCta = document.getElementById("checkout-pro") as HTMLAnchorElement;
+const checkoutError = document.getElementById("checkout-error");
+if (checkoutCta) {
+  checkoutCta.addEventListener("click", async (e) => {
+    e.preventDefault();
+    if (checkoutError) checkoutError.style.display = "none";
+    
+    try {
+      await fetch(checkoutCta.href, { mode: 'no-cors' });
+      const newWin = window.open(checkoutCta.href, "_blank");
+      if (!newWin) {
+        window.location.href = checkoutCta.href;
+      }
+    } catch {
+      if (checkoutError) checkoutError.style.display = "block";
+    }
   });
 }
