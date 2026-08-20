@@ -407,6 +407,27 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
+    <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
+      <div class="narrativa-header">
+        <h2 id="download-title">Descarga Entity ahora</h2>
+        <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
+      </div>
+      <div class="download-container" style="max-width: 600px; margin: 2rem auto; text-align: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
+        <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-secondary);">Plataformas soportadas</h3>
+        <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="justify-content: center; margin-bottom: 2rem;">
+          <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
+          <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
+        </div>
+        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
+          <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.9rem; text-align: center;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
+        </div>
+        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
+          <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span></p>
+        </div>
+      </div>
+    </section>
+
     <section id="faq" class="region reveal-element" aria-labelledby="faq-title">
       <div class="narrativa-header">
         <h2 id="faq-title">Preguntas Frecuentes</h2>
@@ -474,27 +495,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <div class="faq-content">El almacenamiento principal de tus datos se realiza localmente. El procesamiento de información dependerá de si eliges ejecutar modelos locales o si envías datos a través de APIs de proveedores en la nube.</div>
         </details>
 
-      </div>
-    </section>
-
-    <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
-      <div class="narrativa-header">
-        <h2 id="download-title">Descarga Entity ahora</h2>
-        <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
-      </div>
-      <div class="download-container" style="max-width: 600px; margin: 2rem auto; text-align: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px;">
-        <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-secondary);">Plataformas soportadas</h3>
-        <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="justify-content: center; margin-bottom: 2rem;">
-          <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
-          <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
-        </div>
-        <div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" class="join-cta hero-btn" style="text-decoration: none; padding: 1rem 3rem; font-size: 1.2rem; justify-content: center; width: 100%;">Descargar Entity Free</a>
-          <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.9rem; text-align: center;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
-        </div>
-        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
-          <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span></p>
-        </div>
       </div>
     </section>
 

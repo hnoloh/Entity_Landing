@@ -1933,3 +1933,38 @@ describe("Error Observability & Resilience (FIA-W01.29)", () => {
     expect(windowOpenSpy).toHaveBeenCalled();
   });
 });
+
+describe("Arquitectura de página y Composición Visual (FIA-W01.31)", () => {
+  let cacheBuster = 2000;
+  beforeEach(() => {
+    vi.resetModules();
+    document.body.innerHTML = '<div id="app"></div>';
+  });
+
+  it("should have the exact required order of sections", async () => {
+    await import("../src/main.ts?t=" + ++cacheBuster);
+
+    const mainNodes = Array.from(document.querySelectorAll("main > section"));
+    const ids = mainNodes.map(n => n.id);
+
+    const expectedOrder = [
+      "hero",
+      "narrativa",
+      "producto",
+      "precios",
+      "como-funciona-pro",
+      "control-local-first",
+      "casos-uso",
+      "download-free",
+      "faq"
+    ];
+
+    expect(ids).toEqual(expectedOrder);
+    
+    // Verificamos Header al principio y Footer al final del app
+    const appChildren = Array.from(document.querySelector("#app")!.children).map(c => c.tagName.toLowerCase());
+    
+    expect(appChildren[0]).toBe("header");
+    expect(appChildren[appChildren.length - 1]).toBe("footer");
+  });
+});
