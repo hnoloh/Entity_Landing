@@ -98,9 +98,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="orquestacion">Orquestación</button>
       </div>
-      <p id="pf-description" style="color: var(--text-secondary); max-width: 600px; margin: 1.5rem auto 0; text-align: center; min-height: 3rem; font-size: 0.95rem;">
-        Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.
-      </p>
+
       <div class="producto-visual">
         <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
           <img src="/v1_agentes.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
@@ -546,26 +544,22 @@ const pfTabs = document.querySelectorAll(
 );
 const pfCaptureImg = document.querySelector<HTMLImageElement>(".pf-capture");
 
-const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
+const viewAssets: Record<string, { src: string; alt: string }> = {
   agentes: {
     src: "/v1_agentes.png",
     alt: "Agentes de Entity",
-    desc: "Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.",
   },
   multichats: {
     src: "/v1_workspace.png",
     alt: "Multichats de Entity",
-    desc: "Abre múltiples conversaciones independientes con distintos Entis sin perder el contexto de tu Workspace principal.",
   },
   herramientas: {
     src: "/v1_herramientas.png",
     alt: "Herramientas de Entity",
-    desc: "Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.",
   },
   orquestacion: {
     src: "/v1_orquestacion.png",
     alt: "Orquestación de Entis",
-    desc: "Grupos secuenciales. Estructura logística que ordena la participación de Entis especializados bajo control humano.",
   },
 };
 
@@ -574,8 +568,6 @@ Object.values(viewAssets).forEach((asset) => {
   const img = new Image();
   img.src = asset.src;
 });
-
-const pfDesc = document.getElementById("pf-description");
 
 pfTabs.forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -593,10 +585,6 @@ pfTabs.forEach((tab) => {
     if (pfCaptureImg && viewAssets[target]) {
       pfCaptureImg.src = viewAssets[target].src;
       pfCaptureImg.alt = viewAssets[target].alt;
-
-      if (pfDesc) {
-        pfDesc.textContent = viewAssets[target].desc;
-      }
 
       // Trigger transition animation (FIA-067)
       pfCaptureImg.classList.remove("switching");

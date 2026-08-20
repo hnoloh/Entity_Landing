@@ -145,26 +145,17 @@ describe("App Bootstrap", () => {
     expect(tabs?.[2].textContent).toBe("Herramientas");
     expect(tabs?.[3].textContent).toBe("Orquestación");
 
-    const pfDesc = app.querySelector("#pf-description");
-    expect(pfDesc).not.toBeNull();
-
-    // Vista por defecto: Agentes activo
+    // Verificar comportamiento interactivo (Agentes por defecto)
     expect(tabs?.[0].classList.contains("active")).toBe(true);
     expect(tabs?.[1].classList.contains("active")).toBe(false);
     expect(captureImg?.getAttribute("src")).toBe("/v1_agentes.png");
     expect(captureImg?.getAttribute("alt")).toBe("Agentes de Entity");
-    expect(pfDesc?.textContent).toContain("Entis especializados");
-    expect(pfDesc?.textContent).toContain("modelos locales/cloud");
-    expect(pfDesc?.textContent).toContain("configuración a medida");
-    expect(pfDesc?.textContent).toContain("trabajo individual");
 
     // Clic en pestaña Multichats
     tabs?.[1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(tabs?.[0].classList.contains("active")).toBe(false);
     expect(tabs?.[1].classList.contains("active")).toBe(true);
     expect(captureImg?.getAttribute("src")).toBe("/v1_workspace.png");
-    expect(pfDesc?.textContent).toContain("Abre múltiples conversaciones independientes");
-    expect(pfDesc?.textContent).toContain("sin perder el contexto");
 
     // FIA-067: Comprobar que se añade la clase de animación al cambiar de vista
     expect(captureImg?.classList.contains("switching")).toBe(true);
@@ -172,17 +163,12 @@ describe("App Bootstrap", () => {
     // Clic en pestaña Herramientas
     tabs?.[2].dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(tabs?.[2].classList.contains("active")).toBe(true);
-    expect(pfDesc?.textContent).toContain("Tool Belt integrado");
     expect(captureImg?.getAttribute("src")).toBe("/v1_herramientas.png");
 
     // Clic en pestaña Orquestación (Grupos respaldados)
     tabs?.[3].dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(tabs?.[3].classList.contains("active")).toBe(true);
     expect(captureImg?.getAttribute("src")).toBe("/v1_orquestacion.png");
-    expect(pfDesc?.textContent).toContain("Grupos secuenciales");
-    expect(pfDesc?.textContent).toContain("ordena la participación");
-    expect(pfDesc?.textContent).toContain("bajo control humano");
-    expect(pfDesc?.textContent).not.toContain("Comunidades");
 
     // specifications trust badges in Hero
     const trustBadgesList = hero?.querySelector(".hero-trust-badges-inline");

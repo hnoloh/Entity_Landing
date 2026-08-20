@@ -403,16 +403,21 @@ a.text-glow-tier:hover {
   box-shadow: 0 0 8px var(--accent-color);
   border-radius: 50%;
 }
+#producto {
+  min-height: auto;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
 .producto-visual {
   background: #00e5ff05;
   border: 1px solid #00e5ff26;
   border-radius: 16px;
   width: 100%;
   max-width: 800px;
-  aspect-ratio: 16 / 9;
-  height: auto;
-  max-height: 60vh;
-  margin-top: 3rem;
+  height: 420px;
+  margin-top: 2rem;
   display: flex;
   overflow: hidden;
   box-shadow: 0 10px 30px #00000080;
