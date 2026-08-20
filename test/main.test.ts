@@ -1667,6 +1667,47 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     // Verify confirmation email status icon exists and has correct text
     expect(cols[0].textContent).toContain("Email Enviado");
   });
+
+  it("should render the FAQ section according to FIA-W01.25", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    const faq = app.querySelector("#faq");
+    expect(faq).not.toBeNull();
+    
+    const items = faq?.querySelectorAll(".faq-item");
+    expect(items?.length).toBe(12);
+    
+    const text = faq?.textContent || "";
+    // Required exact questions
+    expect(text).toContain("¿Entity Free requiere una cuenta?");
+    expect(text).toContain("¿Free es una prueba temporal?");
+    expect(text).toContain("¿Necesito pagar una API?");
+    expect(text).toContain("¿Puedo utilizar modelos locales/Ollama?");
+    expect(text).toContain("¿Qué incluye Entity Pro?");
+    expect(text).toContain("¿Tengo que descargar otra aplicación para Pro?");
+    expect(text).toContain("¿Cómo activo Pro?");
+    expect(text).toContain("¿En cuántos ordenadores puedo utilizar Pro?");
+    expect(text).toContain("¿Pro funciona sin Internet?");
+    expect(text).toContain("¿Qué ocurre si cancelo Pro?");
+    expect(text).toContain("¿Pierdo mis datos si vuelvo a Free?");
+    expect(text).toContain("¿Dónde se guardan/procesan mis datos?");
+    
+    // Anti-claims checks
+    expect(text).not.toMatch(/todos los datos son locales/i);
+    expect(text).not.toMatch(/nunca salen del dispositivo/i);
+    expect(text).not.toMatch(/privados por diseño/i);
+    expect(text).not.toMatch(/no se almacenan/i);
+    
+    // Specific claims checks
+    expect(text).toContain("sin registro y sin crear una cuenta");
+    expect(text).toContain("no es una prueba temporal");
+    expect(text).toContain("misma aplicación");
+    expect(text).toContain("License Key por correo");
+    expect(text).toContain("máximo de 2 dispositivos");
+    expect(text).toContain("hasta 30 días seguidos");
+    expect(text).toContain("Customer Portal externo (Lemon Squeezy)");
+  });
 });
 
 describe("Monitoring Post-Release (FIA-074)", () => {
