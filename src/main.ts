@@ -22,14 +22,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <a href="#hero" class="nav-item">Inicio</a>
       <a href="#producto" class="nav-item">Producto</a>
       <a href="#precios" class="nav-item">Precios</a>
-      <div class="nav-item dropdown-container" tabindex="0">
-        <span class="dropdown-trigger">Docs</span>
-        <div class="dropdown-menu">
-          <div class="dropdown-menu-inner">
-            <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="dropdown-item">Product Brief</a>
-          </div>
-        </div>
-      </div>
+
       <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
@@ -38,12 +31,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <a href="#hero" class="mobile-nav-item">Inicio</a>
         <a href="#producto" class="mobile-nav-item">Producto</a>
         <a href="#precios" class="mobile-nav-item">Precios</a>
-        <div class="mobile-nav-item mobile-dropdown-container">
-          <span class="mobile-dropdown-trigger">Docs</span>
-          <div class="mobile-dropdown-menu">
-            <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="mobile-dropdown-item">Product Brief</a>
-          </div>
-        </div>
+
         <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
       </nav>
     </div>
@@ -56,8 +44,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <h1 class="hero-headline">Un único Workspace. Todos tus modelos de IA trabajando coordinados.</h1>
             <p class="hero-supporting">Construye agentes especializados con herramientas y contexto propio. Entity te permite orquestar flujos de trabajo híbridos combinando la privacidad de la IA local con la potencia de la nube, optimizando tu consumo de tokens desde tu propio escritorio.</p>
             <div class="hero-cta">
-              <a onclick="location.hash='#precios'" style="cursor: pointer; display: inline-flex; align-items: baseline; gap: 0.4rem;">
-                <span style="color: var(--text-primary); font-weight: 500; font-size: 1.1rem; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='var(--text-primary)'">Ver Entity</span>
+              <a onclick="location.hash='#como-funciona-pro'" style="cursor: pointer; display: inline-flex; align-items: baseline; gap: 0.4rem; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); transition: color 0.2s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='var(--text-primary)'">
+                <span style="color: var(--accent-color);">→</span>
                 <span class="text-glow-tier" style="font-size: 1.1rem;">PRO</span>
               </a>
             </div>

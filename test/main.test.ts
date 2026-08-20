@@ -84,10 +84,7 @@ describe("App Bootstrap", () => {
     expect(freeLink).not.toBeNull();
     expect(freeLink?.textContent).toBe("FREE");
 
-    const docsDropdown = nav?.querySelector(
-      ".dropdown-container .dropdown-trigger",
-    );
-    expect(docsDropdown?.textContent).toBe("Docs");
+
 
     const navText = nav?.textContent || "";
     expect(navText.toLowerCase()).not.toContain("beta");
@@ -109,7 +106,7 @@ describe("App Bootstrap", () => {
 
     expect(hero?.querySelector(".hero-visual")).not.toBeNull();
 
-    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("Ver Entity");
+    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("→");
     expect(hero?.querySelector(".hero-cta")?.textContent).toContain("PRO");
 
     const heroContent = hero?.textContent || "";
@@ -387,10 +384,7 @@ describe("App Bootstrap", () => {
     const drawerFreeLink = drawer?.querySelector("span.text-glow-tier");
     expect(drawerFreeLink).not.toBeNull();
 
-    const mobileDocsDropdown = drawer?.querySelector(
-      ".mobile-dropdown-container .mobile-dropdown-trigger",
-    );
-    expect(mobileDocsDropdown?.textContent).toBe("Docs");
+
 
     const drawerText = drawer?.textContent || "";
     expect(drawerText.toLowerCase()).not.toContain("beta");
