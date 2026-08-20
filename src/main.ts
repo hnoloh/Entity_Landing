@@ -91,13 +91,11 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
-    <section id="producto" class="region reveal-element" aria-labelledby="producto-title">
-      <h2 id="producto-title">Producto</h2>
+    <section id="producto" class="region reveal-element" aria-label="Producto">
       <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
         <button class="pf-tab active" role="tab" aria-selected="true" data-target="agentes">Agentes</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="multichats">Multichats</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="conocimiento">Conocimiento</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="datos">Datos</button>
         <button class="pf-tab" role="tab" aria-selected="false" data-target="orquestacion">Orquestación</button>
       </div>
       <p id="pf-description" style="color: var(--text-secondary); max-width: 600px; margin: 1.5rem auto 0; text-align: center; min-height: 3rem; font-size: 0.95rem;">
@@ -554,20 +552,15 @@ const viewAssets: Record<string, { src: string; alt: string; desc: string }> = {
     alt: "Agentes de Entity",
     desc: "Entis especializados con configuración a medida. Soporta modelos locales/cloud para trabajo individual.",
   },
+  multichats: {
+    src: "/v1_workspace.png",
+    alt: "Multichats de Entity",
+    desc: "Abre múltiples conversaciones independientes con distintos Entis sin perder el contexto de tu Workspace principal.",
+  },
   herramientas: {
     src: "/v1_herramientas.png",
     alt: "Herramientas de Entity",
     desc: "Tool Belt integrado para potenciar a los Entis, permitiéndoles interactuar y actuar sobre su entorno.",
-  },
-  conocimiento: {
-    src: "/v1_workspace.png",
-    alt: "Conocimiento estructural",
-    desc: "",
-  },
-  datos: {
-    src: "/v1_workspace.png",
-    alt: "Datos estructural",
-    desc: "",
   },
   orquestacion: {
     src: "/v1_orquestacion.png",

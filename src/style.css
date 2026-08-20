@@ -409,7 +409,9 @@ a.text-glow-tier:hover {
   border-radius: 16px;
   width: 100%;
   max-width: 800px;
-  height: 420px;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 60vh;
   margin-top: 3rem;
   display: flex;
   overflow: hidden;

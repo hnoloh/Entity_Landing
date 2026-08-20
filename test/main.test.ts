@@ -138,13 +138,12 @@ describe("App Bootstrap", () => {
     expect(selector).not.toBeNull();
 
     const tabs = selector?.querySelectorAll(".pf-tab");
-    expect(tabs?.length).toBe(5);
+    expect(tabs?.length).toBe(4);
 
     expect(tabs?.[0].textContent).toBe("Agentes");
-    expect(tabs?.[1].textContent).toBe("Herramientas");
-    expect(tabs?.[2].textContent).toBe("Conocimiento");
-    expect(tabs?.[3].textContent).toBe("Datos");
-    expect(tabs?.[4].textContent).toBe("Orquestación");
+    expect(tabs?.[1].textContent).toBe("Multichats");
+    expect(tabs?.[2].textContent).toBe("Herramientas");
+    expect(tabs?.[3].textContent).toBe("Orquestación");
 
     const pfDesc = app.querySelector("#pf-description");
     expect(pfDesc).not.toBeNull();
@@ -159,26 +158,26 @@ describe("App Bootstrap", () => {
     expect(pfDesc?.textContent).toContain("configuración a medida");
     expect(pfDesc?.textContent).toContain("trabajo individual");
 
-    // Clic en pestaña Herramientas
+    // Clic en pestaña Multichats
     tabs?.[1].dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(tabs?.[0].classList.contains("active")).toBe(false);
     expect(tabs?.[1].classList.contains("active")).toBe(true);
-    expect(captureImg?.getAttribute("src")).toBe("/v1_herramientas.png");
-    expect(pfDesc?.textContent).toContain("Tool Belt");
-    expect(pfDesc?.textContent).toContain("actuar sobre su entorno");
+    expect(captureImg?.getAttribute("src")).toBe("/v1_workspace.png");
+    expect(pfDesc?.textContent).toContain("Abre múltiples conversaciones independientes");
+    expect(pfDesc?.textContent).toContain("sin perder el contexto");
 
     // FIA-067: Comprobar que se añade la clase de animación al cambiar de vista
     expect(captureImg?.classList.contains("switching")).toBe(true);
 
-    // Clic en pestaña Conocimiento (estructural, no funcional)
+    // Clic en pestaña Herramientas
     tabs?.[2].dispatchEvent(new MouseEvent("click", { bubbles: true }));
     expect(tabs?.[2].classList.contains("active")).toBe(true);
-    expect(pfDesc?.textContent?.trim()).toBe("");
-    expect(captureImg?.getAttribute("src")).toBe("/v1_workspace.png");
+    expect(pfDesc?.textContent).toContain("Tool Belt integrado");
+    expect(captureImg?.getAttribute("src")).toBe("/v1_herramientas.png");
 
     // Clic en pestaña Orquestación (Grupos respaldados)
-    tabs?.[4].dispatchEvent(new MouseEvent("click", { bubbles: true }));
-    expect(tabs?.[4].classList.contains("active")).toBe(true);
+    tabs?.[3].dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    expect(tabs?.[3].classList.contains("active")).toBe(true);
     expect(captureImg?.getAttribute("src")).toBe("/v1_orquestacion.png");
     expect(pfDesc?.textContent).toContain("Grupos secuenciales");
     expect(pfDesc?.textContent).toContain("ordena la participación");
@@ -615,7 +614,7 @@ describe("App Bootstrap", () => {
 
 
     const producto = app.querySelector("#producto");
-    expect(producto?.getAttribute("aria-labelledby")).toBe("producto-title");
+    expect(producto?.getAttribute("aria-label")).toBe("Producto");
 
     const downloadFree = app.querySelector("#download-free");
     expect(downloadFree?.getAttribute("aria-labelledby")).toBe(
