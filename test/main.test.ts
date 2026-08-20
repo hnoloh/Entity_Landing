@@ -1708,6 +1708,43 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     expect(text).toContain("hasta 30 días seguidos");
     expect(text).toContain("Customer Portal externo (Lemon Squeezy)");
   });
+
+  it("should render the Footer section according to FIA-W01.26", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    const footer = app.querySelector(".footer");
+    expect(footer).not.toBeNull();
+    
+    // Check exactly 3 groups
+    const cols = footer?.querySelectorAll(".footer-col");
+    expect(cols?.length).toBe(3);
+    
+    const headers = footer?.querySelectorAll("h4");
+    expect(headers?.[0].textContent).toBe("Producto");
+    expect(headers?.[1].textContent).toBe("Recursos");
+    expect(headers?.[2].textContent).toBe("Legal");
+    
+    // Check content in Producto
+    const productoLinks = cols?.[0].querySelectorAll("a");
+    expect(productoLinks?.length).toBe(4);
+    expect(productoLinks?.[0].getAttribute("href")).toBe("#producto");
+    expect(productoLinks?.[1].getAttribute("href")).toBe("#precios");
+    expect(productoLinks?.[2].getAttribute("href")).toBe("#faq");
+    expect(productoLinks?.[3].getAttribute("href")).toBe("https://entity.lemonsqueezy.com/billing");
+    
+    // Check content in Recursos
+    const recursosLinks = cols?.[1].querySelectorAll("a");
+    expect(recursosLinks?.length).toBe(2);
+    expect(recursosLinks?.[0].getAttribute("href")).toBe("/docs/METODO%20Entity.pdf");
+    expect(recursosLinks?.[0].textContent).toBe("Método Entity");
+    expect(recursosLinks?.[1].getAttribute("href")).toBe("https://github.com/hnoloh/Entity");
+    expect(recursosLinks?.[1].textContent).toBe("GitHub");
+    
+    // Check content in Legal
+    const legalLinks = cols?.[2].querySelectorAll("a");
+    expect(legalLinks?.length).toBe(0); // Cero enlaces legales/placeholders ficticios
+  });
 });
 
 describe("Monitoring Post-Release (FIA-074)", () => {
