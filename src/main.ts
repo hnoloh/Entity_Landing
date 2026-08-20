@@ -107,7 +107,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     </section>
     <section id="precios" class="region reveal-element" aria-label="Precios">
 
-      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; max-width: 800px; width: 100%; margin-top: 1rem;">
+      <div style="display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; max-width: 800px; width: 100%;">
         
         <!-- Tarjeta Free -->
         <div class="narrativa-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
