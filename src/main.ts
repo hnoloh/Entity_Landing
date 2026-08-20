@@ -27,7 +27,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <div class="dropdown-menu">
           <div class="dropdown-menu-inner">
             <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="dropdown-item">Product Brief</a>
-            <a href="/docs/METODO%20Entity.pdf" target="_blank" class="dropdown-item">Entity Method</a>
           </div>
         </div>
       </div>
@@ -42,7 +41,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <span class="mobile-dropdown-trigger">Docs</span>
           <div class="mobile-dropdown-menu">
             <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="mobile-dropdown-item">Product Brief</a>
-            <a href="/docs/METODO%20Entity.pdf" target="_blank" class="mobile-dropdown-item">Entity Method</a>
           </div>
         </div>
         <a href="#download-free" class="mobile-nav-item hero-btn" style="margin-top: 1rem; width: 100%; justify-content: center;">Descargar</a>
@@ -508,10 +506,33 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </button>
     </div>
   </main>
-  <footer class="footer reveal-element">
-    <div class="footer-bottom" style="border-top: none; margin-top: 0; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-      <a href="https://entity.lemonsqueezy.com/billing" class="footer-link" target="_blank" rel="noopener noreferrer">Gestionar suscripción</a>
-      <p>&copy; 2026 Entity. Todos los derechos reservados.</p>
+  <footer class="footer reveal-element" style="padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+    <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 3rem; text-align: left;">
+      <div class="footer-col">
+        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Producto</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a href="#producto" class="footer-link">Características</a>
+          <a href="#precios" class="footer-link">Precios</a>
+          <a href="#faq" class="footer-link">FAQ</a>
+          <a href="https://entity.lemonsqueezy.com/billing" class="footer-link" target="_blank" rel="noopener noreferrer">Gestionar suscripción</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Recursos</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <a href="/docs/METODO%20Entity.pdf" target="_blank" class="footer-link">Método Entity</a>
+          <a href="https://github.com/hnoloh/Entity" target="_blank" class="footer-link">GitHub</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Legal</h4>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <!-- Próximamente / Reservado para FIA-W01.27 -->
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; justify-content: center; align-items: center;">
+      <p style="color: var(--text-secondary); font-size: 0.9rem;">&copy; 2026 Entity. Todos los derechos reservados.</p>
     </div>
   </footer>
 `;
