@@ -58,11 +58,9 @@ describe("App Bootstrap", () => {
     expect(app.querySelector("footer")).not.toBeNull();
 
     // FIA-004 AS-BUILT contract
-    expect(app.querySelector("header .header-left .slogan")).not.toBeNull();
+    expect(app.querySelector("header .header-left .slogan")).toBeNull();
 
     // FIA-006 contract
-    expect(app.querySelector("#problema")).not.toBeNull();
-    expect(app.querySelector("#vision")).not.toBeNull();
     expect(app.querySelector("#producto")).not.toBeNull();
     expect(app.querySelector("#download-free")).not.toBeNull();
 
@@ -73,15 +71,18 @@ describe("App Bootstrap", () => {
     const navLinks = nav?.querySelectorAll("a.nav-item");
     expect(navLinks?.length).toBe(3);
 
-    expect(navLinks?.[0].getAttribute("href")).toBe("#producto");
-    expect(navLinks?.[0].textContent).toBe("Producto");
+    expect(navLinks?.[0].getAttribute("href")).toBe("#hero");
+    expect(navLinks?.[0].textContent).toBe("Inicio");
 
-    expect(navLinks?.[1].getAttribute("href")).toBe("#precios");
-    expect(navLinks?.[1].textContent).toBe("Precios");
+    expect(navLinks?.[1].getAttribute("href")).toBe("#producto");
+    expect(navLinks?.[1].textContent).toBe("Producto");
 
-    expect(navLinks?.[2].getAttribute("href")).toBe("#download-free");
-    expect(navLinks?.[2].textContent).toContain("Descargar");
-    expect(navLinks?.[2].classList.contains("hero-btn")).toBe(true);
+    expect(navLinks?.[2].getAttribute("href")).toBe("#precios");
+    expect(navLinks?.[2].textContent).toBe("Precios");
+
+    const freeLink = nav?.querySelector("span.text-glow-tier");
+    expect(freeLink).not.toBeNull();
+    expect(freeLink?.textContent).toBe("FREE");
 
     const docsDropdown = nav?.querySelector(
       ".dropdown-container .dropdown-trigger",
@@ -99,74 +100,21 @@ describe("App Bootstrap", () => {
     const headline = hero?.querySelector(".hero-headline");
     expect(headline).not.toBeNull();
     expect(headline?.textContent).toBe(
-      "Organiza el trabajo con inteligencia artificial.",
+      "Un único Workspace. Todos tus modelos de IA trabajando coordinados.",
     );
     const supporting = hero?.querySelector(".hero-supporting");
     expect(supporting).not.toBeNull();
-    expect(supporting?.textContent).toContain("La IA necesita un Workspace");
+    expect(supporting?.textContent).toContain("Construye agentes especializados con herramientas");
     expect(supporting?.textContent?.toLowerCase()).not.toContain("beta");
 
     expect(hero?.querySelector(".hero-visual")).not.toBeNull();
-    const ctas = hero?.querySelectorAll(".hero-cta a, .hero-cta button");
-    expect(ctas?.length).toBeGreaterThanOrEqual(2);
 
-    expect(ctas?.[0].textContent).toBe("Descargar Entity Free");
-    expect(ctas?.[0].classList.contains("join-cta")).toBe(true);
-
-    expect(ctas?.[1].textContent).toBe("Ver Entity Pro");
-    expect(ctas?.[1].classList.contains("hero-btn")).toBe(true);
+    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("Ver Entity");
+    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("PRO");
 
     const heroContent = hero?.textContent || "";
-    expect(heroContent).toContain("Free sin registro");
-    expect(heroContent).toContain("Local + Cloud BYOK");
-
-    // FIA-W01.03 contract (Ecosistema)
-    const introEntity = app.querySelector("#intro-entity");
-    expect(introEntity).not.toBeNull();
-    expect(introEntity?.textContent).toContain("Un Ecosistema Avanzado.");
-
-    const items = introEntity?.querySelectorAll("li");
-    expect(items?.length).toBe(5);
-
-    expect(introEntity?.textContent).toContain("Agentes:");
-    expect(introEntity?.textContent).toContain("Herramientas:");
-    expect(introEntity?.textContent).toContain("Conocimiento:");
-    expect(introEntity?.textContent).toContain("Datos:");
-    expect(introEntity?.textContent).toContain("Orquestación:");
-
-    expect(introEntity?.textContent).not.toContain("IA Híbrida");
-    expect(introEntity?.textContent).not.toContain("Grupos Avanzados");
-    expect(introEntity?.textContent).not.toContain("Tool Belt");
-    expect(introEntity?.textContent).not.toContain("UX Premium");
-
-    const narrativa = app.querySelector("#narrativa");
-    expect(narrativa?.textContent?.toLowerCase()).not.toContain("beta");
-    expect(narrativa?.textContent?.toLowerCase()).not.toContain("pricing");
-    expect(narrativa?.textContent?.toLowerCase()).not.toContain("free ");
-    expect(narrativa?.textContent?.toLowerCase()).not.toContain("pro ");
-
-    // FIA-024 contract
-    const problema = app.querySelector("#problema");
-    expect(problema).not.toBeNull();
-    expect(problema?.textContent).toContain(
-      "Trabajar con IA se ha vuelto caótico.",
-    );
-    expect(problema?.textContent).toContain("Más modelos.");
-    expect(problema?.textContent).toContain("Más chats.");
-    expect(problema?.textContent).toContain("Más herramientas.");
-    expect(problema?.textContent).toContain("Más desorden.");
-    expect(problema?.textContent).toContain("La IA ha evolucionado.");
-    expect(problema?.textContent).toContain(
-      "Nuestra forma de trabajar con ella todavía no.",
-    );
-
-    // FIA-025 contract
-    const vision = app.querySelector("#vision");
-    expect(vision).not.toBeNull();
-    expect(vision?.textContent).toContain("La IA necesita un Workspace.");
-    expect(vision?.textContent).toContain(
-      "Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado. Cada agente tiene un propósito específico, permitiéndote montar grupos o equipos de agentes, asegurando que cada decisión siga siempre en manos del usuario.",
-    );
+    expect(heroContent).toContain("Ollama local + Cloud BYOK");
+    expect(heroContent).toContain("Multimodelo");
 
     // FIA-010 contract
     const producto = app.querySelector("#producto");
@@ -237,12 +185,13 @@ describe("App Bootstrap", () => {
     expect(pfDesc?.textContent).toContain("bajo control humano");
     expect(pfDesc?.textContent).not.toContain("Comunidades");
 
-    // specifications trust badges in Hero (agnostic local/cloud features)
+    // specifications trust badges in Hero
     const trustBadgesList = hero?.querySelector(".hero-trust-badges-inline");
     expect(trustBadgesList).not.toBeNull();
     expect(trustBadgesList?.textContent).toContain("Híbrido");
-    expect(trustBadgesList?.textContent).toContain("Agnóstico");
-    expect(trustBadgesList?.textContent).toContain("Privado");
+    expect(trustBadgesList?.textContent).toContain("Multimodelo");
+    expect(trustBadgesList?.textContent).toContain("Orquestación");
+    expect(trustBadgesList?.textContent).toContain("Zero Friction");
 
     // FIA-W01.07 contract (Pricing section, Entity Free)
     const precios = app.querySelector("#precios");
@@ -472,10 +421,12 @@ describe("App Bootstrap", () => {
     // Links inside mobile menu drawer
     const drawerLinks = drawer?.querySelectorAll("a.mobile-nav-item");
     expect(drawerLinks?.length).toBe(3);
-    expect(drawerLinks?.[0].getAttribute("href")).toBe("#producto");
-    expect(drawerLinks?.[1].getAttribute("href")).toBe("#precios");
-    expect(drawerLinks?.[2].getAttribute("href")).toBe("#download-free");
-    expect(drawerLinks?.[2].classList.contains("hero-btn")).toBe(true);
+    expect(drawerLinks?.[0].getAttribute("href")).toBe("#hero");
+    expect(drawerLinks?.[1].getAttribute("href")).toBe("#producto");
+    expect(drawerLinks?.[2].getAttribute("href")).toBe("#precios");
+
+    const drawerFreeLink = drawer?.querySelector("span.text-glow-tier");
+    expect(drawerFreeLink).not.toBeNull();
 
     const mobileDocsDropdown = drawer?.querySelector(
       ".mobile-dropdown-container .mobile-dropdown-trigger",
@@ -578,7 +529,6 @@ describe("App Bootstrap", () => {
 
     // Check all authorized public sections
     const authorizedSections = [
-      "#narrativa",
       "#producto",
       "#download-free",
       ".footer",
@@ -662,8 +612,7 @@ describe("App Bootstrap", () => {
     const hero = app.querySelector("#hero");
     expect(hero?.getAttribute("aria-labelledby")).toBe("hero-headline");
 
-    const narrativa = app.querySelector("#narrativa");
-    expect(narrativa?.getAttribute("aria-labelledby")).toBe("narrativa-title");
+
 
     const producto = app.querySelector("#producto");
     expect(producto?.getAttribute("aria-labelledby")).toBe("producto-title");
@@ -1949,7 +1898,6 @@ describe("Arquitectura de página y Composición Visual (FIA-W01.31)", () => {
 
     const expectedOrder = [
       "hero",
-      "narrativa",
       "producto",
       "precios",
       "como-funciona-pro",

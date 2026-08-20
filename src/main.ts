@@ -17,9 +17,9 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <div class="logo-container">
         <h1>Entity</h1>
       </div>
-      <span class="slogan">Y si el código...<br />Ya no fuera el centro?</span>
     </div>
     <nav class="visual-nav">
+      <a href="#hero" class="nav-item">Inicio</a>
       <a href="#producto" class="nav-item">Producto</a>
       <a href="#precios" class="nav-item">Precios</a>
       <div class="nav-item dropdown-container" tabindex="0">
@@ -30,11 +30,12 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           </div>
         </div>
       </div>
-      <a href="#download-free" class="nav-item hero-btn" style="margin-left: 1rem;">Descargar</a>
+      <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
+        <a href="#hero" class="mobile-nav-item">Inicio</a>
         <a href="#producto" class="mobile-nav-item">Producto</a>
         <a href="#precios" class="mobile-nav-item">Precios</a>
         <div class="mobile-nav-item mobile-dropdown-container">
@@ -43,7 +44,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <a href="/docs/ENTITY_PRODUCT_BRIEF.pdf" target="_blank" class="mobile-dropdown-item">Product Brief</a>
           </div>
         </div>
-        <a href="#download-free" class="mobile-nav-item hero-btn" style="margin-top: 1rem; width: 100%; justify-content: center;">Descargar</a>
+        <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
       </nav>
     </div>
   </header>
@@ -52,14 +53,13 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <div class="hero-content">
         <div class="hero-body-row">
           <div class="hero-left-col">
-            <h1 id="hero-headline" class="hero-headline">Organiza el trabajo<br> con inteligencia artificial.</h1>
-            <p class="hero-supporting">La IA necesita un Workspace. Entity es un entorno de escritorio donde los agentes especializados (Entis) pueden colaborar de manera conjunta y coordinada dentro de un grupo bajo tu control.</p>
-            <div class="hero-cta" style="gap: 1rem; flex-wrap: wrap;">
-              <a href="#download-free" class="join-cta" style="margin: 0;">Descargar Entity Free</a>
-              <a href="#precios" class="hero-btn" style="margin: 0;">Ver Entity Pro</a>
-            </div>
-            <div style="margin-top: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); opacity: 0.85;">
-              <span>✓ Free sin registro</span> <span style="margin: 0 0.5rem;">•</span> <span>✓ Local + Cloud BYOK</span>
+            <h1 class="hero-headline">Un único Workspace. Todos tus modelos de IA trabajando coordinados.</h1>
+            <p class="hero-supporting">Construye agentes especializados con herramientas y contexto propio. Entity te permite orquestar flujos de trabajo híbridos combinando la privacidad de la IA local con la potencia de la nube, optimizando tu consumo de tokens desde tu propio escritorio.</p>
+            <div class="hero-cta">
+              <a onclick="location.hash='#precios'" style="cursor: pointer; display: inline-flex; align-items: baseline; gap: 0.4rem;">
+                <span style="color: var(--text-primary); font-weight: 500; font-size: 1.1rem; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='var(--text-primary)'">Ver Entity</span>
+                <span class="text-glow-tier" style="font-size: 1.1rem;">PRO</span>
+              </a>
             </div>
           </div>
           <div class="hero-visual">
@@ -68,61 +68,29 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         </div>
         <div class="hero-trust-badges-inline">
           <div class="badge-item">
-            <span class="badge-dot"></span>
-            <span><strong>Híbrido</strong> (Local + Cloud)</span>
+            <div class="badge-title"><span class="badge-dot"></span><strong>Híbrido</strong></div>
+            <span class="badge-desc">Ollama local + Cloud BYOK</span>
           </div>
           <div class="badge-item">
-            <span class="badge-dot"></span>
-            <span><strong>Agnóstico</strong> (Cualquier API)</span>
+            <div class="badge-title"><span class="badge-dot"></span><strong>Multimodelo</strong></div>
+            <span class="badge-desc">OpenAI, Gemini, Anthropic, OpenRouter</span>
           </div>
           <div class="badge-item">
-            <span class="badge-dot"></span>
-            <span><strong>Privado</strong> (Modelos Offline)</span>
+            <div class="badge-title"><span class="badge-dot"></span><strong>Tool Belt</strong></div>
+            <span class="badge-desc">RAG, Terminal, Documentos</span>
+          </div>
+          <div class="badge-item">
+            <div class="badge-title"><span class="badge-dot"></span><strong>Orquestación</strong></div>
+            <span class="badge-desc">Grupos secuenciales, por turnos y en bucle</span>
+          </div>
+          <div class="badge-item">
+            <div class="badge-title"><span class="badge-dot"></span><strong>Zero Friction</strong></div>
+            <span class="badge-desc">Offline, sin registro</span>
           </div>
         </div>
       </div>
     </section>
-    <section id="narrativa" class="region reveal-element" aria-labelledby="narrativa-title">
-      <div class="narrativa-header">
-        <h2 id="narrativa-title">La IA necesita un Workspace.</h2>
-        <p>Entity propone dejar atrás el caos de las conversaciones infinitas para estructurar tu flujo en un espacio organizado.</p>
-      </div>
-      <div class="narrativa-grid">
-        <!-- Tarjeta Problema -->
-        <div id="problema" class="narrativa-card">
-          <h3>Trabajar con IA se ha vuelto caótico.</h3>
-          <ul class="problema-bullets-mini">
-            <li>Más modelos.</li>
-            <li>Más chats.</li>
-            <li>Más herramientas.</li>
-            <li>Más desorden.</li>
-          </ul>
-          <p class="problema-conclusion-mini">
-            La IA ha evolucionado. Nuestra forma de trabajar con ella todavía no.
-          </p>
-        </div>
-        
-        <!-- Tarjeta Visión -->
-        <div id="vision" class="narrativa-card">
-          <h3>La IA necesita un Workspace.</h3>
-          <p class="vision-text-mini">
-            Entity propone dejar atrás las conversaciones infinitas para trabajar dentro de un espacio organizado. Cada agente tiene un propósito específico, permitiéndote montar grupos o equipos de agentes, asegurando que cada decisión siga siempre en manos del usuario.
-          </p>
-        </div>
-        
-        <!-- Tarjeta Workspace -->
-        <div id="intro-entity" class="narrativa-card">
-          <h3>Un Ecosistema Avanzado.</h3>
-          <ul class="problema-bullets-mini">
-            <li><strong>Agentes:</strong> Entidades especializadas con propósito y contexto definido.</li>
-            <li><strong>Herramientas:</strong> Capacidades de interacción con el entorno.</li>
-            <li><strong>Conocimiento:</strong> Integración de documentos y fuentes de información.</li>
-            <li><strong>Datos:</strong> Almacenamiento estructurado de la información.</li>
-            <li><strong>Orquestación:</strong> Coordinación y control total del flujo de trabajo.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+
     <section id="producto" class="region reveal-element" aria-labelledby="producto-title">
       <h2 id="producto-title">Producto</h2>
       <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
