@@ -107,16 +107,16 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     </section>
     <section id="precios" class="region reveal-element" aria-label="Precios">
 
-      <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; max-width: 900px; width: 100%; margin-top: 2rem;">
+      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; max-width: 800px; width: 100%; margin-top: 1rem;">
         
         <!-- Tarjeta Free -->
-        <div class="narrativa-card" style="flex: 1; min-width: 300px; border-color: var(--accent-color); box-shadow: 0 0 20px #00e5ff1a; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--accent-color);">Entity Free</h3>
-          <div style="font-size: 2.5rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary);">0 €</div>
-          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+        <div class="narrativa-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Free</h3>
+          <div style="font-size: 2rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">0 €</div>
+          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
             Sin registro y sin tarjeta. Descarga directa para empezar a organizar tu trabajo con IA.
           </p>
-          <ul class="problema-bullets-mini" style="margin-bottom: 2rem; flex: 1;">
+          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
             <li><strong>Entis Ilimitados</strong></li>
             <li><strong>Grupos Secuenciales</strong></li>
             <li><strong>Chat Individual</strong></li>
@@ -124,30 +124,30 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Persistencia completa</strong></li>
             <li><strong>Generación DOCX / PDF / HTML</strong></li>
           </ul>
-          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none;">Descargar Entity Free</a>
+          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Descargar Entity Free</a>
         </div>
 
         <!-- Tarjeta Pro -->
-        <div class="narrativa-card" style="flex: 1; min-width: 300px; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Pro</h3>
+        <div class="narrativa-card pro-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-color);">Entity Pro</h3>
           
           <!-- Mensual / Anual Toggle -->
-          <div class="pf-tabs billing-toggle" role="tablist" aria-label="Selección de cadencia" style="justify-content: center; margin-bottom: 1rem; width: fit-content; align-self: flex-start;">
-            <button class="pf-tab active" role="tab" aria-selected="true" data-billing="monthly">Mensual</button>
-            <button class="pf-tab" role="tab" aria-selected="false" data-billing="annual">Anual</button>
+          <div class="pf-tabs billing-toggle" role="tablist" aria-label="Selección de cadencia" style="justify-content: center; margin-bottom: 0.8rem; width: fit-content; align-self: flex-start; min-height: unset; padding: 2px;">
+            <button class="pf-tab active" role="tab" aria-selected="true" data-billing="monthly" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Mensual</button>
+            <button class="pf-tab" role="tab" aria-selected="false" data-billing="annual" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Anual</button>
           </div>
           
-          <div id="price-monthly" style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
-            <div><strong>8.99 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ mes</span></div>
+          <div id="price-monthly" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
+            <div style="font-size: 2rem; font-weight: 600;">8.99 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ mes</span></div>
           </div>
-          <div id="price-annual" style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-primary); display: none; flex-direction: column; gap: 0.2rem;">
-            <div><strong>89 €</strong> <span style="font-size: 0.9rem; color: var(--text-secondary);">/ año</span></div>
+          <div id="price-annual" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: none; flex-direction: column; gap: 0.2rem;">
+            <div style="font-size: 2rem; font-weight: 600;">89 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ año</span></div>
           </div>
           
-          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
             Capacidades avanzadas para workflows complejos y automatización de alto nivel.
           </p>
-          <ul class="problema-bullets-mini" style="margin-bottom: 2rem; flex: 1;">
+          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
             <li><strong>Todo lo incluido en Free</strong></li>
             <li><strong>Grupos en bucle</strong></li>
             <li><strong>Grupos por turnos</strong></li>
@@ -156,8 +156,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
             <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
           </ul>
-          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none;">Obtener Entity Pro</a>
-          <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.85rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
+          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Obtener Entity Pro</a>
+          <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.5rem; font-size: 0.8rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
         </div>
 
       </div>
