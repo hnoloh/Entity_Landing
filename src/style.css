@@ -234,16 +234,14 @@ main {
   animation: 6s ease-in-out infinite float;
 }
 #hero {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 65px;
   text-align: left;
   border-bottom: 1px solid #00e5ff1a;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 4rem;
   width: 100%;
-  min-height: auto;
-  padding-top: 0;
-  padding-bottom: 3rem;
+  min-height: 100vh;
   display: flex;
 }
 .hero-content {
