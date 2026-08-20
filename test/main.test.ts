@@ -6,6 +6,7 @@ import {
   beforeEach,
   afterEach,
   beforeAll,
+  afterAll,
   vi,
 } from "vitest";
 import fs from "fs";
@@ -1849,5 +1850,86 @@ describe("Privacy & Tracking Compliance (FIA-W01.28)", () => {
     expect(htmlContent).not.toMatch(/posthog/i);
     expect(htmlContent).not.toMatch(/segment\.com/i);
     expect(htmlContent).not.toMatch(/clarity/i);
+  });
+});
+
+describe("Error Observability & Resilience (FIA-W01.29)", () => {
+  let originalFetch: typeof global.fetch;
+
+  beforeAll(() => {
+    originalFetch = global.fetch;
+  });
+
+  afterAll(() => {
+    global.fetch = originalFetch;
+  });
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("should show error on download if GitHub API returns 404", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import("../src/main.ts?t=" + ++cacheBuster);
+
+    const downloadCta = document.querySelector("#download-cta") as HTMLAnchorElement;
+    const downloadError = document.querySelector("#download-error") as HTMLDivElement;
+
+    expect(downloadError.style.display).toBe("none");
+
+    // Mock fetch to simulate 404
+    global.fetch = vi.fn().mockResolvedValue({ ok: false });
+
+    // Simulate click
+    const clickEvent = new MouseEvent("click", { cancelable: true });
+    downloadCta.dispatchEvent(clickEvent);
+
+    // Allow async handlers to complete
+    await new Promise((r) => setTimeout(r, 10));
+
+    expect(global.fetch).toHaveBeenCalledWith("https://api.github.com/repos/hnoloh/Entity-Downloads/releases/tags/v1.0.0");
+    expect(downloadError.style.display).toBe("block");
+  });
+
+  it("should show error on checkout if network fails (no-cors)", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import("../src/main.ts?t=" + ++cacheBuster);
+
+    const checkoutCta = document.querySelector("#checkout-pro") as HTMLAnchorElement;
+    const checkoutError = document.querySelector("#checkout-error") as HTMLDivElement;
+
+    expect(checkoutError.style.display).toBe("none");
+
+    // Mock fetch to simulate network error (throw)
+    global.fetch = vi.fn().mockRejectedValue(new TypeError("Network error"));
+
+    // Simulate click
+    const clickEvent = new MouseEvent("click", { cancelable: true });
+    checkoutCta.dispatchEvent(clickEvent);
+
+    await new Promise((r) => setTimeout(r, 10));
+
+    expect(global.fetch).toHaveBeenCalledWith(expect.stringContaining("lemonsqueezy.com"), { mode: 'no-cors' });
+    expect(checkoutError.style.display).toBe("block");
+  });
+  
+  it("should navigate if fetch succeeds", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    await import("../src/main.ts?t=" + ++cacheBuster);
+
+    const checkoutCta = document.querySelector("#checkout-pro") as HTMLAnchorElement;
+    const checkoutError = document.querySelector("#checkout-error") as HTMLDivElement;
+    
+    const windowOpenSpy = vi.spyOn(window, 'open').mockReturnValue(null);
+    
+    global.fetch = vi.fn().mockResolvedValue({ ok: true });
+
+    const clickEvent = new MouseEvent("click", { cancelable: true });
+    checkoutCta.dispatchEvent(clickEvent);
+
+    await new Promise((r) => setTimeout(r, 10));
+
+    expect(checkoutError.style.display).toBe("none");
+    expect(windowOpenSpy).toHaveBeenCalled();
   });
 });
