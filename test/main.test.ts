@@ -1743,7 +1743,25 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     
     // Check content in Legal
     const legalLinks = cols?.[2].querySelectorAll("a");
-    expect(legalLinks?.length).toBe(0); // Cero enlaces legales/placeholders ficticios
+    expect(legalLinks?.length).toBe(3);
+    
+    expect(legalLinks?.[0].getAttribute("href")).toBe("/docs/entity-privacy-policy-3.pdf");
+    expect(legalLinks?.[0].textContent).toBe("Privacidad");
+    
+    expect(legalLinks?.[1].getAttribute("href")).toBe("/docs/entity-terms-of-use-3.pdf");
+    expect(legalLinks?.[1].textContent).toBe("Términos");
+    
+    expect(legalLinks?.[2].getAttribute("href")).toBe("/docs/entity-eula-2.pdf");
+    expect(legalLinks?.[2].textContent).toBe("EULA");
+    
+    // Check no href empty or '#' in footer
+    const allFooterLinks = footer?.querySelectorAll("a");
+    allFooterLinks?.forEach(link => {
+      const href = link.getAttribute("href");
+      expect(href).not.toBeNull();
+      expect(href).not.toBe("");
+      expect(href).not.toBe("#");
+    });
   });
 });
 
