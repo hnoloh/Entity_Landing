@@ -1604,3 +1604,44 @@ main {
 .comparativa-table tr:hover td {
   background: #00e5ff05;
 }
+
+/* FAQ Styles (FIA-W01.25) */
+.faq-container {
+  width: 100%;
+}
+.faq-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.faq-item summary {
+  padding: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-primary);
+  list-style: none;
+  position: relative;
+}
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item summary::after {
+  content: '+';
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent-color);
+  font-size: 1.2rem;
+}
+.faq-item[open] summary::after {
+  content: '−';
+}
+.faq-item .faq-content {
+  padding: 0 1.2rem 1.2rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}

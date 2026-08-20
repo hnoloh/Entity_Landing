@@ -408,6 +408,76 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
+    <section id="faq" class="region reveal-element" aria-labelledby="faq-title">
+      <div class="narrativa-header">
+        <h2 id="faq-title">Preguntas Frecuentes</h2>
+        <p>Resolvemos tus dudas sobre Entity.</p>
+      </div>
+      <div class="faq-container" style="max-width: 800px; margin: 2rem auto; display: flex; flex-direction: column; gap: 1rem;">
+        
+        <details class="faq-item">
+          <summary>¿Entity Free requiere una cuenta?</summary>
+          <div class="faq-content">No. Entity Free se puede utilizar sin registro y sin crear una cuenta.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Free es una prueba temporal?</summary>
+          <div class="faq-content">No, Entity Free no es una prueba temporal (trial). Es una versión gratuita de uso indefinido.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Necesito pagar una API?</summary>
+          <div class="faq-content">Si utilizas modelos locales (ej. Ollama), no necesitas pagar APIs. Si optas por modelos en la nube (BYOK), el coste dependerá de las tarifas de tu proveedor, no garantizamos APIs gratuitas.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Puedo utilizar modelos locales/Ollama?</summary>
+          <div class="faq-content">Sí, Entity ofrece soporte nativo para modelos locales mediante Ollama, según las capacidades aprobadas.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Qué incluye Entity Pro?</summary>
+          <div class="faq-content">Entity Pro incluye todo lo de Free, más Grupos Loop, Grupos No Secuenciales, y soporte de Terminal / Filesystem avanzado.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Tengo que descargar otra aplicación para Pro?</summary>
+          <div class="faq-content">No. Entity Free y Pro son exactamente la misma aplicación. No hay ejecutables separados.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cómo activo Pro?</summary>
+          <div class="faq-content">Al adquirir Pro, recibes una License Key por correo. Solo tienes que introducirla en la aplicación para activar las capacidades Pro.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿En cuántos ordenadores puedo utilizar Pro?</summary>
+          <div class="faq-content">Puedes utilizar tu suscripción Pro en un máximo de 2 dispositivos simultáneos.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Pro funciona sin Internet?</summary>
+          <div class="faq-content">Sí, Entity Pro funciona offline hasta 30 días seguidos antes de requerir conexión para validar la suscripción.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Qué ocurre si cancelo Pro?</summary>
+          <div class="faq-content">Puedes gestionar tu cancelación a través del Customer Portal externo (Lemon Squeezy). Al cancelar y finalizar el periodo facturado, la aplicación volverá al nivel Free.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Pierdo mis datos si vuelvo a Free?</summary>
+          <div class="faq-content">Los datos creados permanecerán en tu dispositivo, pero las configuraciones que utilicen capacidades exclusivas de Pro no podrán ejecutarse.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Dónde se guardan/procesan mis datos?</summary>
+          <div class="faq-content">El almacenamiento principal de tus datos se realiza localmente. El procesamiento de información dependerá de si eliges ejecutar modelos locales o si envías datos a través de APIs de proveedores en la nube.</div>
+        </details>
+
+      </div>
+    </section>
+
     <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
       <div class="narrativa-header">
         <h2 id="download-title">Descarga Entity ahora</h2>
