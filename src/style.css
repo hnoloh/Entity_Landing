@@ -406,13 +406,16 @@ a.text-glow-tier:hover {
 #producto {
   min-height: auto;
   justify-content: flex-start;
-  padding-top: 2rem;
+  padding-top: 0.5rem;
   padding-bottom: 2rem;
 }
 #precios {
-  min-height: calc(100vh - 80px);
-  justify-content: center;
+  min-height: auto;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
+
 
 .producto-visual {
   background: #00e5ff05;
