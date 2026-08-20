@@ -238,10 +238,12 @@ main {
   text-align: left;
   border-bottom: 1px solid #00e5ff1a;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   gap: 4rem;
   width: 100%;
   min-height: 100vh;
+  padding-top: 0;
+  padding-bottom: 3rem;
   display: flex;
 }
 .hero-content {
