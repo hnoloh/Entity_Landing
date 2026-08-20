@@ -527,7 +527,9 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <div class="footer-col">
         <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Legal</h4>
         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-          <!-- Próximamente / Reservado para FIA-W01.27 -->
+          <a href="/docs/entity-privacy-policy-3.pdf" target="_blank" class="footer-link">Privacidad</a>
+          <a href="/docs/entity-terms-of-use-3.pdf" target="_blank" class="footer-link">Términos</a>
+          <a href="/docs/entity-eula-2.pdf" target="_blank" class="footer-link">EULA</a>
         </div>
       </div>
     </div>
