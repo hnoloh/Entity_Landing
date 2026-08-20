@@ -1807,3 +1807,47 @@ describe("Monitoring Post-Release (FIA-074)", () => {
     );
   });
 });
+
+describe("Privacy & Tracking Compliance (FIA-W01.28)", () => {
+  it("should not inject or load any tracking scripts, cookies or storage", async () => {
+    document.body.innerHTML = '<div id="app"></div>';
+    
+    const localSetItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+    
+    await import("../src/main.ts?t=" + ++cacheBuster);
+    
+    const app = document.querySelector<HTMLDivElement>("#app")!;
+    
+    // No cookie banner or CMP exists in the DOM
+    expect(document.querySelector("#cookie-banner")).toBeNull();
+    expect(document.querySelector(".cmp")).toBeNull();
+    
+    // No storage writes happened from main.ts
+    // In tests we write to sessionStorage in beforeEach, but we are spying on setItem during the import
+    expect(localSetItemSpy).not.toHaveBeenCalled();
+    
+    // Check links for Download and Buy have no tracking params
+    const downloadLink = app.querySelector("#download-cta") as HTMLAnchorElement;
+    if (downloadLink) {
+      expect(downloadLink.getAttribute("href")).not.toContain("utm_");
+      expect(downloadLink.getAttribute("href")).not.toContain("ref=");
+    }
+    
+    const checkoutLink = app.querySelector("#checkout-pro") as HTMLAnchorElement;
+    if (checkoutLink) {
+      expect(checkoutLink.getAttribute("href")).toContain("lemonsqueezy.com");
+      expect(checkoutLink.getAttribute("href")).not.toContain("utm_");
+    }
+    
+    const htmlContent = fs.readFileSync(path.join(__dirname, "../index.html"), "utf-8");
+    
+    // Assert no tracking scripts are in the HTML
+    expect(htmlContent).not.toMatch(/gtag/i);
+    expect(htmlContent).not.toMatch(/google-analytics/i);
+    expect(htmlContent).not.toMatch(/fbq/i);
+    expect(htmlContent).not.toMatch(/mixpanel/i);
+    expect(htmlContent).not.toMatch(/posthog/i);
+    expect(htmlContent).not.toMatch(/segment\.com/i);
+    expect(htmlContent).not.toMatch(/clarity/i);
+  });
+});
