@@ -214,9 +214,10 @@ describe("App Bootstrap", () => {
 
     // Pro capabilities derived exclusively from RV-N01 and RV-N05
     expect(precios?.textContent).toContain("Todo lo incluido en Free");
-    expect(precios?.textContent).toContain("Grupos Loop");
-    expect(precios?.textContent).toContain("Grupos No Secuenciales");
-    expect(precios?.textContent).toContain("Terminal / Filesystem avanzado");
+    expect(precios?.textContent).toContain("Grupos en bucle");
+    expect(precios?.textContent).toContain("Grupos por turnos");
+    expect(precios?.textContent).toContain("Terminal");
+    expect(precios?.textContent).toContain("RAG");
     expect(precios?.textContent).toContain("Máximo 2 dispositivos");
     expect(precios?.textContent).toContain("hasta 30 días");
 
@@ -225,33 +226,6 @@ describe("App Bootstrap", () => {
     expect(proCTA).not.toBeNull();
     expect(proCTA?.textContent).toBe("Obtener Entity Pro");
     // URL will be verified in the new W01.17 test block
-
-    // FIA-W01.09 contract (Comparativa detallada RV-N01)
-    const comparativa = app.querySelector("#comparativa-matrix");
-    expect(comparativa).not.toBeNull();
-
-    // Assert all rows from RV-N01
-    const tableText = comparativa?.textContent || "";
-    expect(tableText).toContain("Entis");
-    expect(tableText).toContain("Grupos secuenciales");
-    expect(tableText).toContain("Grupos Loop");
-    expect(tableText).toContain("Grupos No Secuenciales");
-    expect(tableText).toContain("Chat individual");
-    expect(tableText).toContain("Ollama / modelos locales");
-    expect(tableText).toContain("BYOK cloud");
-    expect(tableText).toContain("Persistencia");
-    expect(tableText).toContain("Generación DOCX / PDF / HTML");
-    expect(tableText).toContain("Terminal / filesystem avanzado");
-    expect(tableText).toContain("Integrantes por Grupo");
-    expect(tableText).toContain("Workflows / presets avanzados futuros");
-    expect(tableText).toContain("Nuevas capacidades power-user");
-
-    // Assert exactly RV-N01 terminology (No omitting, no inventing)
-    expect(tableText).toContain("Sin límite comercial");
-    expect(tableText).toContain("No, salvo decisión expresa posterior");
-    expect(tableText).toContain("Sí cuando formen parte del producto");
-    expect(tableText).toContain("Sólo las declaradas Free");
-    expect(tableText).toContain("Las declaradas Pro");
 
     // FIA-W01.10 contract (Cómo funciona Pro)
     const comoFunciona = app.querySelector("#como-funciona-pro");

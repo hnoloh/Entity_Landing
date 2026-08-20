@@ -403,7 +403,8 @@ a.text-glow-tier:hover {
   box-shadow: 0 0 8px var(--accent-color);
   border-radius: 50%;
 }
-#producto {
+#producto,
+#precios {
   min-height: auto;
   justify-content: flex-start;
   padding-top: 2rem;
