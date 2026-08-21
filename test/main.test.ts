@@ -1712,10 +1712,10 @@ describe("Arquitectura de página y Composición Visual (FIA-W01.31)", () => {
 
     const expectedOrder = [
       "hero",
-      "producto",
-      "precios",
-      "como-funciona-pro",
       "filosofia",
+      "producto",
+      "como-funciona-pro",
+      "precios",
       "download-free"
     ];
 

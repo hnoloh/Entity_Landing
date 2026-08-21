@@ -83,291 +83,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
-    <section id="producto" class="region reveal-element" aria-label="Producto">
-      <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
-        <button class="pf-tab active" role="tab" aria-selected="true" data-target="agentes">Agentes</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="multichats">Multichats</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
-        <button class="pf-tab" role="tab" aria-selected="false" data-target="orquestacion">Orquestación</button>
-      </div>
-
-      <div class="producto-visual">
-        <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
-          <img src="/v1_agentes.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
-        </div>
-      </div>
-    </section>
-    <section id="precios" class="region reveal-element" aria-label="Precios">
-
-      <div style="display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; max-width: 800px; width: 100%;">
-        
-        <!-- Tarjeta Free -->
-        <div class="narrativa-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Free</h3>
-          <div style="font-size: 2rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">0 €</div>
-          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
-            Sin registro y sin tarjeta. Descarga directa para empezar a organizar tu trabajo con IA.
-          </p>
-          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
-            <li><strong>Entis Ilimitados</strong></li>
-            <li><strong>Grupos Secuenciales</strong></li>
-            <li><strong>Chat Individual</strong></li>
-            <li><strong>Ollama / Modelos locales & BYOK Cloud</strong></li>
-            <li><strong>Persistencia completa</strong></li>
-            <li><strong>Generación DOCX / PDF / HTML</strong></li>
-          </ul>
-          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Descargar Entity Free</a>
-        </div>
-
-        <!-- Tarjeta Pro -->
-        <div class="narrativa-card pro-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
-          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-color);">Entity Pro</h3>
-          
-          <!-- Mensual / Anual Toggle -->
-          <div class="pf-tabs billing-toggle" role="tablist" aria-label="Selección de cadencia" style="justify-content: center; margin-bottom: 0.8rem; width: fit-content; align-self: flex-start; min-height: unset; padding: 2px;">
-            <button class="pf-tab active" role="tab" aria-selected="true" data-billing="monthly" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Mensual</button>
-            <button class="pf-tab" role="tab" aria-selected="false" data-billing="annual" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Anual</button>
-          </div>
-          
-          <div id="price-monthly" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
-            <div style="font-size: 2rem; font-weight: 600;">8.99 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ mes</span></div>
-          </div>
-          <div id="price-annual" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: none; flex-direction: column; gap: 0.2rem;">
-            <div style="font-size: 2rem; font-weight: 600;">89 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ año</span></div>
-          </div>
-          
-          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
-            Capacidades avanzadas para workflows complejos y automatización de alto nivel.
-          </p>
-          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
-            <li><strong>Todo lo incluido en Free</strong></li>
-            <li><strong>Grupos en bucle</strong></li>
-            <li><strong>Grupos por turnos</strong></li>
-            <li><strong>Terminal</strong></li>
-            <li><strong>RAG</strong></li>
-            <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
-            <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
-          </ul>
-          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Obtener Entity Pro</a>
-          <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.5rem; font-size: 0.8rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
-        </div>
-
-      </div>
-      
-
-    </section>
-
-    <!-- CÓMO FUNCIONA PRO / PRIVACIDAD (FIA-W01.10 & 11) -->
-    <section id="como-funciona-pro" class="region reveal-element" aria-labelledby="como-funciona-pro-title">
-      <style>
-        #como-funciona-pro {
-          display: grid !important;
-          grid-template-columns: 1fr 1fr;
-          grid-template-rows: auto auto auto;
-          align-content: center;
-          max-width: 1200px;
-          width: 100%;
-          margin: 0 auto;
-          padding-top: 2rem !important;
-          padding-bottom: 2rem !important;
-          padding-left: 2rem;
-          padding-right: 2rem;
-          box-sizing: border-box;
-        }
-
-        .privacy-text-block {
-          grid-column: 1 / 2;
-          grid-row: 1 / 2;
-          align-self: start;
-          text-align: left;
-          padding-right: 2rem;
-        }
-
-        .privacy-cards-block {
-          grid-column: 2 / 3;
-          grid-row: 1 / 3;
-          align-self: center;
-          display: flex;
-          gap: 1rem;
-        }
-
-        .mini-card {
-          flex: 1;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 12px;
-          padding: 1.2rem;
-          display: flex;
-          flex-direction: column;
-        }
-        .mini-card h3 {
-          font-size: 1.1rem;
-          color: var(--accent-color);
-          margin-bottom: 0.8rem;
-        }
-        .mini-card p {
-          font-size: 0.85rem;
-          color: var(--text-secondary);
-          line-height: 1.5;
-          margin-bottom: 1rem;
-        }
-        .mini-card ul {
-          margin: 0;
-          padding-left: 1.2rem;
-        }
-        .mini-card li {
-          font-size: 0.8rem;
-          color: var(--text-secondary);
-          margin-bottom: 0.4rem;
-        }
-
-        .privacy-timeline {
-          grid-column: 1 / 3;
-          grid-row: 3 / 4;
-          align-self: start;
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
-          width: 100%;
-          position: relative;
-          margin-top: 4rem;
-        }
-        .privacy-timeline::before {
-          content: '';
-          position: absolute;
-          top: 14px;
-          left: 12%;
-          right: 12%;
-          height: 1px;
-          background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-          opacity: 0.4;
-          z-index: 0;
-        }
-        .privacy-step {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-          position: relative;
-          z-index: 1;
-        }
-        .privacy-step-num {
-          width: 28px;
-          height: 28px;
-          border-radius: 50%;
-          background: var(--bg-dark, #0d0d12);
-          border: 1px solid var(--accent-color);
-          color: var(--accent-color);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.9rem;
-          font-weight: bold;
-          margin-bottom: 0.8rem;
-          box-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
-        }
-
-        @media (max-width: 900px) {
-          #como-funciona-pro {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 3rem;
-          }
-          .privacy-text-block {
-            grid-column: 1 / 2;
-            grid-row: 1 / 2;
-            padding-right: 0;
-          }
-          .privacy-cards-block {
-            grid-column: 1 / 2;
-            grid-row: 2 / 3;
-            flex-direction: column;
-          }
-          .privacy-timeline {
-            grid-column: 1 / 2;
-            grid-row: 3 / 4;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-          }
-          .privacy-timeline::before {
-            display: none;
-          }
-        }
-      </style>
-
-      <!-- CONTENEDOR INDEPENDIENTE 1: Texto (Anclado Arriba Izquierda) -->
-      <div class="privacy-text-block">
-        <h2 id="como-funciona-pro-title" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--text-primary); line-height: 1.2;">Privacidad por diseño.<br/>Sin cuentas,<br/>Sin registros.</h2>
-        <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;">Nuestra filosofía es innegociable: no traficamos con tus datos. No hay perfiles en la nube ni bases de datos personales. Incluso el pago está blindado.</p>
-      </div>
-
-      <!-- CONTENEDOR INDEPENDIENTE 2: Superpoderes Pro (Anclado Medio Derecha) -->
-      <div class="privacy-cards-block">
-        <div class="mini-card" style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(13, 27, 38, 0.4) 100%); border-color: rgba(0, 229, 255, 0.2); justify-content: center; padding: 1rem;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem;">Lleva a tus Entis al mundo real</h3>
-          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.7rem;">
-            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
-              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
-              <div>
-                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Herramienta Tool (Terminal)</strong>
-                Delega la ejecución de comandos en tu ordenador de forma segura.
-              </div>
-            </li>
-            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
-              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
-              <div>
-                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Conexión RAG</strong>
-                Hazlos exponencialmente más listos inyectando contexto de tus propios documentos.
-              </div>
-            </li>
-            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
-              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
-              <div>
-                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Orquestación Avanzada</strong>
-                Desbloquea rutinas en bucle y grupos por turnos para procesos autónomos complejos.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <!-- CONTENEDOR INDEPENDIENTE 3: Línea de Tiempo (Anclado Abajo) -->
-      <div class="privacy-timeline">
-        <div class="privacy-step">
-          <div class="privacy-step-num">1</div>
-          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Descarga Directa</h4>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
-            La versión Free es el motor completo. Bájalo sin dar tu email ni rellenar formularios absurdos.
-          </p>
-        </div>
-        
-        <div class="privacy-step">
-          <div class="privacy-step-num">2</div>
-          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Pago Externalizado</h4>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
-            Si decides hacer el upgrade, Lemon Squeezy procesa el pago. Nosotros nunca veremos tu tarjeta.
-          </p>
-        </div>
-
-        <div class="privacy-step">
-          <div class="privacy-step-num">3</div>
-          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Licencia Pura</h4>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
-            Recibes una clave segura. Cero creación de perfiles, cero contraseñas en nuestros servidores.
-          </p>
-        </div>
-
-        <div class="privacy-step">
-          <div class="privacy-step-num">4</div>
-          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Desbloqueo Local</h4>
-          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
-            Pega la clave en tu app y el nivel Pro se activa localmente. Tu trabajo se queda en tu ordenador.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- FILOSOFÍA / CONTROL DE CONSUMO -->
     <section id="filosofia" class="region reveal-element" aria-labelledby="filosofia-title">
       <style>
         #filosofia {
@@ -710,6 +425,291 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
+    <section id="producto" class="region reveal-element" aria-label="Producto">
+      <div class="pf-selector" role="tablist" aria-label="Vistas del producto">
+        <button class="pf-tab active" role="tab" aria-selected="true" data-target="agentes">Agentes</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="multichats">Multichats</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="herramientas">Herramientas</button>
+        <button class="pf-tab" role="tab" aria-selected="false" data-target="orquestacion">Orquestación</button>
+      </div>
+
+      <div class="producto-visual">
+        <div class="product-frame" id="product-frame-container" tabindex="0" role="button" aria-label="Ampliar imagen">
+          <img src="/v1_agentes.png" alt="Agentes de Entity" class="pf-capture" id="main-product-img" decoding="async" fetchpriority="high" />
+        </div>
+      </div>
+    </section>
+    <section id="como-funciona-pro" class="region reveal-element" aria-labelledby="como-funciona-pro-title">
+      <style>
+        #como-funciona-pro {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto auto;
+          align-content: center;
+          max-width: 1200px;
+          width: 100%;
+          margin: 0 auto;
+          padding-top: 2rem !important;
+          padding-bottom: 2rem !important;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          box-sizing: border-box;
+        }
+
+        .privacy-text-block {
+          grid-column: 1 / 2;
+          grid-row: 1 / 2;
+          align-self: start;
+          text-align: left;
+          padding-right: 2rem;
+        }
+
+        .privacy-cards-block {
+          grid-column: 2 / 3;
+          grid-row: 1 / 3;
+          align-self: center;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .mini-card {
+          flex: 1;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 1.2rem;
+          display: flex;
+          flex-direction: column;
+        }
+        .mini-card h3 {
+          font-size: 1.1rem;
+          color: var(--accent-color);
+          margin-bottom: 0.8rem;
+        }
+        .mini-card p {
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 1rem;
+        }
+        .mini-card ul {
+          margin: 0;
+          padding-left: 1.2rem;
+        }
+        .mini-card li {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          margin-bottom: 0.4rem;
+        }
+
+        .privacy-timeline {
+          grid-column: 1 / 3;
+          grid-row: 3 / 4;
+          align-self: start;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          width: 100%;
+          position: relative;
+          margin-top: 4rem;
+        }
+        .privacy-timeline::before {
+          content: '';
+          position: absolute;
+          top: 14px;
+          left: 12%;
+          right: 12%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+          opacity: 0.4;
+          z-index: 0;
+        }
+        .privacy-step {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+          z-index: 1;
+        }
+        .privacy-step-num {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: var(--bg-dark, #0d0d12);
+          border: 1px solid var(--accent-color);
+          color: var(--accent-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.9rem;
+          font-weight: bold;
+          margin-bottom: 0.8rem;
+          box-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
+        }
+
+        @media (max-width: 900px) {
+          #como-funciona-pro {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 3rem;
+          }
+          .privacy-text-block {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            padding-right: 0;
+          }
+          .privacy-cards-block {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            flex-direction: column;
+          }
+          .privacy-timeline {
+            grid-column: 1 / 2;
+            grid-row: 3 / 4;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+          }
+          .privacy-timeline::before {
+            display: none;
+          }
+        }
+      </style>
+
+      <!-- CONTENEDOR INDEPENDIENTE 1: Texto (Anclado Arriba Izquierda) -->
+      <div class="privacy-text-block">
+        <h2 id="como-funciona-pro-title" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--text-primary); line-height: 1.2;">Privacidad por diseño.<br/>Sin cuentas,<br/>Sin registros.</h2>
+        <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;">Nuestra filosofía es innegociable: no traficamos con tus datos. No hay perfiles en la nube ni bases de datos personales. Incluso el pago está blindado.</p>
+      </div>
+
+      <!-- CONTENEDOR INDEPENDIENTE 2: Superpoderes Pro (Anclado Medio Derecha) -->
+      <div class="privacy-cards-block">
+        <div class="mini-card" style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(13, 27, 38, 0.4) 100%); border-color: rgba(0, 229, 255, 0.2); justify-content: center; padding: 1rem;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem;">Lleva a tus Entis al mundo real</h3>
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.7rem;">
+            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
+              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
+              <div>
+                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Herramienta Tool (Terminal)</strong>
+                Delega la ejecución de comandos en tu ordenador de forma segura.
+              </div>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
+              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
+              <div>
+                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Conexión RAG</strong>
+                Hazlos exponencialmente más listos inyectando contexto de tus propios documentos.
+              </div>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
+              <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
+              <div>
+                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Orquestación Avanzada</strong>
+                Desbloquea rutinas en bucle y grupos por turnos para procesos autónomos complejos.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- CONTENEDOR INDEPENDIENTE 3: Línea de Tiempo (Anclado Abajo) -->
+      <div class="privacy-timeline">
+        <div class="privacy-step">
+          <div class="privacy-step-num">1</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Descarga Directa</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            La versión Free es el motor completo. Bájalo sin dar tu email ni rellenar formularios absurdos.
+          </p>
+        </div>
+        
+        <div class="privacy-step">
+          <div class="privacy-step-num">2</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Pago Externalizado</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Si decides hacer el upgrade, Lemon Squeezy procesa el pago. Nosotros nunca veremos tu tarjeta.
+          </p>
+        </div>
+
+        <div class="privacy-step">
+          <div class="privacy-step-num">3</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Licencia Pura</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Recibes una clave segura. Cero creación de perfiles, cero contraseñas en nuestros servidores.
+          </p>
+        </div>
+
+        <div class="privacy-step">
+          <div class="privacy-step-num">4</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Desbloqueo Local</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Pega la clave en tu app y el nivel Pro se activa localmente. Tu trabajo se queda en tu ordenador.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILOSOFÍA / CONTROL DE CONSUMO -->
+    <section id="precios" class="region reveal-element" aria-label="Precios">
+
+      <div style="display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; max-width: 800px; width: 100%;">
+        
+        <!-- Tarjeta Free -->
+        <div class="narrativa-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Free</h3>
+          <div style="font-size: 2rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">0 €</div>
+          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
+            Sin registro y sin tarjeta. Descarga directa para empezar a organizar tu trabajo con IA.
+          </p>
+          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
+            <li><strong>Entis Ilimitados</strong></li>
+            <li><strong>Grupos Secuenciales</strong></li>
+            <li><strong>Chat Individual</strong></li>
+            <li><strong>Ollama / Modelos locales & BYOK Cloud</strong></li>
+            <li><strong>Persistencia completa</strong></li>
+            <li><strong>Generación DOCX / PDF / HTML</strong></li>
+          </ul>
+          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Descargar Entity Free</a>
+        </div>
+
+        <!-- Tarjeta Pro -->
+        <div class="narrativa-card pro-card" style="flex: 1; min-width: 280px; padding: 1.5rem; display: flex; flex-direction: column;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-color);">Entity Pro</h3>
+          
+          <!-- Mensual / Anual Toggle -->
+          <div class="pf-tabs billing-toggle" role="tablist" aria-label="Selección de cadencia" style="justify-content: center; margin-bottom: 0.8rem; width: fit-content; align-self: flex-start; min-height: unset; padding: 2px;">
+            <button class="pf-tab active" role="tab" aria-selected="true" data-billing="monthly" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Mensual</button>
+            <button class="pf-tab" role="tab" aria-selected="false" data-billing="annual" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">Anual</button>
+          </div>
+          
+          <div id="price-monthly" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: flex; flex-direction: column; gap: 0.2rem;">
+            <div style="font-size: 2rem; font-weight: 600;">8.99 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ mes</span></div>
+          </div>
+          <div id="price-annual" style="font-size: 1.1rem; margin-bottom: 0.8rem; color: var(--text-primary); display: none; flex-direction: column; gap: 0.2rem;">
+            <div style="font-size: 2rem; font-weight: 600;">89 € <span style="font-size: 0.9rem; font-weight: normal; color: var(--text-secondary);">/ año</span></div>
+          </div>
+          
+          <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
+            Capacidades avanzadas para workflows complejos y automatización de alto nivel.
+          </p>
+          <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
+            <li><strong>Todo lo incluido en Free</strong></li>
+            <li><strong>Grupos en bucle</strong></li>
+            <li><strong>Grupos por turnos</strong></li>
+            <li><strong>Terminal</strong></li>
+            <li><strong>RAG</strong></li>
+            <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
+            <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
+          </ul>
+          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Obtener Entity Pro</a>
+          <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.5rem; font-size: 0.8rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
+        </div>
+
+      </div>
+      
+
+    </section>
+
+    <!-- CÓMO FUNCIONA PRO / PRIVACIDAD (FIA-W01.10 & 11) -->
     <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
       <style>
         #download-free {
