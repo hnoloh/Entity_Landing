@@ -515,6 +515,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           width: 100%;
           position: relative;
           margin-top: 4rem;
+          transform: translateY(-40px);
         }
         .privacy-timeline::before {
           content: '';
@@ -574,6 +575,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             grid-row: 3 / 4;
             grid-template-columns: 1fr;
             gap: 2.5rem;
+            transform: none;
           }
           .privacy-timeline::before {
             display: none;
