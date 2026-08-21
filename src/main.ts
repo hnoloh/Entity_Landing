@@ -595,7 +595,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
                 <polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line>
               </svg>
               <strong style="color: var(--text-primary); font-size: 0.85rem; margin-top: 0.2rem;">Consola</strong>
-              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Dale a tus Entis el poder de ejecutar comandos y controlar tu ordenador.</span>
+              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Dale a tus Entis el poder de ejecutar comandos.</span>
             </div>
             
             <!-- RAG -->
@@ -604,7 +604,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
               </svg>
               <strong style="color: var(--text-primary); font-size: 0.85rem; margin-top: 0.2rem;">Conexión RAG</strong>
-              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Dales acceso a grandes fuentes de conocimiento para inyectar contexto.</span>
+              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Dale acceso a tus Entis a grandes fuentes de conocimiento.</span>
             </div>
             
             <!-- Grupos -->
@@ -612,8 +612,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-color);">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path>
               </svg>
-              <strong style="color: var(--text-primary); font-size: 0.85rem; margin-top: 0.2rem;">Nuevos Grupos</strong>
-              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Experimenta con nuevas formas de organizar a tus Entis en rutinas.</span>
+              <strong style="color: var(--text-primary); font-size: 0.85rem; margin-top: 0.2rem;">Grupos</strong>
+              <span style="color: var(--text-secondary); font-size: 0.75rem; line-height: 1.4;">Experimenta con nuevas secuencias para tus grupos de Entis.</span>
             </div>
           </div>
         </div>
