@@ -55,7 +55,7 @@ describe("App Bootstrap", () => {
     // FIA-002 contract
     expect(app.querySelector("header")).not.toBeNull();
     expect(app.querySelector("main")).not.toBeNull();
-    expect(app.querySelector("footer")).not.toBeNull();
+    expect(app.querySelector("footer")).toBeNull();
 
     // FIA-004 AS-BUILT contract
     expect(app.querySelector("header .header-left .slogan")).toBeNull();
@@ -69,7 +69,7 @@ describe("App Bootstrap", () => {
     expect(nav).not.toBeNull();
 
     const navLinks = nav?.querySelectorAll("span.nav-item:not(.text-glow-tier)");
-    expect(navLinks?.length).toBe(5);
+    expect(navLinks?.length).toBe(6);
 
     expect(navLinks?.[0].getAttribute("onclick")).toContain("#hero");
     expect(navLinks?.[0].textContent).toBe("Inicio");
@@ -318,12 +318,6 @@ describe("App Bootstrap", () => {
     // Assert negativo: no validación W01.16. (No e2e flow logic added to CTA)
     expect(ctaLink?.getAttribute("href")).not.toBe("#checkout-pro");
 
-    // FIA-013 contract
-    const footer = app.querySelector(".footer");
-    expect(footer).not.toBeNull();
-    // Footer assertions for brand and links removed as they don't exist in AS-BUILT
-    expect(footer?.querySelector(".footer-bottom")).not.toBeNull();
-
     // FIA-017 contract
     const mobileBtn = app.querySelector("header .mobile-menu-btn");
     expect(mobileBtn).not.toBeNull();
@@ -335,7 +329,7 @@ describe("App Bootstrap", () => {
 
     // Links inside mobile menu drawer
     const drawerLinks = drawer?.querySelectorAll("span.mobile-nav-item:not(.text-glow-tier)");
-    expect(drawerLinks?.length).toBe(5);
+    expect(drawerLinks?.length).toBe(6);
     expect(drawerLinks?.[0].getAttribute("onclick")).toContain("#hero");
     expect(drawerLinks?.[1].getAttribute("onclick")).toContain("#producto");
     expect(drawerLinks?.[2].getAttribute("onclick")).toContain("#filosofia");
@@ -445,7 +439,6 @@ describe("App Bootstrap", () => {
     const authorizedSections = [
       "#producto",
       "#download-free",
-      ".footer",
     ];
 
     authorizedSections.forEach((selector) => {
@@ -545,7 +538,6 @@ describe("App Bootstrap", () => {
     // Check focus styles in css
     const cssPath = path.join(__dirname, "../src/style.css");
     const cssContent = fs.readFileSync(cssPath, "utf-8");
-    expect(cssContent).toContain(".footer-link:focus-visible");
   });
 
   it("should include correct SEO metadata in index.html (FIA-070)", () => {
@@ -729,29 +721,6 @@ describe("App Bootstrap", () => {
     expect(proCTA.getAttribute("target")).toBe("_blank");
   });
 
-  it("should delegate Manage subscription entirely to Lemon Squeezy Customer Portal (FIA-W01.21)", async () => {
-    // This test formally checks PVF-W01.44
-    await import("../src/main.ts?t=" + ++cacheBuster);
-    const app = document.querySelector<HTMLDivElement>("#app")!;
-    
-    // 1. Verify existence of the external static link in the footer
-    const manageLink = Array.from(app.querySelectorAll("a")).find(a => 
-      a.textContent?.includes("Gestionar suscripción")
-    );
-    expect(manageLink).toBeDefined();
-    
-    // 2. Verify it points strictly to the unsigned official Customer Portal
-    expect(manageLink?.getAttribute("href")).toBe("https://entity.lemonsqueezy.com/billing");
-    expect(manageLink?.getAttribute("target")).toBe("_blank");
-
-    // 3. Negative Assertions: ensure no local dashboard, API, token or login
-    const htmlContent = app.innerHTML;
-    expect(app.querySelector("#customer-portal")).toBeNull();
-    expect(app.querySelector("#dashboard")).toBeNull();
-    expect(htmlContent).not.toMatch(/api\/billing|api\/portal/i);
-    expect(htmlContent).not.toMatch(/customer_id|subscription_id/i);
-    expect(htmlContent).not.toMatch(/magic-link-token/i);
-  });
 
   it("should strictly respect the web to desktop boundary for entitlement (RV-N05) (FIA-W01.22)", async () => {
     // This test formally checks PVF-W01.45
@@ -1206,6 +1175,11 @@ describe("Email Confirmation Dispatch (FIA-056)", () => {
     });
   });
 
+  let Sentry: typeof import("@sentry/browser");
+  beforeAll(async () => {
+    Sentry = await import("@sentry/browser");
+  });
+
   afterEach(() => {
     // Clean up files after test
     [registrationsPath, sentEmailsPath].forEach((filePath) => {
@@ -1295,6 +1269,11 @@ describe("Metrics Dashboard (FIA-061)", () => {
     sessionStorage.setItem("entityAdminToken", "admin-secret-2026");
     vi.resetModules();
     document.body.innerHTML = '<div id="admin-app"></div>';
+  });
+
+  let Sentry: typeof import("@sentry/browser");
+  beforeAll(async () => {
+    Sentry = await import("@sentry/browser");
   });
 
   afterEach(() => {
@@ -1410,6 +1389,11 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
         }
       }
     });
+  });
+
+  let Sentry: typeof import("@sentry/browser");
+  beforeAll(async () => {
+    Sentry = await import("@sentry/browser");
   });
 
   afterEach(() => {
@@ -1555,67 +1539,6 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     expect(megaMenuText).toContain("¿Necesito pagar una API?");
   });
 
-  it("should render the Footer section according to FIA-W01.26", async () => {
-    document.body.innerHTML = '<div id="app"></div>';
-    await import("../src/main.ts?t=" + ++cacheBuster);
-    const app = document.querySelector<HTMLDivElement>("#app")!;
-    const footer = app.querySelector(".footer");
-    expect(footer).not.toBeNull();
-    
-    // Check exactly 3 groups
-    const cols = footer?.querySelectorAll(".footer-col");
-    expect(cols?.length).toBe(3);
-    
-    const headers = footer?.querySelectorAll("h4");
-    expect(headers?.[0].textContent).toBe("Producto");
-    expect(headers?.[1].textContent).toBe("Recursos");
-    expect(headers?.[2].textContent).toBe("Legal");
-    
-    // Check content in Producto
-    const productoLinks = cols?.[0].querySelectorAll("a");
-    expect(productoLinks?.length).toBe(3);
-    expect(productoLinks?.[0].getAttribute("href")).toBe("#producto");
-    expect(productoLinks?.[1].getAttribute("href")).toBe("#precios");
-    expect(productoLinks?.[2].getAttribute("href")).toBe("https://entity.lemonsqueezy.com/billing");
-    
-    // Check content in Recursos
-    const recursosLinks = cols?.[1].querySelectorAll("a");
-    expect(recursosLinks?.length).toBe(2);
-    expect(recursosLinks?.[0].getAttribute("href")).toBe("/docs/METODO%20Entity.pdf");
-    expect(recursosLinks?.[0].textContent).toBe("Método Entity");
-    expect(recursosLinks?.[1].getAttribute("href")).toBe("https://github.com/hnoloh/Entity");
-    expect(recursosLinks?.[1].textContent).toBe("GitHub");
-    
-    // Check content in Legal
-    const legalLinks = cols?.[2].querySelectorAll("a");
-    expect(legalLinks?.length).toBe(3);
-    
-    expect(legalLinks?.[0].getAttribute("href")).toBe("/docs/entity-privacy-policy-3.pdf");
-    expect(legalLinks?.[0].textContent).toBe("Privacidad");
-    
-    expect(legalLinks?.[1].getAttribute("href")).toBe("/docs/entity-terms-of-use-3.pdf");
-    expect(legalLinks?.[1].textContent).toBe("Términos");
-    
-    expect(legalLinks?.[2].getAttribute("href")).toBe("/docs/entity-eula-2.pdf");
-    expect(legalLinks?.[2].textContent).toBe("EULA");
-    
-    // Check no href empty or '#' in footer
-    const allFooterLinks = footer?.querySelectorAll("a");
-    allFooterLinks?.forEach(link => {
-      const href = link.getAttribute("href");
-      expect(href).not.toBeNull();
-      expect(href).not.toBe("");
-      expect(href).not.toBe("#");
-    });
-  });
-});
-
-describe("Monitoring Post-Release (FIA-074)", () => {
-  let Sentry: typeof import("@sentry/browser");
-
-  beforeAll(async () => {
-    Sentry = await import("@sentry/browser");
-  });
 
   afterEach(() => {
     vi.clearAllMocks();
@@ -1806,6 +1729,6 @@ describe("Arquitectura de página y Composición Visual (FIA-W01.31)", () => {
     const appChildren = Array.from(document.querySelector("#app")!.children).map(c => c.tagName.toLowerCase());
     
     expect(appChildren[0]).toBe("header");
-    expect(appChildren.includes("footer")).toBe(true);
+    expect(appChildren.includes("footer")).toBe(false);
   });
 });

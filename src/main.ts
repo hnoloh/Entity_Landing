@@ -25,7 +25,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
 
       <!-- FAQ Menu Container -->
-      <div class="faq-menu-container">
+      <div class="faq-menu-container" id="desktop-faq-container">
         <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
         <div class="faq-mega-menu" id="faq-mega-menu">
           <!-- JS will populate questions here -->
@@ -34,6 +34,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <div id="faq-bocadillo" class="faq-bocadillo">
           <h4 id="faq-bocadillo-q"></h4>
           <p id="faq-bocadillo-a"></p>
+        </div>
+      </div>
+
+      <!-- Legal Menu Container -->
+      <div class="faq-menu-container" id="desktop-legal-container">
+        <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;" tabindex="0">Legal ▾</span>
+        <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
+          <!-- JS will populate legal items here -->
         </div>
       </div>
 
@@ -52,6 +60,13 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <span class="mobile-nav-item" id="mobile-faq-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
           <div class="mobile-faq-list" id="mobile-faq-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
             <!-- JS will populate mobile questions here -->
+          </div>
+        </div>
+
+        <div class="mobile-faq-container" id="mobile-legal-container">
+          <span class="mobile-nav-item" id="mobile-legal-btn" style="cursor: pointer;" tabindex="0">Legal ▾</span>
+          <div class="mobile-faq-list" id="mobile-legal-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
+            <!-- JS will populate legal items here -->
           </div>
         </div>
 
@@ -854,37 +869,23 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
+
+    <!-- Legal Viewer Modal -->
+    <div id="legal-modal" class="manual-overlay" style="display: none; align-items: center; justify-content: center; z-index: 10000; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);">
+      <div class="manual-viewer" style="max-width: 800px; width: 90%; max-height: 85vh; background: var(--bg-color); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; flex-direction: column; position: relative;">
+        <div class="manual-controls" style="padding: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border-radius: 12px 12px 0 0; position: relative;">
+          <button onclick="closeLegalViewer()" style="position: absolute; left: 1.5rem; background: transparent; border: none; color: var(--accent-color); font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; padding: 0; text-shadow: 0 0 5px rgba(0,229,255,0); transition: text-shadow 0.2s;" onmouseover="this.style.textShadow='0 0 10px rgba(0,229,255,0.6)'" onmouseout="this.style.textShadow='0 0 5px rgba(0,229,255,0)'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Volver
+          </button>
+          <h3 id="legal-modal-title" style="margin: 0; font-size: 1.2rem; color: var(--text-primary);">Aviso Legal</h3>
+        </div>
+        <div id="legal-modal-content" style="padding: 2.5rem 2rem; overflow-y: auto; text-align: left; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">
+          <!-- JS injects text -->
+        </div>
+      </div>
+    </div>
   </main>
-  <footer class="footer reveal-element" style="padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-    <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 3rem; text-align: left;">
-      <div class="footer-col">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Producto</h4>
-        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-          <a href="#producto" class="footer-link">Características</a>
-          <a href="#precios" class="footer-link">Precios</a>
-          <a href="https://entity.lemonsqueezy.com/billing" class="footer-link" target="_blank" rel="noopener noreferrer">Gestionar suscripción</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Recursos</h4>
-        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-          <a href="/docs/METODO%20Entity.pdf" target="_blank" class="footer-link">Método Entity</a>
-          <a href="https://github.com/hnoloh/Entity" target="_blank" class="footer-link">GitHub</a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">Legal</h4>
-        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-          <a href="/docs/entity-privacy-policy-3.pdf" target="_blank" class="footer-link">Privacidad</a>
-          <a href="/docs/entity-terms-of-use-3.pdf" target="_blank" class="footer-link">Términos</a>
-          <a href="/docs/entity-eula-2.pdf" target="_blank" class="footer-link">EULA</a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; justify-content: center; align-items: center;">
-      <p style="color: var(--text-secondary); font-size: 0.9rem;">&copy; 2026 Entity. Todos los derechos reservados.</p>
-    </div>
-  </footer>
 
   <!-- MANUAL VIEWER MODAL -->
   <style>
@@ -1444,7 +1445,7 @@ const faqData = [
 ];
 
 const faqMenuBtn = document.getElementById('faq-menu-btn');
-const faqMenuContainer = document.querySelector('.faq-menu-container');
+const faqMenuContainer = document.getElementById('desktop-faq-container');
 const faqMegaMenu = document.getElementById('faq-mega-menu');
 const faqBocadillo = document.getElementById('faq-bocadillo');
 const faqBocadilloQ = document.getElementById('faq-bocadillo-q');
@@ -1511,5 +1512,96 @@ if (mobileFaqBtn && mobileFaqList) {
     const qEl = document.createElement('div');
     qEl.innerHTML = `<h5 style="color:var(--accent-color); margin:0 0 0.2rem 0; font-size:0.95rem;">${item.q}</h5><p style="color:var(--text-secondary); margin:0; font-size:0.85rem;">${item.a}</p>`;
     mobileFaqList.appendChild(qEl);
+  });
+}
+
+// =======================
+// LEGAL MODAL & DROPDOWNS
+// =======================
+const legalDocs = [
+  {
+    title: "Política de Privacidad",
+    content: "<h3>1. Almacenamiento Local First</h3><p>Entity está diseñado fundamentalmente para operar localmente. Todos tus datos, configuraciones, flujos de trabajo y prompts residen exclusivamente en tu ordenador por defecto. No recogemos métricas de uso ni almacenamos tu propiedad intelectual en nuestros servidores.</p><h3>2. Conexiones a APIs de terceros</h3><p>Cuando decides conectar Entity a un modelo externo (ej. OpenAI, Anthropic), debes saber que el envío de datos está sujeto a las políticas de privacidad de dicho proveedor de IA. Entity actúa como un mero puente para facilitar esta conexión y no almacena copias intermedias de estas peticiones.</p><h3>3. Información de facturación</h3><p>Las suscripciones a la versión Pro se procesan de forma segura a través de Lemon Squeezy, que actúa como Merchant of Record (MoR). Nosotros no tenemos acceso directo a tu información de pago ni a los detalles completos de tus tarjetas bancarias.</p>"
+  },
+  {
+    title: "Términos y Condiciones",
+    content: "<h3>1. Licencia de la versión Free</h3><p>La versión Free de Entity se distribuye de manera gratuita y permite un uso ilimitado de sus características base (Entis, Brains y Grupos). Está permitida su instalación y uso tanto en entornos personales como comerciales, pero sin garantías explícitas ni derecho a soporte técnico prioritario.</p><h3>2. Condiciones de la versión Pro</h3><p>El uso de la versión Pro está supeditado a una suscripción activa (mensual o anual). La suscripción te da acceso al modo autónomo (Auto-run), a configuraciones avanzadas de concurrencia y a un canal de soporte técnico dedicado. El reembolso es aplicable según las políticas estándar de Lemon Squeezy dentro de los primeros 14 días si no estás satisfecho con la plataforma.</p><h3>3. Limitación de Responsabilidad</h3><p>Entity proporciona la infraestructura de agentes locales, pero no se hace responsable del código emitido ni de las acciones ejecutadas de forma autónoma por los agentes en tu máquina. Utiliza la supervisión del modo manual siempre que tengas dudas sobre el flujo orquestado.</p>"
+  },
+  {
+    title: "Política de Cookies",
+    content: "<h3>1. Uso exclusivo de Cookies Técnicas</h3><p>Nuestra página web no despliega cookies de rastreo (trackers), ni cookies publicitarias de terceros (como Google Analytics, Meta Pixel, etc.). Nuestro objetivo es el diseño limpio y el respeto absoluto a tu huella digital.</p><h3>2. Cookies de sesión e idioma</h3><p>Únicamente se instalarán cookies necesarias (strict cookies) que gestionen preferencias muy básicas, como el estado de tu sesión en el panel de usuario o la moneda mostrada en los precios, facilitado por Lemon Squeezy en la pasarela de pago.</p><h3>3. Aceptación implícita</h3><p>Al utilizar esta página estás interactuando con una estructura sin rastreadores masivos. La navegación continua asume la aceptación del depósito de las mencionadas y exclusivas cookies técnicas.</p>"
+  }
+];
+
+// Open / Close Global Functions
+(window as any).openLegalViewer = (index: number) => {
+  const modal = document.getElementById('legal-modal');
+  const titleEl = document.getElementById('legal-modal-title');
+  const contentEl = document.getElementById('legal-modal-content');
+  if (modal && titleEl && contentEl) {
+    titleEl.textContent = legalDocs[index].title;
+    contentEl.innerHTML = legalDocs[index].content;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+(window as any).closeLegalViewer = () => {
+  const modal = document.getElementById('legal-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+// Desktop Legal Dropdown
+const legalMenuBtn = document.getElementById('legal-menu-btn');
+const legalMenuContainer = document.getElementById('desktop-legal-container');
+const legalMegaMenu = document.getElementById('legal-mega-menu');
+
+if (legalMenuBtn && legalMenuContainer && legalMegaMenu) {
+  legalMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    legalMenuContainer.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!legalMenuContainer.contains(e.target as Node)) {
+      legalMenuContainer.classList.remove('open');
+    }
+  });
+
+  legalDocs.forEach((doc, index) => {
+    const item = document.createElement('div');
+    item.className = 'faq-q-item';
+    item.textContent = doc.title;
+    
+    item.addEventListener('click', () => {
+      (window as any).openLegalViewer(index);
+      legalMenuContainer.classList.remove('open');
+    });
+    legalMegaMenu.appendChild(item);
+  });
+}
+
+// Mobile Legal Dropdown
+const mobileLegalBtn = document.getElementById('mobile-legal-btn');
+const mobileLegalList = document.getElementById('mobile-legal-list');
+
+if (mobileLegalBtn && mobileLegalList) {
+  mobileLegalBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isExpanded = mobileLegalList.style.display === 'flex';
+    mobileLegalList.style.display = isExpanded ? 'none' : 'flex';
+  });
+
+  legalDocs.forEach((doc, index) => {
+    const item = document.createElement('div');
+    item.style.padding = '0.5rem 0';
+    item.innerHTML = `<span style="color: var(--text-primary); font-size: 0.9rem; cursor: pointer;">${doc.title}</span>`;
+    item.addEventListener('click', () => {
+      (window as any).openLegalViewer(index);
+    });
+    mobileLegalList.appendChild(item);
   });
 }
