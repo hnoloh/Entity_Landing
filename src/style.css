@@ -405,7 +405,12 @@ a.text-glow-tier:hover {
   box-shadow: 0 0 8px var(--accent-color);
   border-radius: 50%;
 }
-#producto,
+#producto {
+  min-height: calc(100vh - 65px);
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
 #precios {
   min-height: 100vh;
   justify-content: flex-start;
@@ -1286,7 +1291,7 @@ a.text-glow-tier:hover {
   border: 1px solid #00e5ff1a;
   border-radius: 30px;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 0;
   padding: 0.4rem;
   display: flex;
   flex-wrap: wrap;
