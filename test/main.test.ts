@@ -199,9 +199,9 @@ describe("App Bootstrap", () => {
     expect(precios?.textContent).toContain("DOCX y PDF");
 
     // Assert CTA
-    const freeCTA = precios?.querySelector("a.join-cta");
+    const freeCTA = precios?.querySelector("a.text-link-premium");
     expect(freeCTA).not.toBeNull();
-    expect(freeCTA?.textContent).toBe("Descargar Entity Free");
+    expect(freeCTA?.textContent).toBe("→ Free");
     expect(freeCTA?.getAttribute("href")).toBe("#download-free");
 
     // Assert Entity Pro structural presence and capabilities
@@ -222,9 +222,9 @@ describe("App Bootstrap", () => {
     expect(precios?.textContent).toContain("hasta 30 días");
 
     // CTA Obtener Entity Pro
-    const proCTA = precios?.querySelectorAll("a.join-cta")[1];
+    const proCTA = precios?.querySelectorAll("a.text-link-premium")[1];
     expect(proCTA).not.toBeNull();
-    expect(proCTA?.textContent).toBe("Obtener Entity Pro");
+    expect(proCTA?.textContent).toBe("→ Pro");
     // URL will be verified in the new W01.17 test block
 
     // FIA-W01.10 contract (Cómo funciona Pro)
@@ -634,7 +634,7 @@ describe("App Bootstrap", () => {
     // CTA
     const proCTA = precios?.querySelector("#checkout-pro") as HTMLAnchorElement;
     expect(proCTA).not.toBeNull();
-    expect(proCTA.textContent).toBe("Obtener Entity Pro");
+    expect(proCTA.textContent).toBe("→ Pro");
     expect(proCTA.getAttribute("target")).toBe("_blank");
     expect(proCTA.getAttribute("rel")).toContain("noopener");
     expect(proCTA.getAttribute("rel")).toContain("noreferrer");

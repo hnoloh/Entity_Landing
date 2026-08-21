@@ -682,7 +682,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Persistencia completa</strong></li>
             <li><strong>DOCX y PDF</strong></li>
           </ul>
-          <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Descargar Entity Free</a>
+          <a href="#download-free" class="text-link-premium">→ Free</a>
         </div>
 
         <!-- Tarjeta Pro -->
@@ -714,7 +714,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
             <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
           </ul>
-          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="join-cta hero-btn" target="_blank" rel="noopener noreferrer" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Obtener Entity Pro</a>
+          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="text-link-premium" target="_blank" rel="noopener noreferrer">→ Pro</a>
           <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.5rem; font-size: 0.8rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
         </div>
 

@@ -418,6 +418,23 @@ a.text-glow-tier:hover {
   box-sizing: border-box;
 }
 
+.text-link-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+.text-link-premium:hover {
+  color: var(--accent-color);
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+  transform: translateX(4px);
+}
+
 
 .producto-visual {
   background: #00e5ff05;
