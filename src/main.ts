@@ -464,7 +464,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           align-self: start;
           text-align: left;
           padding-right: 2rem;
-          transform: translateY(-40px);
         }
 
         .privacy-cards-block {
@@ -514,7 +513,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           gap: 1.5rem;
           width: 100%;
           position: relative;
-          margin-top: 7rem;
+          margin-top: 4rem;
         }
         .privacy-timeline::before {
           content: '';
@@ -589,9 +588,13 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
       <!-- CONTENEDOR INDEPENDIENTE 2: Superpoderes Pro (Anclado Medio Derecha) -->
       <div class="privacy-cards-block">
+        <style>
+          .pro-features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 0.5rem; }
+          @media (max-width: 768px) { .pro-features-grid { grid-template-columns: 1fr; } }
+        </style>
         <div class="mini-card" style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(13, 27, 38, 0.4) 100%); border-color: rgba(0, 229, 255, 0.2); justify-content: center; padding: 1rem;">
           <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem;">¿Qué aporta la versión Pro?</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1.5rem; margin-top: 0.5rem;">
+          <div class="pro-features-grid">
             <!-- Consola -->
             <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.3rem; text-align: left;">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-color);">
