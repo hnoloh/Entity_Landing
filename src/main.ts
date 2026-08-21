@@ -980,7 +980,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
     #manual-page-img {
       width: 100%;
-      max-width: 900px; /* Default readable width */
+      max-width: 500px; /* Default readable width */
       height: auto;
       margin: 0 auto;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
@@ -1408,7 +1408,7 @@ function updateManualPage() {
   }
 }
 
-let currentManualWidth = 900;
+let currentManualWidth = 500;
 window.zoomManualPage = (amount: number) => {
   currentManualWidth += amount;
   if (currentManualWidth < 400) currentManualWidth = 400; // Min zoom
