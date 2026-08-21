@@ -732,11 +732,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
       <style>
         #download-free {
-          display: grid !important;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          grid-template-rows: auto 1fr;
-          gap: 2rem;
-          align-content: center;
+          display: flex !important;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
           min-height: calc(100vh - 65px) !important;
           max-width: 1200px;
           width: 100%;
@@ -745,11 +744,9 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           box-sizing: border-box;
         }
         .download-header {
-          grid-column: 1 / 3;
-          grid-row: 1 / 2;
           text-align: left;
-          max-width: 100%;
-          margin: 0 0 1rem 0;
+          margin-bottom: 3.5rem;
+          width: 100%;
         }
         .download-header h2 {
           margin-top: 0;
@@ -759,51 +756,48 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           margin-bottom: 1rem;
         }
         .download-header p {
-          font-size: 1.1rem;
+          font-size: 0.95rem;
           color: var(--text-secondary);
-          line-height: 1.6;
-          margin: 0;
+          line-height: 1.7;
+          margin: 0 0 0.5rem 0;
           max-width: 100%;
         }
-        .download-left {
-          grid-column: 1 / 2;
-          grid-row: 2 / 3;
-          text-align: left;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          padding: 2rem;
-          border-radius: 12px;
-          align-self: start;
+        .unified-actions {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          box-sizing: border-box;
+          align-items: center;
+          gap: 1.5rem;
+          margin-top: 1.5rem;
         }
-        .download-right {
-          grid-column: 2 / 3;
-          grid-row: 2 / 3;
-          align-self: start;
+        .free-features {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 3rem;
+          text-align: left;
           width: 100%;
-          display: flex;
-          flex-direction: column;
+          margin-top: auto;
+          margin-bottom: auto;
+        }
+        .feature-col h3 {
+          color: var(--accent-color);
+          font-size: 0.85rem;
+          font-weight: 600;
+          margin-bottom: 0.6rem;
+          margin-top: 0;
+        }
+        .feature-col p {
+          font-size: 0.75rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin: 0;
         }
         @media (max-width: 900px) {
-          #download-free {
+          .free-features {
             grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto;
             gap: 2rem;
           }
-          .download-header {
-            grid-column: 1 / 2;
-            grid-row: 1 / 2;
-          }
-          .download-left {
-            grid-column: 1 / 2;
-            grid-row: 2 / 3;
-          }
-          .download-right {
-            grid-column: 1 / 2;
-            grid-row: 3 / 4;
+          .unified-actions {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
       </style>
@@ -811,43 +805,41 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <div class="download-header">
         <h2 id="download-title">Descarga Entity ahora</h2>
         <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
-      </div>
-
-      <div class="download-left">
-        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem; line-height: 1.5;">La versión Free no es una demo capada. Es una plataforma completa para diseñar líneas de trabajo serias a coste cero:</p>
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-          <div>
-            <div style="color: var(--accent-color); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;"><span style="font-size: 1rem;">∞</span> Entis Ilimitados</div>
-            <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Crea todos los agentes especializados que necesites sin restricciones.</p>
-          </div>
-          <div>
-            <div style="color: var(--accent-color); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;"><span style="font-size: 1rem;">🧠</span> Brains a Medida</div>
-            <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Conecta cada Enti al modelo ideal (Local, OpenAI, Anthropic, etc.).</p>
-          </div>
-          <div>
-            <div style="color: var(--accent-color); font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem;"><span style="font-size: 1rem;">⚙️</span> Grupos Secuenciales</div>
-            <p style="font-size: 0.75rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Orquesta pipelines paso a paso, automatizando cadenas de tareas enteras.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="download-right">
-        <div class="download-container" style="max-width: 100%; width: 100%; margin: 0; text-align: center; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 1rem; color: var(--text-secondary);">Plataformas soportadas</h3>
-          <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="justify-content: center; margin-bottom: 2rem;">
+        <p style="margin-top: 0.5rem; margin-bottom: 0;">La versión Free no es una demo capada. Es una plataforma completa para diseñar líneas de trabajo serias a coste cero.</p>
+        <div class="unified-actions download-container">
+          <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="margin: 0;">
             <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
             <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
           </div>
-          <div style="display: flex; justify-content: center; flex-direction: column; align-items: center; width: 100%; max-width: 400px; margin-bottom: 1rem;">
-            <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); font-size: 1.2rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-              Entity Free 
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M7 7h10v10"></path></svg>
-            </a>
-            <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.8rem; font-size: 0.9rem; text-align: center;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
+          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); background: transparent; padding: 0.6rem 0; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); transition: text-shadow 0.2s, opacity 0.2s;" onmouseover="this.style.opacity='0.8'; this.style.textShadow='0 0 15px rgba(0, 229, 255, 0.8)';" onmouseout="this.style.opacity='1'; this.style.textShadow='0 0 10px rgba(0, 229, 255, 0.4)';">
+            Descargar
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </a>
+          <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0; font-size: 0.85rem; margin-left: 1rem;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
+        </div>
+      </div>
+
+      <div class="free-features">
+        <div class="feature-col">
+          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"></path></svg>
           </div>
-          <div style="font-size: 0.85rem; color: var(--text-secondary); opacity: 0.8;">
-            <p id="download-desc">Descarga directa desde las releases oficiales en GitHub.</p>
+          <h3>Entis Ilimitados</h3>
+          <p>Crea todos los agentes especializados que necesites sin restricciones. Asigna roles únicos y construye un equipo local imparable adaptado a tu flujo de trabajo.</p>
+        </div>
+        <div class="feature-col">
+          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path></svg>
           </div>
+          <h3>Brains a Medida</h3>
+          <p>Conecta cada Enti al modelo ideal. Usa LLMs locales para privacidad total, o integra APIs como OpenAI y Anthropic para tareas exigentes.</p>
+        </div>
+        <div class="feature-col">
+          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </div>
+          <h3>Grupos Secuenciales</h3>
+          <p>Orquesta pipelines paso a paso. Haz que tus Entis colaboren pasándose el contexto, automatizando cadenas de tareas enteras de forma autónoma.</p>
         </div>
       </div>
     </section>

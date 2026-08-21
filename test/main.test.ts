@@ -289,7 +289,7 @@ describe("App Bootstrap", () => {
     // Assert 5: CTA exists and points to #descargar (NOT checkout-pro).
     const ctaLink = downloadFree?.querySelector("#download-cta");
     expect(ctaLink).not.toBeNull();
-    expect(ctaLink?.textContent).toMatch(/Entity Free/i);
+    expect(ctaLink?.textContent).toMatch(/Descargar/i);
     // Assert: cada recurso visible usa destino real autorizado.
     expect(ctaLink?.getAttribute("href")).toMatch(
       /Entity_1\.0\.0_x64-setup\.exe/,
