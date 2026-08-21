@@ -26,30 +26,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     </div>
     <nav class="visual-nav">
       <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;">Inicio</span>
-      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
       <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;">Filosofía</span>
+      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
+      <span onclick="location.hash='#como-funciona-pro'" class="nav-item" style="cursor: pointer;">Pro</span>
       <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Precios</span>
-
-      <!-- FAQ Menu Container -->
-      <div class="faq-menu-container" id="desktop-faq-container">
-        <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;">FAQ</span>
-        <div class="faq-mega-menu" id="faq-mega-menu">
-          <!-- JS will populate questions here -->
-        </div>
-        <!-- Bocadillo Tooltip -->
-        <div id="faq-bocadillo" class="faq-bocadillo">
-          <h4 id="faq-bocadillo-q"></h4>
-          <p id="faq-bocadillo-a"></p>
-        </div>
-      </div>
-
-      <!-- Legal Menu Container -->
-      <div class="faq-menu-container" id="desktop-legal-container">
-        <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;">Legal</span>
-        <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
-          <!-- JS will populate legal items here -->
-        </div>
-      </div>
 
       <span onclick="location.hash='#download-free'" class="nav-item" style="cursor: pointer;">Descargar</span>
     </nav>
@@ -57,23 +37,10 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
         <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;">Inicio</span>
-        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
         <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;">Filosofía</span>
+        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
+        <span onclick="location.hash='#como-funciona-pro'" class="mobile-nav-item" style="cursor: pointer;">Pro</span>
         <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Precios</span>
-
-        <div class="mobile-faq-container" id="mobile-faq-container">
-          <span class="mobile-nav-item" id="mobile-faq-btn" style="cursor: pointer;">FAQ</span>
-          <div class="mobile-faq-list" id="mobile-faq-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
-            <!-- JS will populate mobile questions here -->
-          </div>
-        </div>
-
-        <div class="mobile-faq-container" id="mobile-legal-container">
-          <span class="mobile-nav-item" id="mobile-legal-btn" style="cursor: pointer;">Legal</span>
-          <div class="mobile-faq-list" id="mobile-legal-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
-            <!-- JS will populate legal items here -->
-          </div>
-        </div>
 
         <span onclick="location.hash='#download-free'" class="mobile-nav-item" style="cursor: pointer;">Descargar</span>
       </nav>
@@ -86,12 +53,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <div class="hero-left-col">
             <h1 class="hero-headline">Un único Workspace. Todos tus modelos de IA trabajando coordinados.</h1>
             <p class="hero-supporting">Construye agentes especializados con herramientas y contexto propio. Entity te permite orquestar flujos de trabajo híbridos combinando la privacidad de la IA local con la potencia de la nube, optimizando tu consumo de tokens desde tu propio escritorio.</p>
-            <div class="hero-cta">
-              <a onclick="location.hash='#como-funciona-pro'" style="cursor: pointer; display: inline-flex; align-items: baseline; gap: 0.4rem; font-size: 1.1rem; font-weight: 500; color: var(--text-primary); transition: color 0.2s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='var(--text-primary)'">
-                <span style="color: var(--accent-color);">→</span>
-                <span class="text-glow-tier" style="font-size: 1.1rem;">PRO</span>
-              </a>
-            </div>
           </div>
           <div class="hero-visual">
             <img src="/hero-test-1.png" alt="Test Hero Image" class="hero-visual-img" />
@@ -760,7 +721,8 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           max-width: 1200px;
           width: 100%;
           margin: 0 auto;
-          padding: 4rem 2rem !important;
+          padding: 2rem 2rem 0 2rem !important;
+          border-bottom: 1px solid rgba(0, 229, 255, 0.1) !important;
           box-sizing: border-box;
         }
         .download-header {
@@ -860,6 +822,30 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           </div>
           <h3>Grupos Secuenciales</h3>
           <p>Orquesta pipelines paso a paso. Haz que tus Entis colaboren pasándose el contexto, automatizando cadenas de tareas enteras de forma autónoma.</p>
+        </div>
+      </div>
+
+      <!-- NUEVO FOOTER INTEGRADO (FAQ Y LEGAL) -->
+      <div style="width: 100%; border-top: 1px solid rgba(0, 229, 255, 0.1); padding: 0.5rem 0; margin-top: auto; display: flex; justify-content: center; gap: 4rem;">
+        <!-- FAQ Menu Container -->
+        <div class="faq-menu-container" id="desktop-faq-container">
+          <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;">FAQ</span>
+          <div class="faq-mega-menu" id="faq-mega-menu">
+            <!-- JS will populate questions here -->
+          </div>
+          <!-- Bocadillo Tooltip -->
+          <div id="faq-bocadillo" class="faq-bocadillo">
+            <h4 id="faq-bocadillo-q"></h4>
+            <p id="faq-bocadillo-a"></p>
+          </div>
+        </div>
+
+        <!-- Legal Menu Container -->
+        <div class="faq-menu-container" id="desktop-legal-container">
+          <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;">Legal</span>
+          <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
+            <!-- JS will populate legal items here -->
+          </div>
         </div>
       </div>
     </section>

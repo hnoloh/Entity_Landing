@@ -69,19 +69,22 @@ describe("App Bootstrap", () => {
     expect(nav).not.toBeNull();
 
     const navLinks = nav?.querySelectorAll("span.nav-item:not(.text-glow-tier)");
-    expect(navLinks?.length).toBe(7);
+    expect(navLinks?.length).toBe(6);
 
     expect(navLinks?.[0].getAttribute("onclick")).toContain("#hero");
     expect(navLinks?.[0].textContent).toBe("Inicio");
 
-    expect(navLinks?.[1].getAttribute("onclick")).toContain("#producto");
-    expect(navLinks?.[1].textContent).toBe("Producto");
+    expect(navLinks?.[1].getAttribute("onclick")).toContain("#filosofia");
+    expect(navLinks?.[1].textContent).toBe("Filosofía");
 
-    expect(navLinks?.[2].getAttribute("onclick")).toContain("#filosofia");
-    expect(navLinks?.[2].textContent).toBe("Filosofía");
+    expect(navLinks?.[2].getAttribute("onclick")).toContain("#producto");
+    expect(navLinks?.[2].textContent).toBe("Producto");
 
-    expect(navLinks?.[3].getAttribute("onclick")).toContain("#precios");
-    expect(navLinks?.[3].textContent).toBe("Precios");
+    expect(navLinks?.[3].getAttribute("onclick")).toContain("#como-funciona-pro");
+    expect(navLinks?.[3].textContent).toBe("Pro");
+
+    expect(navLinks?.[4].getAttribute("onclick")).toContain("#precios");
+    expect(navLinks?.[4].textContent).toBe("Precios");
 
     const freeLink = Array.from(nav?.querySelectorAll("span.nav-item") || []).find(el => el.textContent === "Descargar");
     expect(freeLink).not.toBeNull();
@@ -108,8 +111,6 @@ describe("App Bootstrap", () => {
 
     expect(hero?.querySelector(".hero-visual")).not.toBeNull();
 
-    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("→");
-    expect(hero?.querySelector(".hero-cta")?.textContent).toContain("PRO");
 
     const heroContent = hero?.textContent || "";
     expect(heroContent).toContain("Ollama local + Cloud BYOK");
@@ -329,11 +330,12 @@ describe("App Bootstrap", () => {
 
     // Links inside mobile menu drawer
     const drawerLinks = drawer?.querySelectorAll("span.mobile-nav-item:not(.text-glow-tier)");
-    expect(drawerLinks?.length).toBe(7);
+    expect(drawerLinks?.length).toBe(6);
     expect(drawerLinks?.[0].getAttribute("onclick")).toContain("#hero");
-    expect(drawerLinks?.[1].getAttribute("onclick")).toContain("#producto");
-    expect(drawerLinks?.[2].getAttribute("onclick")).toContain("#filosofia");
-    expect(drawerLinks?.[3].getAttribute("onclick")).toContain("#precios");
+    expect(drawerLinks?.[1].getAttribute("onclick")).toContain("#filosofia");
+    expect(drawerLinks?.[2].getAttribute("onclick")).toContain("#producto");
+    expect(drawerLinks?.[3].getAttribute("onclick")).toContain("#como-funciona-pro");
+    expect(drawerLinks?.[4].getAttribute("onclick")).toContain("#precios");
 
     const drawerFreeLink = Array.from(drawer?.querySelectorAll("span.mobile-nav-item") || []).find(el => el.textContent === "Descargar");
     expect(drawerFreeLink).not.toBeNull();
@@ -1455,10 +1457,10 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
 
     // 2. Interact with Public UI
-    const heroCta = document.querySelector(
-      "#hero .hero-cta a",
-    ) as HTMLAnchorElement;
-    expect(heroCta).not.toBeNull();
+    const navProLink = document.querySelector(
+      "header nav span[onclick=\"location.hash='#como-funciona-pro'\"]",
+    ) as HTMLSpanElement;
+    expect(navProLink).not.toBeNull();
 
     // Simulate scroll to form
     // scrollIntoView not available in JSDOM
@@ -1504,7 +1506,7 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     expect(cols[0].textContent).toContain("Email Enviado");
   });
 
-  it("should render the FAQ Mega-Menu in the header instead of a section", async () => {
+  it("should render the FAQ and Legal menus at the bottom of the download-free section", async () => {
     document.body.innerHTML = '<div id="app"></div>';
     await import("../src/main.ts?t=" + ++cacheBuster);
     const app = document.querySelector<HTMLDivElement>("#app")!;
@@ -1516,10 +1518,16 @@ describe("E2E QA Conversion Flow (FIA-072)", () => {
     const megaMenu = app.querySelector(".faq-mega-menu");
     expect(megaMenu).not.toBeNull();
     
-    // Trigger script logic if necessary, but we can just check the header HTML directly
+    // Verify they are NOT in the header
     const navText = app.querySelector("nav.visual-nav")?.textContent || "";
-    expect(navText).toContain("FAQ");
+    expect(navText).not.toContain("FAQ");
+    expect(navText).not.toContain("Legal");
     
+    // Verify they ARE in the download-free section
+    const downloadSection = app.querySelector("#download-free");
+    expect(downloadSection?.textContent).toContain("FAQ");
+    expect(downloadSection?.textContent).toContain("Legal");
+
     // Because the JS populates the mega menu, we can check the populated content
     const megaMenuText = megaMenu?.textContent || "";
     expect(megaMenuText).toContain("¿Entity Free requiere una cuenta?");

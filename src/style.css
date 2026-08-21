@@ -1804,3 +1804,12 @@ a.text-glow-tier:hover {
   line-height: 1.5;
   margin: 0;
 }
+
+/* Ocultar la scrollbar nativa para no romper el encuadre */
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
