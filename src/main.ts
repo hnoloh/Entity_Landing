@@ -94,6 +94,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           max-width: 1200px;
           margin: 0 auto;
           width: 100%;
+          min-height: calc(100vh - 65px) !important;
           padding-top: 2rem !important;
           padding-bottom: 2rem !important;
           padding-left: 2rem;
