@@ -37,7 +37,7 @@ body:before {
   max-width: 100%;
   min-height: 100vh;
   margin: 0 auto;
-  padding: 0 4rem 2rem;
+  padding: 0 4rem 0;
   display: flex;
 }
 header {
@@ -1100,7 +1100,7 @@ a.text-glow-tier:hover {
 }
 @media (width<=1024px) {
   #app {
-    padding: 0 2rem 2rem;
+    padding: 0 2rem 0;
   }
   .hero-headline {
     font-size: 2.2rem;
@@ -1123,7 +1123,7 @@ a.text-glow-tier:hover {
 }
 @media (width<=768px) {
   #app {
-    padding: 0 1rem 1rem;
+    padding: 0 1rem 0;
   }
   header {
     flex-direction: row;
@@ -1332,7 +1332,6 @@ a.text-glow-tier:hover {
 .pf-tab.active {
   color: var(--accent-color);
   background: #00e5ff1a;
-  font-weight: 600;
   box-shadow: inset 0 0 10px #00e5ff26;
 }
 .pf-tab:focus-visible {

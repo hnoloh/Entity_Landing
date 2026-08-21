@@ -29,9 +29,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;">Filosofía</span>
       <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
       <span onclick="location.hash='#como-funciona-pro'" class="nav-item" style="cursor: pointer;">Pro</span>
-      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Precios</span>
-
-      <span onclick="location.hash='#download-free'" class="nav-item" style="cursor: pointer;">Descargar</span>
+      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Descargar</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
@@ -40,9 +38,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;">Filosofía</span>
         <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
         <span onclick="location.hash='#como-funciona-pro'" class="mobile-nav-item" style="cursor: pointer;">Pro</span>
-        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Precios</span>
-
-        <span onclick="location.hash='#download-free'" class="mobile-nav-item" style="cursor: pointer;">Descargar</span>
+        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Descargar</span>
       </nav>
     </div>
   </header>
@@ -672,7 +668,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Free</h3>
           <div style="font-size: 2rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">0 €</div>
           <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
-            <span style="color: var(--accent-color);">Sin registro y sin tarjeta.</span> Descarga directa para empezar a organizar tu trabajo con IA.
+            <span style="color: var(--accent-color);">Sin registro y sin tarjeta.</span><br>Descarga directa desde GitHub
           </p>
           <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
             <li><strong>Entis Ilimitados</strong></li>
@@ -682,7 +678,17 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Persistencia completa</strong></li>
             <li><strong>DOCX y PDF</strong></li>
           </ul>
-          <a href="#download-free" class="text-link-premium">→ Free</a>
+          <div class="download-container" style="display: flex; align-items: center; justify-content: flex-start; gap: 1rem; width: 100%; flex-wrap: wrap;">
+            <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); background: transparent; padding: 0.4rem 0; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); transition: text-shadow 0.2s, opacity 0.2s;" onmouseover="this.style.opacity='0.8'; this.style.textShadow='0 0 15px rgba(0, 229, 255, 0.8)';" onmouseout="this.style.opacity='1'; this.style.textShadow='0 0 10px rgba(0, 229, 255, 0.4)';">
+              Descargar
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            </a>
+            <div class="pf-selector download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="margin: 0; padding: 2px; width: fit-content; gap: 0.2rem; min-height: unset;">
+              <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Win</button>
+              <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Linux</button>
+            </div>
+            <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); font-size: 0.75rem;">Error temporal.</div>
+          </div>
         </div>
 
         <!-- Tarjeta Pro -->
@@ -714,7 +720,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             <li><strong>Máximo 2 dispositivos simultáneos</strong></li>
             <li><strong>Offline:</strong> Funciona sin red hasta 30 días seguidos</li>
           </ul>
-          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" class="text-link-premium" target="_blank" rel="noopener noreferrer">→ Pro</a>
+          <a href="https://entity.lemonsqueezy.com/checkout/buy/6d4157a1-2d33-4db0-95f0-5d8689b6931a?enabled=2031256%2C2034570" id="checkout-pro" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); background: transparent; padding: 0.4rem 0; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); transition: text-shadow 0.2s, opacity 0.2s;" onmouseover="this.style.opacity='0.8'; this.style.textShadow='0 0 15px rgba(0, 229, 255, 0.8)';" onmouseout="this.style.opacity='1'; this.style.textShadow='0 0 10px rgba(0, 229, 255, 0.4)';">Obtener Licencia Pro</a>
           <div id="checkout-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0.5rem; font-size: 0.8rem; text-align: center;">El servicio de compra no está disponible en este momento. Inténtalo más tarde.</div>
         </div>
 
@@ -723,146 +729,29 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
     </section>
 
-    <!-- CÓMO FUNCIONA PRO / PRIVACIDAD (FIA-W01.10 & 11) -->
-    <section id="download-free" class="region reveal-element" aria-labelledby="download-title">
-      <style>
-        #download-free {
-          display: flex !important;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: flex-start;
-          min-height: calc(100vh - 65px) !important;
-          max-width: 1200px;
-          width: 100%;
-          margin: 0 auto;
-          padding: 2rem 2rem 0 2rem !important;
-          border-bottom: 1px solid rgba(0, 229, 255, 0.1) !important;
-          box-sizing: border-box;
-        }
-        .download-header {
-          text-align: left;
-          margin-bottom: 3.5rem;
-          width: 100%;
-        }
-        .download-header h2 {
-          margin-top: 0;
-          font-size: 2.2rem;
-          color: var(--text-primary);
-          line-height: 1.2;
-          margin-bottom: 1rem;
-        }
-        .download-header p {
-          font-size: 0.95rem;
-          color: var(--text-secondary);
-          line-height: 1.7;
-          margin: 0 0 0.5rem 0;
-          max-width: 100%;
-        }
-        .unified-actions {
-          display: flex;
-          align-items: center;
-          gap: 1.5rem;
-          margin-top: 1.5rem;
-        }
-        .free-features {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 3rem;
-          text-align: left;
-          width: 100%;
-          margin-top: auto;
-          margin-bottom: auto;
-        }
-        .feature-col h3 {
-          color: var(--accent-color);
-          font-size: 0.85rem;
-          font-weight: 600;
-          margin-bottom: 0.6rem;
-          margin-top: 0;
-        }
-        .feature-col p {
-          font-size: 0.75rem;
-          color: var(--text-secondary);
-          line-height: 1.5;
-          margin: 0;
-        }
-        @media (max-width: 900px) {
-          .free-features {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-          }
-          .unified-actions {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-        }
-      </style>
-
-      <div class="download-header">
-        <h2 id="download-title">Descarga Entity ahora</h2>
-        <p>Comienza a utilizar el núcleo local-first de Entity de inmediato. <strong>Sin email. Sin cuenta. Sin tarjeta.</strong></p>
-        <p style="margin-top: 0.5rem; margin-bottom: 0;">La versión Free no es una demo capada. Es una plataforma completa para diseñar líneas de trabajo serias a coste cero.</p>
-        <div class="unified-actions download-container">
-          <div class="pf-tabs download-os-tabs" role="tablist" aria-label="Selección de plataforma" style="margin: 0;">
-            <button class="pf-tab active" role="tab" aria-selected="true" data-platform="windows">Windows</button>
-            <button class="pf-tab" role="tab" aria-selected="false" data-platform="linux">Linux</button>
-          </div>
-          <a id="download-cta" href="https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe" target="_blank" rel="noopener noreferrer" style="color: var(--accent-color); background: transparent; padding: 0.6rem 0; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); transition: text-shadow 0.2s, opacity 0.2s;" onmouseover="this.style.opacity='0.8'; this.style.textShadow='0 0 15px rgba(0, 229, 255, 0.8)';" onmouseout="this.style.opacity='1'; this.style.textShadow='0 0 10px rgba(0, 229, 255, 0.4)';">
-            Descargar
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-          </a>
-          <div id="download-error" style="display: none; color: var(--danger-color, #ff4d4d); margin-top: 0; font-size: 0.85rem; margin-left: 1rem;">El recurso de descarga no está disponible en este momento. Inténtalo más tarde.</div>
+    <!-- FOOTER INTEGRADO (FAQ Y LEGAL) -->
+    <div style="width: 100%; border-bottom: 1px solid rgba(0, 229, 255, 0.1); padding: 0.5rem 0; display: flex; justify-content: center; gap: 4rem;">
+      <!-- FAQ Menu Container -->
+      <div class="faq-menu-container" id="desktop-faq-container">
+        <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;">FAQ</span>
+        <div class="faq-mega-menu" id="faq-mega-menu">
+          <!-- JS will populate questions here -->
+        </div>
+        <!-- Bocadillo Tooltip -->
+        <div id="faq-bocadillo" class="faq-bocadillo">
+          <h4 id="faq-bocadillo-q"></h4>
+          <p id="faq-bocadillo-a"></p>
         </div>
       </div>
 
-      <div class="free-features">
-        <div class="feature-col">
-          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"></path></svg>
-          </div>
-          <h3>Entis Ilimitados</h3>
-          <p>Crea todos los agentes especializados que necesites sin restricciones. Asigna roles únicos y construye un equipo local imparable adaptado a tu flujo de trabajo.</p>
-        </div>
-        <div class="feature-col">
-          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path></svg>
-          </div>
-          <h3>Brains a Medida</h3>
-          <p>Conecta cada Enti al modelo ideal. Usa LLMs locales para privacidad total, o integra APIs como OpenAI y Anthropic para tareas exigentes.</p>
-        </div>
-        <div class="feature-col">
-          <div style="color: var(--accent-color); margin-bottom: 0.8rem; display: flex;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          </div>
-          <h3>Grupos Secuenciales</h3>
-          <p>Orquesta pipelines paso a paso. Haz que tus Entis colaboren pasándose el contexto, automatizando cadenas de tareas enteras de forma autónoma.</p>
+      <!-- Legal Menu Container -->
+      <div class="faq-menu-container" id="desktop-legal-container">
+        <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;">Legal</span>
+        <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
+          <!-- JS will populate legal items here -->
         </div>
       </div>
-
-      <!-- NUEVO FOOTER INTEGRADO (FAQ Y LEGAL) -->
-      <div style="width: 100%; border-top: 1px solid rgba(0, 229, 255, 0.1); padding: 0.5rem 0; margin-top: auto; display: flex; justify-content: center; gap: 4rem;">
-        <!-- FAQ Menu Container -->
-        <div class="faq-menu-container" id="desktop-faq-container">
-          <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;">FAQ</span>
-          <div class="faq-mega-menu" id="faq-mega-menu">
-            <!-- JS will populate questions here -->
-          </div>
-          <!-- Bocadillo Tooltip -->
-          <div id="faq-bocadillo" class="faq-bocadillo">
-            <h4 id="faq-bocadillo-q"></h4>
-            <p id="faq-bocadillo-a"></p>
-          </div>
-        </div>
-
-        <!-- Legal Menu Container -->
-        <div class="faq-menu-container" id="desktop-legal-container">
-          <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;">Legal</span>
-          <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
-            <!-- JS will populate legal items here -->
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
 
 
     <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true">
@@ -1159,21 +1048,15 @@ downloadOsTabs.forEach((tab) => {
     tab.setAttribute("aria-selected", "true");
 
     const cta = document.getElementById("download-cta") as HTMLAnchorElement;
-    const desc = document.getElementById(
-      "download-desc",
-    ) as HTMLParagraphElement;
+    const desc = document.getElementById("download-desc") as HTMLParagraphElement | null;
     const platform = tab.getAttribute("data-platform");
 
     if (platform === "windows") {
-      cta.href =
-        "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe";
-      desc.innerHTML =
-        'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
+      if (cta) cta.href = "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_x64-setup.exe";
+      if (desc) desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:765192c676498df622a81ce29900f63671c7c6d0ee0cbebea51fb81416f6643d | 5.89 MB</span>';
     } else if (platform === "linux") {
-      cta.href =
-        "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_amd64.AppImage";
-      desc.innerHTML =
-        'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
+      if (cta) cta.href = "https://github.com/hnoloh/Entity-Downloads/releases/download/v1.0.0/Entity_1.0.0_amd64.AppImage";
+      if (desc) desc.innerHTML = 'Descarga directa desde las releases oficiales en GitHub.<br/><span style="font-size: 0.75rem; opacity: 0.6; display: block; margin-top: 0.5rem; font-family: monospace;">sha256:e78eca59cf20c9ef4e2dc579dd6f2b2332c08ee4736fc5e449a366ac711f8fcf | 84.8 MB</span>';
     }
   });
 });
