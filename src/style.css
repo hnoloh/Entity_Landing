@@ -414,8 +414,9 @@ a.text-glow-tier:hover {
 #precios {
   min-height: calc(100vh - 65px);
   justify-content: center;
-  padding: 6rem 2rem;
+  padding: 2rem;
   box-sizing: border-box;
+  scroll-margin-top: -20px;
 }
 
 
@@ -1241,9 +1242,6 @@ a.text-glow-tier:hover {
     padding: 1.2rem 1.5rem;
   }
   .region {
-    padding: 3rem 1rem;
-  }
-  #precios {
     padding: 3rem 1rem;
   }
   .region h2 {
