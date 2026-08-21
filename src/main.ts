@@ -592,27 +592,27 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <!-- CONTENEDOR INDEPENDIENTE 2: Superpoderes Pro (Anclado Medio Derecha) -->
       <div class="privacy-cards-block">
         <div class="mini-card" style="background: linear-gradient(135deg, rgba(0, 229, 255, 0.05) 0%, rgba(13, 27, 38, 0.4) 100%); border-color: rgba(0, 229, 255, 0.2); justify-content: center; padding: 1rem;">
-          <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem;">Lleva a tus Entis al mundo real</h3>
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.8rem;">¿Qué aporta la versión Pro?</h3>
           <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.7rem;">
             <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
               <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
               <div>
-                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Herramienta Tool (Terminal)</strong>
-                Delega la ejecución de comandos en tu ordenador de forma segura.
+                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Herramienta Consola</strong>
+                Dale a tus Entis el poder de ejecutar comandos y controlar tu ordenador.
               </div>
             </li>
             <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
               <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
               <div>
                 <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Conexión RAG</strong>
-                Hazlos exponencialmente más listos inyectando contexto de tus propios documentos.
+                Dales acceso a grandes fuentes de conocimiento para inyectar contexto a tus proyectos.
               </div>
             </li>
             <li style="display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.75rem;">
               <span style="color: var(--accent-color); font-size: 1rem; line-height: 1;">›</span>
               <div>
-                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Orquestación Avanzada</strong>
-                Desbloquea rutinas en bucle y grupos por turnos para procesos autónomos complejos.
+                <strong style="color: var(--text-primary); display: block; margin-bottom: 0.1rem;">Nuevas secuencias de grupo</strong>
+                Experimenta con nuevas formas de organizar a tus Entis en rutinas complejas.
               </div>
             </li>
           </ul>
