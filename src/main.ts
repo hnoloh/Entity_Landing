@@ -464,6 +464,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           align-self: start;
           text-align: left;
           padding-right: 2rem;
+          transform: translateY(-40px);
         }
 
         .privacy-cards-block {
