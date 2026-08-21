@@ -136,9 +136,10 @@ main {
   text-decoration: none;
   transition: all 0.2s;
 }
-.nav-item:hover {
-  color: var(--text-primary);
-  text-shadow: 0 0 8px #fff6;
+.nav-item:hover,
+.nav-item.active {
+  color: var(--accent-color);
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
 }
 .dropdown-container {
   position: relative;
@@ -1168,9 +1169,10 @@ a.text-glow-tier:hover {
     text-decoration: none;
     transition: all 0.2s;
   }
-  .mobile-nav-item:hover {
-    color: var(--text-primary);
-    text-shadow: 0 0 8px #fff6;
+  .mobile-nav-item:hover,
+  .mobile-nav-item.active {
+    color: var(--accent-color);
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
   }
   .mobile-dropdown-container {
     display: flex;

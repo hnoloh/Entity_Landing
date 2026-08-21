@@ -68,21 +68,24 @@ describe("App Bootstrap", () => {
     const nav = app.querySelector("header nav");
     expect(nav).not.toBeNull();
 
-    const navLinks = nav?.querySelectorAll("a.nav-item");
-    expect(navLinks?.length).toBe(3);
+    const navLinks = nav?.querySelectorAll("span.nav-item:not(.text-glow-tier)");
+    expect(navLinks?.length).toBe(4);
 
-    expect(navLinks?.[0].getAttribute("href")).toBe("#hero");
+    expect(navLinks?.[0].getAttribute("onclick")).toContain("#hero");
     expect(navLinks?.[0].textContent).toBe("Inicio");
 
-    expect(navLinks?.[1].getAttribute("href")).toBe("#producto");
+    expect(navLinks?.[1].getAttribute("onclick")).toContain("#producto");
     expect(navLinks?.[1].textContent).toBe("Producto");
 
-    expect(navLinks?.[2].getAttribute("href")).toBe("#precios");
-    expect(navLinks?.[2].textContent).toBe("Precios");
+    expect(navLinks?.[2].getAttribute("onclick")).toContain("#filosofia");
+    expect(navLinks?.[2].textContent).toBe("Filosofía");
+
+    expect(navLinks?.[3].getAttribute("onclick")).toContain("#precios");
+    expect(navLinks?.[3].textContent).toBe("Precios");
 
     const freeLink = nav?.querySelector("span.text-glow-tier");
     expect(freeLink).not.toBeNull();
-    expect(freeLink?.textContent).toBe("FREE");
+    expect(freeLink?.textContent).toBe("Free");
 
 
 
@@ -230,76 +233,33 @@ describe("App Bootstrap", () => {
     const comoFuncionaText = comoFunciona?.textContent || "";
 
     // 4 conceptual steps
-    expect(comoFuncionaText).toContain("Download");
-    expect(comoFuncionaText).toContain("Buy");
-    expect(comoFuncionaText).toContain("License key");
-    expect(comoFuncionaText).toContain("Activate Pro");
+    expect(comoFuncionaText).toContain("Descarga Directa");
+    expect(comoFuncionaText).toContain("Pago Externalizado");
+    expect(comoFuncionaText).toContain("Licencia Pura");
+    expect(comoFuncionaText).toContain("Desbloqueo Local");
 
     // Core anti-drift messaging
-    expect(comoFuncionaText).toContain("misma app");
-    expect(comoFuncionaText).toContain("sin crear cuenta Entity");
-    expect(comoFuncionaText).toContain("Sin migración");
-    expect(comoFuncionaText).toContain("sin reinstalación");
+    expect(comoFuncionaText).toContain("Privacidad por diseño");
+    expect(comoFuncionaText).toContain("Sin cuentas");
+    expect(comoFuncionaText).toContain("Sin registros");
 
     // Validate order roughly by their visual numbering
     expect(comoFuncionaText).toMatch(
-      /1.*Download.*2.*Buy.*3.*License key.*4.*Activate Pro/s,
+      /1.*Descarga Directa.*2.*Pago Externalizado.*3.*Licencia Pura.*4.*Desbloqueo Local/s,
     );
 
-    // FIA-W01.11 contract (Control / Local-first)
-    const controlSection = app.querySelector("#control-local-first");
-    expect(controlSection).not.toBeNull();
-    const controlText = controlSection?.textContent || "";
-
-    // Core anti-drift messaging
-    expect(controlText).toContain("sin cuenta Entity");
-    expect(controlText).toContain("modelos locales");
-    expect(controlText).toContain("BYOK");
-    expect(controlText).toContain("Camino Local");
-    expect(controlText).toContain("Camino Cloud");
-
-    // Conditional logic phrasing
-    expect(controlText).toContain(
-      "El tratamiento depende del camino que elijas",
-    );
-    expect(controlText).toContain("procesamiento ocurre en tu máquina");
-    expect(controlText).toContain(
-      "procesamiento involucra al proveedor seleccionado",
-    );
-
-    // Negatives (No privacy absolute claims, no specific vendors)
-    expect(controlText).not.toMatch(/100% privado/i);
-    expect(controlText).not.toMatch(/siempre local/i);
-    expect(controlText).not.toContain("OpenAI");
-    expect(controlText).not.toContain("Anthropic");
-    expect(controlText).not.toContain("retención de 0 días");
-
-    // FIA-W01.12 contract (Casos de uso)
-    const casosUso = app.querySelector("#casos-uso");
-    expect(casosUso).not.toBeNull();
-    const casosText = casosUso?.textContent || "";
-
-    // Exact group names
-    expect(casosText).toContain("Desarrollo y producto");
-    expect(casosText).toContain("Investigación y conocimiento");
-    expect(casosText).toContain("Operaciones y empresa");
-    expect(casosText).toContain("Creación y workflows complejos");
-
-    // Exact features embedded (Trazabilidad estricta)
-    expect(casosText).toContain("Grupos secuenciales");
-    expect(casosText).toContain("Terminal / filesystem avanzado");
-    expect(casosText).toContain("BYOK y modelos locales");
-    expect(casosText).toContain("Chat individual");
-    expect(casosText).toContain("Persistencia completa");
-    expect(casosText).toContain("Grupos No Secuenciales");
-    expect(casosText).toContain("Generación DOCX / PDF / HTML");
-    expect(casosText).toContain("Grupos Loop");
-
-    // Negatives (No undocumented capabilities, no communities)
-    expect(casosText).not.toContain("Comunidades");
-    expect(casosText).not.toContain("SQLite");
-    expect(casosText).not.toContain("RAG automático");
-    expect(casosText).not.toContain("ROI");
+    // Nueva sección de Filosofía (Método Entity)
+    const filosofia = app.querySelector("#filosofia");
+    expect(filosofia).not.toBeNull();
+    const filosofiaText = filosofia?.textContent || "";
+    
+    expect(filosofiaText).toContain("Atomiza tareas");
+    expect(filosofiaText).toContain("Controla tu consumo");
+    expect(filosofiaText).toContain("Método Entity (Aplicado al desarrollo)");
+    expect(filosofiaText).toContain("Enti Documentador");
+    expect(filosofiaText).toContain("Enti Traductor Técnico");
+    expect(filosofiaText).toContain("Enti Generador Specs");
+    expect(filosofiaText).toContain("Enti Implementador");
 
     // FIA-W01.13 contract (Sustituir bloque Beta por Download Free)
 
@@ -375,14 +335,16 @@ describe("App Bootstrap", () => {
     expect(drawer).not.toBeNull();
 
     // Links inside mobile menu drawer
-    const drawerLinks = drawer?.querySelectorAll("a.mobile-nav-item");
-    expect(drawerLinks?.length).toBe(3);
-    expect(drawerLinks?.[0].getAttribute("href")).toBe("#hero");
-    expect(drawerLinks?.[1].getAttribute("href")).toBe("#producto");
-    expect(drawerLinks?.[2].getAttribute("href")).toBe("#precios");
+    const drawerLinks = drawer?.querySelectorAll("span.mobile-nav-item:not(.text-glow-tier)");
+    expect(drawerLinks?.length).toBe(4);
+    expect(drawerLinks?.[0].getAttribute("onclick")).toContain("#hero");
+    expect(drawerLinks?.[1].getAttribute("onclick")).toContain("#producto");
+    expect(drawerLinks?.[2].getAttribute("onclick")).toContain("#filosofia");
+    expect(drawerLinks?.[3].getAttribute("onclick")).toContain("#precios");
 
     const drawerFreeLink = drawer?.querySelector("span.text-glow-tier");
     expect(drawerFreeLink).not.toBeNull();
+    expect(drawerFreeLink?.textContent).toBe("Free");
 
 
 
@@ -1854,18 +1816,17 @@ describe("Arquitectura de página y Composición Visual (FIA-W01.31)", () => {
       "producto",
       "precios",
       "como-funciona-pro",
-      "control-local-first",
-      "casos-uso",
+      "filosofia",
       "download-free",
       "faq"
     ];
 
     expect(ids).toEqual(expectedOrder);
-    
-    // Verificamos Header al principio y Footer al final del app
+
+    // Verificamos Header al principio y Footer al final (antes del modal del manual)
     const appChildren = Array.from(document.querySelector("#app")!.children).map(c => c.tagName.toLowerCase());
     
     expect(appChildren[0]).toBe("header");
-    expect(appChildren[appChildren.length - 1]).toBe("footer");
+    expect(appChildren.includes("footer")).toBe(true);
   });
 });

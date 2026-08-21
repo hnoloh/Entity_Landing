@@ -19,20 +19,22 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </div>
     <nav class="visual-nav">
-      <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;">Inicio</span>
-      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
-      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Precios</span>
+      <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;" tabindex="0">Inicio</span>
+      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;" tabindex="0">Producto</span>
+      <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
+      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
 
-      <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
+      <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
-        <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;">Inicio</span>
-        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
-        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Precios</span>
+        <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Inicio</span>
+        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Producto</span>
+        <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
+        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
 
-        <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
+        <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
       </nav>
     </div>
   </header>
@@ -354,45 +356,345 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
-    <!-- CASOS DE USO (FIA-W01.12) -->
-    <section id="casos-uso" class="region reveal-element" aria-labelledby="casos-title">
-      <div class="narrativa-header">
-        <h2 id="casos-title">Casos de uso</h2>
-        <p>Escalabilidad adaptable a cualquier necesidad funcional.</p>
-      </div>
-      
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 2rem auto 0; padding: 0 1rem;">
+    <!-- FILOSOFÍA / CONTROL DE CONSUMO -->
+    <section id="filosofia" class="region reveal-element" aria-labelledby="filosofia-title">
+      <style>
+        #filosofia {
+          display: grid !important;
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+          row-gap: 1.5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+          width: 100%;
+          padding-top: 2rem !important;
+          padding-bottom: 2rem !important;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          box-sizing: border-box;
+          min-height: auto !important;
+          align-content: start;
+        }
         
-        <!-- 1. Desarrollo y producto -->
-        <div class="narrativa-card">
-          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Desarrollo y producto</h4>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
-            Emplea <strong>Grupos secuenciales</strong> para flujos de revisión de código, o asigna un Enti al <strong>Terminal / filesystem avanzado</strong> para operar sobre tu base de código y gestionar refactorizaciones locales.
-          </p>
+        .filosofia-top-row {
+          grid-row: 1 / 2;
+          display: grid;
+          grid-template-columns: 2fr 1fr;
+          gap: 3rem;
+          align-items: center;
+        }
+        
+        .filosofia-left-col {
+          text-align: left;
+        }
+
+        .filosofia-left-col h2 {
+          font-size: 2.2rem;
+          color: var(--text-primary);
+          line-height: 1.2;
+          margin-bottom: 1rem;
+          margin-top: 0;
+        }
+
+        .filosofia-left-col p {
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 0.8rem;
+        }
+
+        .manual-card {
+          background: linear-gradient(180deg, rgba(0, 229, 255, 0.08) 0%, rgba(13, 27, 38, 0.6) 100%);
+          border: 1px solid var(--accent-color);
+          box-shadow: 0 0 25px rgba(0, 229, 255, 0.15), inset 0 0 20px rgba(0, 229, 255, 0.05);
+          border-radius: 16px;
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .manual-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+        }
+        
+        .manual-header {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          margin-bottom: 0.8rem;
+        }
+
+        .manual-icon {
+          background: rgba(0, 229, 255, 0.1);
+          padding: 0.5rem;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .manual-header h4 {
+          color: var(--text-primary);
+          font-size: 1rem;
+          margin: 0;
+          font-weight: 500;
+        }
+
+        .manual-info p {
+          color: var(--text-secondary);
+          font-size: 0.75rem;
+          line-height: 1.4;
+          margin-bottom: 1.2rem;
+          margin-top: 0;
+        }
+
+        .diagram-clean {
+          grid-row: 2 / 3;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          margin-top: 0.5rem;
+        }
+
+        .diagram-node-primary {
+          background: transparent;
+          border: none;
+          padding: 0.6rem 1.5rem;
+          text-align: center;
+          position: relative;
+          z-index: 2;
+          margin-bottom: 1.5rem;
+        }
+
+        .diagram-node-primary h4 {
+          color: var(--accent-color);
+          font-size: 1.1rem;
+          margin: 0;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+
+        .diagram-4-cols {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          width: 100%;
+          position: relative;
+          z-index: 2;
+        }
+
+        /* Connecting Lines */
+        .diagram-lines {
+          position: absolute;
+          top: 2.2rem;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+        }
+        .diagram-lines::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 2px;
+          height: 0.75rem;
+          background: var(--accent-color);
+          opacity: 0.3;
+        }
+        .diagram-lines::after {
+          content: '';
+          position: absolute;
+          top: 0.75rem;
+          left: 12.5%;
+          right: 12.5%;
+          height: 2px;
+          background: var(--accent-color);
+          opacity: 0.3;
+        }
+        
+        .diagram-drop {
+          position: absolute;
+          top: 0.75rem;
+          width: 2px;
+          height: 0.75rem;
+          background: var(--accent-color);
+          opacity: 0.3;
+        }
+        .drop-1 { left: 12.5%; }
+        .drop-2 { left: 37.5%; }
+        .drop-3 { left: 62.5%; }
+        .drop-4 { left: 87.5%; }
+
+        .enti-col {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: left;
+          background: transparent;
+        }
+
+        .micro-agent {
+          width: 100%;
+          background: transparent;
+          border: none;
+          padding: 0;
+          text-align: center;
+          margin-bottom: 0.8rem;
+          box-sizing: border-box;
+        }
+        
+        .micro-agent strong {
+          display: block;
+          color: var(--accent-color);
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .enti-details {
+          width: 100%;
+        }
+        .enti-details p {
+          font-size: 0.75rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 0.6rem;
+        }
+        .enti-details strong {
+          color: var(--text-primary);
+          font-weight: 500;
+        }
+
+        @media (max-width: 900px) {
+          #filosofia {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+            row-gap: 1.5rem;
+          }
+          .filosofia-top-row {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          .filosofia-title-block, .filosofia-text-block, .diagram-clean {
+            grid-column: 1 / 2;
+          }
+          .filosofia-text-block { grid-row: 2 / 3; }
+          .diagram-clean { grid-row: 3 / 4; }
+          .diagram-4-cols {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+          }
+          .diagram-lines { display: none; }
+          .diagram-node-primary { margin-bottom: 1rem; }
+          .enti-col { text-align: center; }
+          .enti-details p { text-align: center; }
+        }
+      </style>
+
+      <div class="filosofia-top-row">
+        <!-- LEFT SIDE: Title and Text -->
+        <div class="filosofia-left-col">
+          <h2 id="filosofia-title">Atomiza tareas<br/>Controla tu consumo</h2>
+          <p>No malgastes tokens en procesos mecánicos. Entity te permite asignar un <strong>Brain (modelo) distinto a cada microagente</strong> dentro de un mismo flujo.</p>
+          <p>Divide un proyecto gigante en microtareas y delega el trabajo de volumen a motores locales o gratuitos. Reserva la potencia (y el coste) de GPT-4o o Claude Opus únicamente para los nodos que exijan razonamiento avanzado. Resultado: <strong>rendimiento premium a coste cero.</strong></p>
         </div>
 
-        <!-- 2. Investigación y conocimiento -->
-        <div class="narrativa-card">
-          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Investigación y conocimiento</h4>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
-            Combina <strong>BYOK y modelos locales</strong> para debatir ideas en <strong>Chat individual</strong>, y conserva tus hallazgos organizados de forma indefinida gracias a la <strong>Persistencia completa</strong>.
-          </p>
+        <!-- RIGHT SIDE: Manual Card -->
+        <div class="filosofia-right-col">
+          <div class="manual-card">
+            <div class="manual-header">
+              <div class="manual-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+              </div>
+              <h4>Método Entity</h4>
+            </div>
+            <div class="manual-info">
+              <p>Manual oficial de atomización de tareas (15 págs).</p>
+            </div>
+            <div style="margin-top: auto;">
+              <a onclick="openManualViewer()" style="cursor: pointer; display: inline-flex; align-items: baseline; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; color: var(--text-primary); transition: color 0.2s;" onmouseover="this.style.color='var(--accent-color)'" onmouseout="this.style.color='var(--text-primary)'">
+                <span style="color: var(--accent-color);">→</span>
+                <span class="text-glow-tier" style="font-size: 0.9rem;">Leer Método</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENEDOR INDEPENDIENTE 3: DIAGRAMA -->
+      <div class="diagram-clean">
+        
+        <div class="diagram-lines">
+          <div class="diagram-drop drop-1"></div>
+          <div class="diagram-drop drop-2"></div>
+          <div class="diagram-drop drop-3"></div>
+          <div class="diagram-drop drop-4"></div>
+        </div>
+        
+        <div class="diagram-node-primary">
+          <h4>Método Entity (Aplicado al desarrollo)</h4>
         </div>
 
-        <!-- 3. Operaciones y empresa -->
-        <div class="narrativa-card">
-          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Operaciones y empresa</h4>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
-            Configura <strong>Grupos No Secuenciales</strong> donde diferentes perfiles procesan la información en paralelo, consolidando las salidas con la <strong>Generación DOCX / PDF / HTML</strong> nativa.
-          </p>
-        </div>
+        <div class="diagram-4-cols">
+          
+          <div class="enti-col">
+            <div class="micro-agent">
+              <strong>1. Enti Documentador</strong>
+            </div>
+            <div class="enti-details">
+              <p><strong>Brain:</strong> Llama 3.1 8B (Local)</p>
+              <p><strong>¿Por qué?:</strong> Tarea de lluvia de ideas y redacción creativa. Un modelo local ligero lo hace perfecto, a coste cero, y lo más importante: tu idea de negocio inicial se queda 100% privada en tu máquina.</p>
+            </div>
+          </div>
 
-        <!-- 4. Creación y workflows complejos -->
-        <div class="narrativa-card">
-          <h4 style="color: var(--accent-color); margin-bottom: 0.5rem; font-size: 1.2rem;">Creación y workflows complejos</h4>
-          <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5;">
-            Diseña topologías en <strong>Grupos Loop</strong> para procesos iterativos (como revisión de contenidos), donde los Entis corrigen y refinan sus propias salidas cíclicamente.
-          </p>
+          <div class="enti-col">
+            <div class="micro-agent">
+              <strong>2. Enti Traductor Técnico</strong>
+            </div>
+            <div class="enti-details">
+              <p><strong>Brain:</strong> Mistral / Qwen 2 (Local u OR)</p>
+              <p><strong>¿Por qué?:</strong> Es una tarea mecánica de parseo y traducción de texto plano a formato técnico. No requiere un razonamiento profundo, solo buen formateo. Sigue siendo gratis.</p>
+            </div>
+          </div>
+
+          <div class="enti-col">
+            <div class="micro-agent">
+              <strong>3. Enti Generador Specs</strong>
+            </div>
+            <div class="enti-details">
+              <p><strong>Brain:</strong> GPT-4o Mini (API)</p>
+              <p><strong>¿Por qué?:</strong> Aquí ya empezamos a requerir razonamiento arquitectónico, pero aún no estamos escribiendo código final. 4o Mini es ridículamente barato pero ultra-capaz para estructurar dependencias.</p>
+            </div>
+          </div>
+
+          <div class="enti-col">
+            <div class="micro-agent">
+              <strong>4. Enti Implementador</strong>
+            </div>
+            <div class="enti-details">
+              <p><strong>Brain:</strong> Claude 3.5 Sonnet (API)</p>
+              <p><strong>¿Por qué?:</strong> Aquí es donde te juegas el dinero. Necesitas la máxima inteligencia del mercado para que el código compile a la primera. Inversión inteligente y enfocada.</p>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -530,6 +832,139 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <p style="color: var(--text-secondary); font-size: 0.9rem;">&copy; 2026 Entity. Todos los derechos reservados.</p>
     </div>
   </footer>
+
+  <!-- MANUAL VIEWER MODAL -->
+  <style>
+    .manual-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: none; /* hidden by default, toggled via JS */
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .manual-viewer {
+      width: 95%;
+      max-width: 1200px;
+      height: 95vh;
+      background: var(--bg-dark, #0d0d12);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 50px rgba(0, 229, 255, 0.1);
+    }
+
+    .manual-close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      color: var(--text-secondary);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .manual-close-btn:hover { color: white; border-color: var(--accent-color); background: rgba(0,229,255,0.1); }
+
+    .manual-controls {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .manual-nav-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .manual-nav-btn:hover:not(:disabled) {
+      background: rgba(0, 229, 255, 0.1);
+      border-color: var(--accent-color);
+    }
+    .manual-nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    #manual-page-indicator {
+      color: var(--accent-color);
+      font-size: 1rem;
+      font-family: monospace;
+      font-weight: bold;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .manual-page-container {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: auto;
+      text-align: center;
+      padding: 2rem;
+      /* Protect against download */
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #manual-page-img {
+      width: 100%;
+      max-width: 900px; /* Default readable width */
+      height: auto;
+      margin: 0 auto;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+      pointer-events: none; /* Block right-click entirely on the image */
+      transition: max-width 0.2s ease;
+    }
+  </style>
+
+  <div id="manual-modal" class="manual-overlay">
+    <div class="manual-viewer">
+      <button class="manual-close-btn" onclick="closeManualViewer()">×</button>
+      <div class="manual-controls">
+        <button class="manual-nav-btn" onclick="prevManualPage()" id="manual-prev-btn">← Anterior</button>
+        <span id="manual-page-indicator">Página 1 / 15</span>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="manual-nav-btn" onclick="zoomManualPage(150)" title="Acercar (Zoom In)" style="padding: 0.4rem 0.8rem; display: flex; align-items: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+          </button>
+          <button class="manual-nav-btn" onclick="zoomManualPage(-150)" title="Alejar (Zoom Out)" style="padding: 0.4rem 0.8rem; display: flex; align-items: center;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+          </button>
+        </div>
+        <button class="manual-nav-btn" onclick="nextManualPage()" id="manual-next-btn">Siguiente →</button>
+      </div>
+      <div class="manual-page-container" oncontextmenu="return false;">
+        <img id="manual-page-img" src="/manual/page-01.png" alt="Página del Método Entity" draggable="false" />
+      </div>
+    </div>
+  </div>
 `;
 
 const mobileMenuBtn =
@@ -708,6 +1143,30 @@ if (typeof window !== "undefined" && window.IntersectionObserver) {
   document.querySelectorAll(".reveal-element").forEach((el) => {
     revealObserver.observe(el);
   });
+
+  // Scrollspy for Navigation Links
+  const sections = document.querySelectorAll("section");
+  const navItems = document.querySelectorAll(".nav-item, .mobile-nav-item");
+
+  const scrollSpyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute("id");
+        if (id) {
+          navItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.getAttribute("onclick")?.includes(id)) {
+              item.classList.add("active");
+            }
+          });
+        }
+      }
+    });
+  }, { rootMargin: "-30% 0px -70% 0px" });
+
+  sections.forEach(section => {
+    scrollSpyObserver.observe(section);
+  });
 }
 
 // Lightbox functionality
@@ -833,3 +1292,85 @@ if (checkoutCta) {
     }
   });
 }
+
+declare global {
+  interface Window {
+    openManualViewer: () => void;
+    closeManualViewer: () => void;
+    nextManualPage: () => void;
+    prevManualPage: () => void;
+    zoomManualPage: (amount: number) => void;
+  }
+}
+
+// === MANUAL VIEWER LOGIC ===
+let currentManualPage = 1;
+const totalManualPages = 15;
+
+window.openManualViewer = () => {
+  const modal = document.getElementById('manual-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  }
+  updateManualPage();
+};
+
+window.closeManualViewer = () => {
+  const modal = document.getElementById('manual-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+window.nextManualPage = () => {
+  if (currentManualPage < totalManualPages) {
+    currentManualPage++;
+    updateManualPage();
+  }
+};
+
+window.prevManualPage = () => {
+  if (currentManualPage > 1) {
+    currentManualPage--;
+    updateManualPage();
+  }
+};
+
+function updateManualPage() {
+  const img = document.getElementById('manual-page-img') as HTMLImageElement;
+  const indicator = document.getElementById('manual-page-indicator');
+  const prevBtn = document.getElementById('manual-prev-btn') as HTMLButtonElement;
+  const nextBtn = document.getElementById('manual-next-btn') as HTMLButtonElement;
+  
+  if (img) {
+    const pageNumStr = currentManualPage.toString().padStart(2, '0');
+    const container = img.parentElement;
+    if (container) container.scrollTop = 0;
+    
+    img.src = `/manual/page-${pageNumStr}.png`;
+  }
+  if (indicator) {
+    indicator.textContent = `Página ${currentManualPage} / ${totalManualPages}`;
+  }
+  if (prevBtn) {
+    prevBtn.disabled = currentManualPage === 1;
+  }
+  if (nextBtn) {
+    nextBtn.disabled = currentManualPage === totalManualPages;
+  }
+}
+
+let currentManualWidth = 900;
+window.zoomManualPage = (amount: number) => {
+  currentManualWidth += amount;
+  if (currentManualWidth < 400) currentManualWidth = 400; // Min zoom
+  if (currentManualWidth > 3000) currentManualWidth = 3000; // Max zoom
+  
+  const img = document.getElementById('manual-page-img');
+  if (img) {
+    img.style.maxWidth = currentManualWidth + 'px';
+  }
+};
+
