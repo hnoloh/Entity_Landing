@@ -450,6 +450,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           max-width: 1200px;
           width: 100%;
           margin: 0 auto;
+          min-height: calc(100vh - 65px) !important;
           padding-top: 2rem !important;
           padding-bottom: 2rem !important;
           padding-left: 2rem;
@@ -463,7 +464,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           align-self: start;
           text-align: left;
           padding-right: 2rem;
-          transform: translateY(-80px);
         }
 
         .privacy-cards-block {
@@ -472,7 +472,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           align-self: center;
           display: flex;
           gap: 1rem;
-          transform: translateY(-80px);
         }
 
         .mini-card {
@@ -515,7 +514,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           width: 100%;
           position: relative;
           margin-top: 4rem;
-          transform: translateY(-40px);
         }
         .privacy-timeline::before {
           content: '';
@@ -562,20 +560,17 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             grid-column: 1 / 2;
             grid-row: 1 / 2;
             padding-right: 0;
-            transform: none;
           }
           .privacy-cards-block {
             grid-column: 1 / 2;
             grid-row: 2 / 3;
             flex-direction: column;
-            transform: none;
           }
           .privacy-timeline {
             grid-column: 1 / 2;
             grid-row: 3 / 4;
             grid-template-columns: 1fr;
             gap: 2.5rem;
-            transform: none;
           }
           .privacy-timeline::before {
             display: none;
