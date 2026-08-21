@@ -269,7 +269,7 @@ main {
 .hero-body-row {
   flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
+  align-items: flex-start;
   gap: 4rem;
   width: 100%;
   display: flex;
@@ -280,6 +280,7 @@ main {
   flex: 1.2;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-top: -60px;
   gap: 1.5rem;
   display: flex;
 }
@@ -1222,6 +1223,7 @@ a.text-glow-tier:hover {
     align-items: center;
     gap: 1.5rem;
     height: auto;
+    margin-top: 0;
   }
   .hero-visual {
     min-height: 215px;
