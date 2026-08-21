@@ -19,18 +19,18 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </div>
     <nav class="visual-nav">
-      <a href="#hero" class="nav-item">Inicio</a>
-      <a href="#producto" class="nav-item">Producto</a>
-      <a href="#precios" class="nav-item">Precios</a>
+      <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;">Inicio</span>
+      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
+      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Precios</span>
 
       <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
-        <a href="#hero" class="mobile-nav-item">Inicio</a>
-        <a href="#producto" class="mobile-nav-item">Producto</a>
-        <a href="#precios" class="mobile-nav-item">Precios</a>
+        <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;">Inicio</span>
+        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
+        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Precios</span>
 
         <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;">FREE</span>
       </nav>
@@ -153,85 +153,204 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
     </section>
 
-    <!-- CÓMO FUNCIONA PRO (FIA-W01.10) -->
+    <!-- CÓMO FUNCIONA PRO / PRIVACIDAD (FIA-W01.10 & 11) -->
     <section id="como-funciona-pro" class="region reveal-element" aria-labelledby="como-funciona-pro-title">
-      <div class="narrativa-header">
-        <h2 id="como-funciona-pro-title">Cómo funciona Pro</h2>
-        <p>Un proceso local-first. Pásate a Pro sin cuentas en la nube ni migraciones.</p>
+      <style>
+        #como-funciona-pro {
+          display: grid !important;
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto auto auto;
+          align-content: start;
+          max-width: 1200px;
+          width: 100%;
+          margin: 0 auto;
+          padding-top: 2rem !important;
+          padding-bottom: 2rem !important;
+          padding-left: 2rem;
+          padding-right: 2rem;
+          box-sizing: border-box;
+          min-height: auto !important;
+        }
+
+        .privacy-text-block {
+          grid-column: 1 / 2;
+          grid-row: 1 / 2;
+          align-self: start;
+          text-align: left;
+          padding-right: 2rem;
+        }
+
+        .privacy-cards-block {
+          grid-column: 2 / 3;
+          grid-row: 1 / 3;
+          align-self: center;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .mini-card {
+          flex: 1;
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          padding: 1.2rem;
+          display: flex;
+          flex-direction: column;
+        }
+        .mini-card h3 {
+          font-size: 1.1rem;
+          color: var(--accent-color);
+          margin-bottom: 0.8rem;
+        }
+        .mini-card p {
+          font-size: 0.85rem;
+          color: var(--text-secondary);
+          line-height: 1.5;
+          margin-bottom: 1rem;
+        }
+        .mini-card ul {
+          margin: 0;
+          padding-left: 1.2rem;
+        }
+        .mini-card li {
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          margin-bottom: 0.4rem;
+        }
+
+        .privacy-timeline {
+          grid-column: 1 / 3;
+          grid-row: 3 / 4;
+          align-self: start;
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.5rem;
+          width: 100%;
+          position: relative;
+          margin-top: 4rem;
+        }
+        .privacy-timeline::before {
+          content: '';
+          position: absolute;
+          top: 14px;
+          left: 12%;
+          right: 12%;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+          opacity: 0.4;
+          z-index: 0;
+        }
+        .privacy-step {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+          z-index: 1;
+        }
+        .privacy-step-num {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: var(--bg-dark, #0d0d12);
+          border: 1px solid var(--accent-color);
+          color: var(--accent-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.9rem;
+          font-weight: bold;
+          margin-bottom: 0.8rem;
+          box-shadow: 0 0 15px rgba(0, 212, 255, 0.15);
+        }
+
+        @media (max-width: 900px) {
+          #como-funciona-pro {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 3rem;
+          }
+          .privacy-text-block {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+            padding-right: 0;
+          }
+          .privacy-cards-block {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            flex-direction: column;
+          }
+          .privacy-timeline {
+            grid-column: 1 / 2;
+            grid-row: 3 / 4;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+          }
+          .privacy-timeline::before {
+            display: none;
+          }
+        }
+      </style>
+
+      <!-- CONTENEDOR INDEPENDIENTE 1: Texto (Anclado Arriba Izquierda) -->
+      <div class="privacy-text-block">
+        <h2 id="como-funciona-pro-title" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--text-primary); line-height: 1.2;">Privacidad por diseño.<br/>Sin cuentas,<br/>Sin registros.</h2>
+        <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;">Nuestra filosofía es innegociable: no traficamos con tus datos. No hay perfiles en la nube ni bases de datos personales. Incluso el pago está blindado.</p>
       </div>
-      <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; max-width: 1000px; width: 100%; margin-top: 2rem; margin-left: auto; margin-right: auto;">
-        
-        <!-- Step 1 -->
-        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">1</div>
-          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Download</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            Descarga Entity Free. Es la <strong>misma app</strong>, sin ejecutables ni builds separados.
-          </p>
-        </div>
-        
-        <!-- Step 2 -->
-        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">2</div>
-          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Buy</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            Adquiere tu suscripción comercial <strong>sin crear cuenta Entity</strong>.
-          </p>
-        </div>
 
-        <!-- Step 3 -->
-        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">3</div>
-          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">License key</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            Recibe tu clave por email de forma segura. <strong>Sin migración del workspace</strong>.
-          </p>
-        </div>
-
-        <!-- Step 4 -->
-        <div class="narrativa-card" style="flex: 1; min-width: 220px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-          <div style="font-size: 2.5rem; font-weight: bold; color: var(--accent-color); margin-bottom: 1rem; opacity: 0.8;">4</div>
-          <h4 style="margin-bottom: 0.5rem; color: var(--text-primary); font-size: 1.2rem;">Activate Pro</h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
-            Introduce la clave en la app y desbloquea el nivel avanzado <strong>sin reinstalación</strong>.
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- CONTROL / LOCAL-FIRST (FIA-W01.11) -->
-    <section id="control-local-first" class="region reveal-element" aria-labelledby="control-title">
-      <div class="narrativa-header">
-        <h2 id="control-title">Control total sobre tus datos</h2>
-        <p>El tratamiento depende del camino que elijas. Entity funciona <strong>sin cuenta Entity</strong>.</p>
-      </div>
-      <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; max-width: 1000px; width: 100%; margin-top: 2rem; margin-left: auto; margin-right: auto;">
-        
-        <!-- Local Path -->
-        <div class="narrativa-card" style="flex: 1; min-width: 300px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Camino Local</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
-            Soporte nativo para <strong>modelos locales</strong>. Si optas por emplear motores ejecutados en tu propio hardware, el procesamiento ocurre en tu máquina.
-          </p>
-          <ul class="problema-bullets-mini">
+      <!-- CONTENEDOR INDEPENDIENTE 2: Tarjetas (Anclado Medio Derecha) -->
+      <div class="privacy-cards-block">
+        <div class="mini-card">
+          <h3>Camino Local</h3>
+          <p>Soporte nativo para <strong>modelos locales</strong>. El procesamiento ocurre en tu máquina.</p>
+          <ul>
             <li>Ejecución contenida en tu dispositivo</li>
             <li>Tú decides qué entra y qué sale</li>
           </ul>
         </div>
-
-        <!-- Cloud BYOK Path -->
-        <div class="narrativa-card" style="flex: 1; min-width: 300px;">
-          <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Camino Cloud (BYOK)</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
-            Soporte para integraciones en la nube mediante <strong>BYOK (Bring Your Own Key)</strong>. Al utilizar APIs externas, el procesamiento involucra al proveedor seleccionado.
-          </p>
-          <ul class="problema-bullets-mini">
+        <div class="mini-card">
+          <h3>Camino Cloud (BYOK)</h3>
+          <p>Integraciones en la nube mediante <strong>BYOK</strong>. El procesamiento involucra al proveedor.</p>
+          <ul>
             <li>Gestión y rotación de tus propias claves</li>
-            <li>Sujeto exclusivamente a las políticas de tu proveedor</li>
+            <li>Sujeto a las políticas de tu proveedor</li>
           </ul>
         </div>
+      </div>
+      
+      <!-- CONTENEDOR INDEPENDIENTE 3: Línea de Tiempo (Anclado Abajo) -->
+      <div class="privacy-timeline">
+        <div class="privacy-step">
+          <div class="privacy-step-num">1</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Descarga Directa</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            La versión Free es el motor completo. Bájalo sin dar tu email ni rellenar formularios absurdos.
+          </p>
+        </div>
+        
+        <div class="privacy-step">
+          <div class="privacy-step-num">2</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Pago Externalizado</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Si decides hacer el upgrade, Lemon Squeezy procesa el pago. Nosotros nunca veremos tu tarjeta.
+          </p>
+        </div>
 
+        <div class="privacy-step">
+          <div class="privacy-step-num">3</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Licencia Pura</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Recibes una clave segura. Cero creación de perfiles, cero contraseñas en nuestros servidores.
+          </p>
+        </div>
+
+        <div class="privacy-step">
+          <div class="privacy-step-num">4</div>
+          <h4 style="margin-bottom: 0.6rem; color: var(--text-primary); font-size: 0.9rem;">Desbloqueo Local</h4>
+          <p style="font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;">
+            Pega la clave en tu app y el nivel Pro se activa localmente. Tu trabajo se queda en tu ordenador.
+          </p>
+        </div>
       </div>
     </section>
 
