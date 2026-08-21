@@ -703,7 +703,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           </div>
           
           <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
-            Capacidades avanzadas para workflows complejos y automatización de alto nivel.
+            Sube de nivel a tus Entis y grupos con las funciones Pro
           </p>
           <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
             <li><strong>Todo lo incluido en Free</strong></li>
