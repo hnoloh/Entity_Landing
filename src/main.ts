@@ -1,4 +1,10 @@
 import "./style.css";
+declare global {
+  interface Window {
+    openLegalViewer: (index: number) => void;
+    closeLegalViewer: () => void;
+  }
+}
 import * as Sentry from "@sentry/browser";
 
 if (import.meta.env.VITE_SENTRY_DSN) {
@@ -19,14 +25,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </div>
     <nav class="visual-nav">
-      <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;" tabindex="0">Inicio</span>
-      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;" tabindex="0">Producto</span>
-      <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
-      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
+      <span onclick="location.hash='#hero'" class="nav-item" style="cursor: pointer;">Inicio</span>
+      <span onclick="location.hash='#producto'" class="nav-item" style="cursor: pointer;">Producto</span>
+      <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;">Filosofía</span>
+      <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;">Precios</span>
 
       <!-- FAQ Menu Container -->
       <div class="faq-menu-container" id="desktop-faq-container">
-        <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
+        <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;">FAQ</span>
         <div class="faq-mega-menu" id="faq-mega-menu">
           <!-- JS will populate questions here -->
         </div>
@@ -39,38 +45,37 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 
       <!-- Legal Menu Container -->
       <div class="faq-menu-container" id="desktop-legal-container">
-        <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;" tabindex="0">Legal ▾</span>
+        <span class="nav-item" id="legal-menu-btn" style="cursor: pointer;">Legal</span>
         <div class="faq-mega-menu" id="legal-mega-menu" style="min-width: 200px;">
           <!-- JS will populate legal items here -->
         </div>
       </div>
 
-      <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
+      <span onclick="location.hash='#download-free'" class="nav-item" style="cursor: pointer;">Descargar</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
     <div class="mobile-menu-drawer">
       <nav class="mobile-nav">
-        <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Inicio</span>
-        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Producto</span>
-        <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
-        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
+        <span onclick="location.hash='#hero'" class="mobile-nav-item" style="cursor: pointer;">Inicio</span>
+        <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;">Producto</span>
+        <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;">Filosofía</span>
+        <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;">Precios</span>
 
-        <!-- Mobile FAQ simply links to a quick alert or handles differently. For now we will populate it below the Precios -->
         <div class="mobile-faq-container" id="mobile-faq-container">
-          <span class="mobile-nav-item" id="mobile-faq-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
+          <span class="mobile-nav-item" id="mobile-faq-btn" style="cursor: pointer;">FAQ</span>
           <div class="mobile-faq-list" id="mobile-faq-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
             <!-- JS will populate mobile questions here -->
           </div>
         </div>
 
         <div class="mobile-faq-container" id="mobile-legal-container">
-          <span class="mobile-nav-item" id="mobile-legal-btn" style="cursor: pointer;" tabindex="0">Legal ▾</span>
+          <span class="mobile-nav-item" id="mobile-legal-btn" style="cursor: pointer;">Legal</span>
           <div class="mobile-faq-list" id="mobile-legal-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
             <!-- JS will populate legal items here -->
           </div>
         </div>
 
-        <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
+        <span onclick="location.hash='#download-free'" class="mobile-nav-item" style="cursor: pointer;">Descargar</span>
       </nav>
     </div>
   </header>
@@ -1534,7 +1539,7 @@ const legalDocs = [
 ];
 
 // Open / Close Global Functions
-(window as any).openLegalViewer = (index: number) => {
+window.openLegalViewer = (index: number) => {
   const modal = document.getElementById('legal-modal');
   const titleEl = document.getElementById('legal-modal-title');
   const contentEl = document.getElementById('legal-modal-content');
@@ -1546,7 +1551,7 @@ const legalDocs = [
   }
 };
 
-(window as any).closeLegalViewer = () => {
+window.closeLegalViewer = () => {
   const modal = document.getElementById('legal-modal');
   if (modal) {
     modal.style.display = 'none';
@@ -1577,7 +1582,7 @@ if (legalMenuBtn && legalMenuContainer && legalMegaMenu) {
     item.textContent = doc.title;
     
     item.addEventListener('click', () => {
-      (window as any).openLegalViewer(index);
+      window.openLegalViewer(index);
       legalMenuContainer.classList.remove('open');
     });
     legalMegaMenu.appendChild(item);
@@ -1600,7 +1605,7 @@ if (mobileLegalBtn && mobileLegalList) {
     item.style.padding = '0.5rem 0';
     item.innerHTML = `<span style="color: var(--text-primary); font-size: 0.9rem; cursor: pointer;">${doc.title}</span>`;
     item.addEventListener('click', () => {
-      (window as any).openLegalViewer(index);
+      window.openLegalViewer(index);
     });
     mobileLegalList.appendChild(item);
   });

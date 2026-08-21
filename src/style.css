@@ -131,7 +131,7 @@ main {
 .nav-item {
   color: var(--text-secondary);
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s;
@@ -1164,7 +1164,7 @@ a.text-glow-tier:hover {
   }
   .mobile-nav-item {
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     font-weight: 500;
     text-decoration: none;
     transition: all 0.2s;
