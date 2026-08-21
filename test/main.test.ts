@@ -193,10 +193,10 @@ describe("App Bootstrap", () => {
     expect(precios?.textContent).toContain("Grupos Secuenciales");
     expect(precios?.textContent).toContain("Chat Individual");
     expect(precios?.textContent).toContain(
-      "Ollama / Modelos locales & BYOK Cloud",
+      "Ollama, Cloud y Open router",
     );
     expect(precios?.textContent).toContain("Persistencia completa");
-    expect(precios?.textContent).toContain("Generación DOCX / PDF / HTML");
+    expect(precios?.textContent).toContain("DOCX y PDF");
 
     // Assert CTA
     const freeCTA = precios?.querySelector("a.join-cta");

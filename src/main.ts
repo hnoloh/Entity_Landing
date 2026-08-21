@@ -671,15 +671,15 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--text-primary);">Entity Free</h3>
           <div style="font-size: 2rem; font-weight: 600; margin-bottom: 0.8rem; color: var(--text-primary);">0 €</div>
           <p style="color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 0.85rem;">
-            Sin registro y sin tarjeta. Descarga directa para empezar a organizar tu trabajo con IA.
+            <span style="color: var(--accent-color);">Sin registro y sin tarjeta.</span> Descarga directa para empezar a organizar tu trabajo con IA.
           </p>
           <ul class="problema-bullets-mini" style="margin-bottom: 1.5rem; flex: 1;">
             <li><strong>Entis Ilimitados</strong></li>
             <li><strong>Grupos Secuenciales</strong></li>
             <li><strong>Chat Individual</strong></li>
-            <li><strong>Ollama / Modelos locales & BYOK Cloud</strong></li>
+            <li><strong>Ollama, Cloud y Open router</strong></li>
             <li><strong>Persistencia completa</strong></li>
-            <li><strong>Generación DOCX / PDF / HTML</strong></li>
+            <li><strong>DOCX y PDF</strong></li>
           </ul>
           <a href="#download-free" class="join-cta hero-btn" style="width: 100%; justify-content: center; text-decoration: none; padding: 0.6rem 1rem; font-size: 0.9rem;">Descargar Entity Free</a>
         </div>
