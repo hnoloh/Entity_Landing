@@ -24,6 +24,19 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       <span onclick="location.hash='#filosofia'" class="nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
       <span onclick="location.hash='#precios'" class="nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
 
+      <!-- FAQ Menu Container -->
+      <div class="faq-menu-container">
+        <span class="nav-item" id="faq-menu-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
+        <div class="faq-mega-menu" id="faq-mega-menu">
+          <!-- JS will populate questions here -->
+        </div>
+        <!-- Bocadillo Tooltip -->
+        <div id="faq-bocadillo" class="faq-bocadillo">
+          <h4 id="faq-bocadillo-q"></h4>
+          <p id="faq-bocadillo-a"></p>
+        </div>
+      </div>
+
       <span onclick="location.hash='#download-free'" class="nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
     </nav>
     <button class="mobile-menu-btn" aria-label="Menú" aria-expanded="false">☰</button>
@@ -33,6 +46,14 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <span onclick="location.hash='#producto'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Producto</span>
         <span onclick="location.hash='#filosofia'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Filosofía</span>
         <span onclick="location.hash='#precios'" class="mobile-nav-item" style="cursor: pointer;" tabindex="0">Precios</span>
+
+        <!-- Mobile FAQ simply links to a quick alert or handles differently. For now we will populate it below the Precios -->
+        <div class="mobile-faq-container" id="mobile-faq-container">
+          <span class="mobile-nav-item" id="mobile-faq-btn" style="cursor: pointer;" tabindex="0">FAQ ▾</span>
+          <div class="mobile-faq-list" id="mobile-faq-list" style="display: none; flex-direction: column; gap: 1rem; padding: 1rem 0 1rem 1rem;">
+            <!-- JS will populate mobile questions here -->
+          </div>
+        </div>
 
         <span onclick="location.hash='#download-free'" class="mobile-nav-item text-glow-tier" style="cursor: pointer;" tabindex="0">Free</span>
       </nav>
@@ -162,7 +183,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           display: grid !important;
           grid-template-columns: 1fr 1fr;
           grid-template-rows: auto auto auto;
-          align-content: start;
+          align-content: center;
           max-width: 1200px;
           width: 100%;
           margin: 0 auto;
@@ -171,7 +192,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           padding-left: 2rem;
           padding-right: 2rem;
           box-sizing: border-box;
-          min-height: auto !important;
         }
 
         .privacy-text-block {
@@ -363,6 +383,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           display: grid !important;
           grid-template-columns: 1fr;
           grid-template-rows: auto auto auto;
+          align-content: center;
           row-gap: 1.5rem;
           max-width: 1200px;
           margin: 0 auto;
@@ -372,8 +393,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           padding-left: 2rem;
           padding-right: 2rem;
           box-sizing: border-box;
-          min-height: auto !important;
-          align-content: start;
         }
         
         .filosofia-top-row {
@@ -721,75 +740,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
       </div>
     </section>
 
-    <section id="faq" class="region reveal-element" aria-labelledby="faq-title">
-      <div class="narrativa-header">
-        <h2 id="faq-title">Preguntas Frecuentes</h2>
-        <p>Resolvemos tus dudas sobre Entity.</p>
-      </div>
-      <div class="faq-container" style="max-width: 800px; margin: 2rem auto; display: flex; flex-direction: column; gap: 1rem;">
-        
-        <details class="faq-item">
-          <summary>¿Entity Free requiere una cuenta?</summary>
-          <div class="faq-content">No. Entity Free se puede utilizar sin registro y sin crear una cuenta.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Free es una prueba temporal?</summary>
-          <div class="faq-content">No, Entity Free no es una prueba temporal (trial). Es una versión gratuita de uso indefinido.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Necesito pagar una API?</summary>
-          <div class="faq-content">Si utilizas modelos locales (ej. Ollama), no necesitas pagar APIs. Si optas por modelos en la nube (BYOK), el coste dependerá de las tarifas de tu proveedor, no garantizamos APIs gratuitas.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Puedo utilizar modelos locales/Ollama?</summary>
-          <div class="faq-content">Sí, Entity ofrece soporte nativo para modelos locales mediante Ollama, según las capacidades aprobadas.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Qué incluye Entity Pro?</summary>
-          <div class="faq-content">Entity Pro incluye todo lo de Free, más Grupos Loop, Grupos No Secuenciales, y soporte de Terminal / Filesystem avanzado.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Tengo que descargar otra aplicación para Pro?</summary>
-          <div class="faq-content">No. Entity Free y Pro son exactamente la misma aplicación. No hay ejecutables separados.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Cómo activo Pro?</summary>
-          <div class="faq-content">Al adquirir Pro, recibes una License Key por correo. Solo tienes que introducirla en la aplicación para activar las capacidades Pro.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿En cuántos ordenadores puedo utilizar Pro?</summary>
-          <div class="faq-content">Puedes utilizar tu suscripción Pro en un máximo de 2 dispositivos simultáneos.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Pro funciona sin Internet?</summary>
-          <div class="faq-content">Sí, Entity Pro funciona offline hasta 30 días seguidos antes de requerir conexión para validar la suscripción.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Qué ocurre si cancelo Pro?</summary>
-          <div class="faq-content">Puedes gestionar tu cancelación a través del Customer Portal externo (Lemon Squeezy). Al cancelar y finalizar el periodo facturado, la aplicación volverá al nivel Free.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Pierdo mis datos si vuelvo a Free?</summary>
-          <div class="faq-content">Los datos creados permanecerán en tu dispositivo, pero las configuraciones que utilicen capacidades exclusivas de Pro no podrán ejecutarse.</div>
-        </details>
-
-        <details class="faq-item">
-          <summary>¿Dónde se guardan/procesan mis datos?</summary>
-          <div class="faq-content">El almacenamiento principal de tus datos se realiza localmente. El procesamiento de información dependerá de si eliges ejecutar modelos locales o si envías datos a través de APIs de proveedores en la nube.</div>
-        </details>
-
-      </div>
-    </section>
 
     <div id="lightbox-modal" class="lightbox-modal" aria-hidden="true" role="dialog" aria-modal="true">
       <button id="lightbox-prev" class="lightbox-nav-btn lightbox-prev" aria-label="Imagen anterior">
@@ -808,7 +758,6 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
           <a href="#producto" class="footer-link">Características</a>
           <a href="#precios" class="footer-link">Precios</a>
-          <a href="#faq" class="footer-link">FAQ</a>
           <a href="https://entity.lemonsqueezy.com/billing" class="footer-link" target="_blank" rel="noopener noreferrer">Gestionar suscripción</a>
         </div>
       </div>
@@ -1374,3 +1323,89 @@ window.zoomManualPage = (amount: number) => {
   }
 };
 
+
+// === FAQ MEGA MENU LOGIC ===
+const faqData = [
+  { q: "¿Entity Free requiere una cuenta?", a: "No. Entity Free se puede utilizar sin registro y sin crear una cuenta." },
+  { q: "¿Free es una prueba temporal?", a: "No, Entity Free no es una prueba temporal (trial). Es una versión gratuita de uso indefinido." },
+  { q: "¿Necesito pagar una API?", a: "Si utilizas modelos locales (ej. Ollama), no necesitas pagar APIs. Si optas por modelos en la nube (BYOK), el coste dependerá de las tarifas de tu proveedor, no garantizamos APIs gratuitas." },
+  { q: "¿Puedo utilizar modelos locales/Ollama?", a: "Sí, Entity ofrece soporte nativo para modelos locales mediante Ollama." },
+  { q: "¿Qué incluye Entity Pro?", a: "Entity Pro incluye todo lo de Free, más Grupos Loop, Grupos No Secuenciales, y soporte de Terminal / Filesystem avanzado." },
+  { q: "¿Tengo que descargar otra aplicación para Pro?", a: "No. Entity Free y Pro son exactamente la misma aplicación. No hay ejecutables separados." },
+  { q: "¿Cómo activo Pro?", a: "Al adquirir Pro, recibes una License Key por correo. Solo tienes que introducirla en la aplicación para activar las capacidades Pro." },
+  { q: "¿En cuántos ordenadores puedo utilizar Pro?", a: "Puedes utilizar tu suscripción Pro en un máximo de 2 dispositivos simultáneos." },
+  { q: "¿Pro funciona sin Internet?", a: "Sí, Entity Pro funciona offline hasta 30 días seguidos antes de requerir conexión para validar la suscripción." },
+  { q: "¿Qué ocurre si cancelo Pro?", a: "Puedes gestionar tu cancelación a través de Lemon Squeezy. Al finalizar el periodo facturado, la aplicación volverá al nivel Free." },
+  { q: "¿Dónde se guardan mis datos?", a: "El almacenamiento principal de tus datos se realiza localmente en tu ordenador." }
+];
+
+const faqMenuBtn = document.getElementById('faq-menu-btn');
+const faqMenuContainer = document.querySelector('.faq-menu-container');
+const faqMegaMenu = document.getElementById('faq-mega-menu');
+const faqBocadillo = document.getElementById('faq-bocadillo');
+const faqBocadilloQ = document.getElementById('faq-bocadillo-q');
+const faqBocadilloA = document.getElementById('faq-bocadillo-a');
+
+if (faqMenuBtn && faqMenuContainer && faqMegaMenu) {
+  // Toggle mega menu
+  faqMenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    faqMenuContainer.classList.toggle('open');
+    if (!faqMenuContainer.classList.contains('open') && faqBocadillo) {
+       faqBocadillo.classList.remove('show');
+    }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!faqMenuContainer.contains(e.target as Node)) {
+      faqMenuContainer.classList.remove('open');
+      if (faqBocadillo) faqBocadillo.classList.remove('show');
+    }
+  });
+
+  // Populate questions
+  faqData.forEach((item) => {
+    const qEl = document.createElement('div');
+    qEl.className = 'faq-q-item';
+    qEl.textContent = item.q;
+    qEl.title = item.q; // tooltip for long truncated text
+    
+    // Click interactions
+    qEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.querySelectorAll('.faq-q-item').forEach(el => el.classList.remove('active'));
+      qEl.classList.add('active');
+      
+      if (faqBocadillo) {
+        faqBocadillo.classList.add('show');
+        if (faqBocadilloQ) faqBocadilloQ.textContent = item.q;
+        if (faqBocadilloA) faqBocadilloA.textContent = item.a;
+        
+        // Align bubble with the item
+        const itemTop = qEl.offsetTop - faqMegaMenu.scrollTop;
+        faqBocadillo.style.top = (itemTop - 10) + 'px';
+      }
+    });
+
+    faqMegaMenu.appendChild(qEl);
+  });
+}
+
+// Mobile FAQ Logic
+const mobileFaqBtn = document.getElementById('mobile-faq-btn');
+const mobileFaqList = document.getElementById('mobile-faq-list');
+
+if (mobileFaqBtn && mobileFaqList) {
+  mobileFaqBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isExpanded = mobileFaqList.style.display === 'flex';
+    mobileFaqList.style.display = isExpanded ? 'none' : 'flex';
+  });
+
+  faqData.forEach((item) => {
+    const qEl = document.createElement('div');
+    qEl.innerHTML = `<h5 style="color:var(--accent-color); margin:0 0 0.2rem 0; font-size:0.95rem;">${item.q}</h5><p style="color:var(--text-secondary); margin:0; font-size:0.85rem;">${item.a}</p>`;
+    mobileFaqList.appendChild(qEl);
+  });
+}
