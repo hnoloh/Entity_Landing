@@ -513,7 +513,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
           gap: 1.5rem;
           width: 100%;
           position: relative;
-          margin-top: 4rem;
+          margin-top: 7rem;
         }
         .privacy-timeline::before {
           content: '';
@@ -571,6 +571,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
             grid-row: 3 / 4;
             grid-template-columns: 1fr;
             gap: 2.5rem;
+            margin-top: 4rem;
           }
           .privacy-timeline::before {
             display: none;
