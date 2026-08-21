@@ -337,7 +337,7 @@ document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
         <div class="filosofia-left-col">
           <h2 id="filosofia-title">Atomiza tareas<br/>Controla tu consumo</h2>
           <p>No malgastes tokens en procesos mecánicos. Entity te permite asignar un <strong>Brain (modelo) distinto a cada microagente</strong> dentro de un mismo flujo.</p>
-          <p>Divide un proyecto gigante en microtareas y delega el trabajo de volumen a motores locales o gratuitos. Reserva la potencia (y el coste) de GPT-4o o Claude Opus únicamente para los nodos que exijan razonamiento avanzado. Resultado: <strong>rendimiento premium a coste cero.</strong></p>
+          <p>Divide un proyecto grande en microtareas y delega el trabajo de volumen a motores locales o gratuitos. Reserva la potencia (y el coste) de GPT-4o o Claude Opus únicamente para los nodos que exijan razonamiento avanzado.</p>
         </div>
 
         <!-- RIGHT SIDE: Manual Card -->
